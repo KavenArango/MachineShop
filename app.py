@@ -13,9 +13,6 @@ db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 
 
-
-
-
 from apps.Hompage.routes import Main_View
 from apps.StudentPage.routes import Student_view
 from apps.accounts.routes import login_view
