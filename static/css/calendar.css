@@ -1,0 +1,121 @@
+machine_menu{
+    position: absolute;
+    width:10%;
+    height:10%;
+    top:10%;
+    left:5%;
+
+}
+
+h1{
+    text-align:center;
+    color: #0C3270;
+    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
+}
+
+
+
+
+table.calendar {
+    margin-bottom: 0;
+    position: absolute;
+    width:80%;
+    height:80%;
+    top:10%;
+    left:10%;
+
+}
+
+
+table.calendar > thead > tr > th {
+    text-align: center;
+}
+
+table.calendar > tbody > tr > td {
+    height: 20px;
+}
+
+table.calendar > tbody > tr > td > div {
+    //padding: 8px;
+    height: 40px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    float: left;
+}
+
+table.calendar > tbody > tr > td.no-events {
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
+}
+
+table.calendar > tbody > tr > td.no-events > a > div {
+    background-color: #009900;
+    border-left: 1px solid white;
+}
+
+table.table-borderless > thead > tr > th, table.table-borderless > tbody > tr > td {
+    border: 0;
+}
+
+
+table.calendar > tbody > tr > td.no-events > div:first-child {
+    border-left: 0;
+    margin-left: 1px;
+}
+
+table.calendar > tbody > tr > td.no-events > div.practice {
+    opacity: 0.7;
+}
+
+table.calendar > tbody > tr > td.has-events {
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    border-radius: 4px;
+}
+
+table.calendar > tbody > tr > td.has-events > div {
+    background-color: #cc0000;
+    border-left: 1px solid white;
+}
+
+
+
+table.calendar > tbody > tr > td.has-events > div:first-child {
+    border-left: 0;
+    margin-left: 1px;
+}
+
+table.calendar > tbody > tr > td.has-events > div.practice {
+    opacity: 0.7;
+}
+table.calendar > tbody > tr > td.conflicts > div > span.title {
+    //color: red;
+}
+table.calendar > tbody > tr > td.max-conflicts > div {
+    background-color: red;
+    color: white;
+}
+
+table.calendar > tbody > tr > td.has-events > div > span {
+    display: block;
+    text-align: center;
+}
+table.calendar > tbody > tr > td.has-events > div > span a {
+    color: white;
+}
+
+table.calendar > tbody > tr > td.has-events > div > span.title {
+    font-weight: bold;
+}
+
+table.table-borderless > thead > tr > th, table.table-borderless > tbody > tr > td {
+    border: 0;
+}
+
+.table tbody tr.hover td, .table tbody tr.hover th {
+    background-color: whiteSmoke;
+}

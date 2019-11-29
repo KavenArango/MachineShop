@@ -1,0 +1,23 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+WTForms
+{% endblock %}
+
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
+
+{% block content %}
+<h1 align="center">Login</h1>
+    <div class="container">
+    <form methond = "Post" action="/">
+        <dl>
+            {{ wtf.quick_form(form) }}
+            <input class="btn btn-primary" type="submit" value="Login">
+        </dl>
+        <p><a href="{{ url_for('login.signup')}}">Click here</a></p>
+    </form>
+    </div>
+{% endblock %}
