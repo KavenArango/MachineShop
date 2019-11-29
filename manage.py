@@ -1,4 +1,4 @@
-from app import db,app
+from app import db, app
 from apps.accounts import models
 from apps.StudentPage import models
 from apps.StaffPage import models
