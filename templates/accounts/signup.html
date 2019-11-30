@@ -12,14 +12,19 @@ WTForms
 
 {% block content %}
 <h1 align="center">Sign up</h1>
-    <div class="container">
-    <form methond = "Post" >
-        <dl>
 
-            {{ wtf.quick_form(form) }}
+     <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+    <form method="post">
+        {{ form.csrf_token }}
+        {{wtf.quick_form(form)}}
 
 
-        </dl>
     </form>
     </div>
 {% endblock %}
