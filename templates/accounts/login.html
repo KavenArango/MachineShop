@@ -18,10 +18,11 @@ WTForms
         {{ message }}
     </div>
         {% endfor %}
-    <form methond = "Post" action="/">
+    <form method="post" >
         <dl>
+            {{ form.csrf_token }}
             {{ wtf.quick_form(form) }}
-            <input class="btn btn-primary" type="submit" value="Login">
+
         </dl>
         <p><a href="{{ url_for('login.signup')}}">Click here</a></p>
     </form>

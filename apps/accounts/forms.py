@@ -4,9 +4,9 @@ from wtforms.validators import InputRequired, length, Email, DataRequired,EqualT
 from apps.accounts.models import Users
 
 class LoginForm(FlaskForm):
-    username = StringField("username", validators=[DataRequired(), Email(message='Please enter a valid username')])
-    password = PasswordField("password", validators=[DataRequired(), length(min=5, max=10)])
-
+    username = StringField("username", validators=[DataRequired()])
+    password = PasswordField("password", validators=[DataRequired()])
+    submit = SubmitField("Login")
 
 class SignupForm(FlaskForm):
     first_name = StringField("first name", validators=[DataRequired()])
@@ -16,3 +16,12 @@ class SignupForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Sign Up")
 
+    def validate_username(self, username):
+        user = Users.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That username is taken. Please choose a different one.')
+
+    def validate_email(self, email):
+        user = Users.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('That email is taken. Please choose a different one.')
