@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for,app
 from apps.accounts.forms import LoginForm, SignupForm
 from app import db,bcrypt
 from apps.accounts.models import Users
-from flask_login import login_user
+from flask_login import login_user, current_user, logout_user
 
 
 
@@ -41,3 +41,9 @@ def signup():
 
 
     return render_template("accounts/signup.html", title="Signup", form=form)
+
+@login_view.route('/logout')
+def logout():
+    logout_user()
+    flash('You have Logged Out')
+    return redirect(url_for('login.login_form'))
