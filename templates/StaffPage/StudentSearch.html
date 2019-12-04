@@ -1,0 +1,50 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Staff Page
+{% endblock %}
+
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/staff.css') }}">
+
+{% endblock %}
+
+{% block content %}
+<title>Home</title>
+    <!-- The divider for the welcome paragraph at the top of the homepage -->
+<div class="table-responsive">
+		<table class="table" id="data_table">
+			<thead>
+			<tr>
+				<th scope="col">ID</th>
+				<th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Major</th>
+                <th scope="col">Machine</th>
+			</tr>
+			</thead>
+			<tbody>
+			   	{% for student in students%}
+                    <tr>
+                        <td><a href="{{ url_for('Staff_View.student_detail', student_id=student.id) }}"> {{ student.id }}</a></td>
+						<td><a> {{ student.first_name}} {{student.last_name}}</a></td>
+                        <td><a>{{ student.email }}</a></td>
+                        <td><a>{{ student.major_name}}</a></td>
+                        <td><a>{{ student.machine_name }}</a></td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+
+
+
+
+{% endblock content %}
