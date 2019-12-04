@@ -1,0 +1,23 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+WTForms
+{% endblock %}
+
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
+
+{% block content %}
+<h1 align="center">Student Detail</h1>
+    <div class="container">
+    <form methond = "Post" action="/">
+        <dl>
+            {{ wtf.quick_form(form) }}
+
+        </dl>
+
+    </form>
+    </div>
+{% endblock %}
