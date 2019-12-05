@@ -4,15 +4,15 @@ from wtforms.validators import InputRequired, length, Email, DataRequired,EqualT
 from apps.accounts.models import Users
 
 class LoginForm(FlaskForm):
-    username = StringField("username", validators=[DataRequired()])
-    password = PasswordField("password", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Login")
 
 class SignupForm(FlaskForm):
-    first_name = StringField("first name", validators=[DataRequired()])
-    last_name = StringField("last name", validators=[DataRequired()])
-    username = StringField("username", validators=[DataRequired()])
-    major = SelectField("major",coerce=int, validators=[DataRequired()])
+    first_name = StringField("First name", validators=[DataRequired()])
+    last_name = StringField("Last name", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired()])
+    major = SelectField("Major",coerce=int, validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Sign Up")

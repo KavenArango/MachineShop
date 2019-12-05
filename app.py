@@ -37,6 +37,7 @@ nav = Nav(app)
 @nav.navigation('my_nav')
 def create_nav():
     if current_user.is_authenticated:
+        StudentSearch = View('Student Search' , 'Staff_View.student_search')
         MachineShop = View('Machine Shop', 'Main_View.home')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
@@ -51,7 +52,7 @@ def create_nav():
                                 Syil_view)
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, Logout)
     else:
         login = View('Login', 'login.login_form')
         signup = View('Signup', 'login.signup')

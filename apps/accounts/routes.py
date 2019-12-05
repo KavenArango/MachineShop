@@ -36,7 +36,7 @@ def signup():
         db.session.add(user)
         ID = Users.query.filter_by(username=form.username.data).first()
         for i in range(0,5):
-            student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i)
+            student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=0)
             db.session.add(student)
         db.session.commit()
         flash('Your account has been created! You may now log in', 'success')

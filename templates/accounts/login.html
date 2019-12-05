@@ -9,8 +9,14 @@ WTForms
         {{ nav.my_nav.render() }}
 {% endblock %}
 
+{% block styles %}
+{{super()}}
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/login-signup/login.css') }}">
+
+{% endblock %}
+
 {% block content %}
-<h1 align="center">Login</h1>
+<h1>Login</h1>
     <div class="container">
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
@@ -18,13 +24,13 @@ WTForms
         {{ message }}
     </div>
         {% endfor %}
-    <form method="post" >
+    <form method="post">
         <dl>
             {{ form.csrf_token }}
-            {{ wtf.quick_form(form) }}
+            <h2>{{ wtf.quick_form(form) }}</h2>
 
         </dl>
-        <p><a href="{{ url_for('login.signup')}}">Click here</a></p>
+        <p><a href="{{ url_for('login.signup')}}">Need to Signup? Click Here</a></p>
     </form>
     </div>
 {% endblock %}

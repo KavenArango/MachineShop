@@ -9,6 +9,11 @@ WTForms
         {{ nav.my_nav.render() }}
 {% endblock %}
 
+{% block styles %}
+{{super()}}
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/login-signup/login.css') }}">
+
+{% endblock %}
 
 {% block content %}
 <h1 align="center">Sign up</h1>
@@ -21,8 +26,9 @@ WTForms
         </div>
         {% endfor %}
     <form method="post">
+
         {{ form.csrf_token }}
-        {{wtf.quick_form(form)}}
+        <h2>{{wtf.quick_form(form)}}</h2>
 
     </form>
     </div>
