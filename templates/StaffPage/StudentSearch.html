@@ -19,6 +19,10 @@ Staff Page
 <title>Home</title>
     <!-- The divider for the welcome paragraph at the top of the homepage -->
 <div class="table-responsive">
+        <input type="text" id="nameinput" onkeyup="namesearch()" placeholder="Search by name..">
+        <input type="text" id="majorinput" onkeyup="majorsearch()" placeholder="Search by major..">
+        <input type="text" id="machineinput" onkeyup="machinesearch()" placeholder="Search by machine..">
+
 		<table class="table" id="data_table">
 			<thead>
 			<tr>
@@ -46,5 +50,72 @@ Staff Page
 
 
 
+<script>
+function namesearch() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("nameinput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("data_table");
+  tr = table.getElementsByTagName("tr");
 
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+function majorsearch() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("majorinput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("data_table");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[3];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+function machinesearch() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("machineinput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("data_table");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[4];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 {% endblock content %}
+
