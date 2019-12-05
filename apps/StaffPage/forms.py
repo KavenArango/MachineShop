@@ -9,4 +9,5 @@ class Staff_Student(Form):
     email = StringField('Email')
     major = StringField('Major')
     machine = StringField('Machine')
+    level = StringField('Level')
 

@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import render_template,g
 from apps.accounts.models import Users
-from apps.StudentPage.models import Student, majors
+from apps.StudentPage.models import Student, majors, Levels
 from apps.StaffPage.forms import Staff_Student
 from apps.Machine.models import machines
 
@@ -24,13 +24,16 @@ def student_search():
         machines, machines.id == Student.machine_id
     ).join(
         majors, majors.id == Student.major_id
+    ).join(
+        Levels, Levels.id == Student.level_id
     ).with_entities(
         Student.id.label("id"),
         Users.first_name.label("first_name"),
         Users.last_name.label("last_name"),
         Users.email.label("email"),
         majors.major_name.label("major_name"),
-        machines.machine_name.label("machine_name")
+        machines.machine_name.label("machine_name"),
+        Levels.description.label("level")
     ).all()
     return render_template(template, title=title, students=students, form=form)
 
@@ -45,19 +48,23 @@ def student_detail(student_id):
         machines, machines.id == Student.machine_id
     ).join(
         majors, majors.id == Student.major_id
+    ).join(
+        Levels, Levels.id == Student.level_id
     ).with_entities(
         Student.id.label("id"),
         Users.first_name.label("first_name"),
         Users.last_name.label("last_name"),
         Users.email.label("email"),
         majors.major_name.label("major_name"),
-        machines.machine_name.label("machine_name")
+        machines.machine_name.label("machine_name"),
+        Levels.description.label("description")
     ).first()
     form.first_name.data = post.first_name
     form.last_name.data = post.last_name
     form.email.data = post.email
     form.major.data = post.major_name
     form.machine.data = post.machine_name
+    form.level.data = post.description
     return render_template(template, title=title, form=form)
 
 
