@@ -2,6 +2,8 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
+
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'KILLME'
@@ -33,11 +35,13 @@ bootstrap = Bootstrap(app)
 
 nav = Nav(app)
 
+from apps.accounts.models import Users
 
 @nav.navigation('my_nav')
 def create_nav():
-    if current_user.is_authenticated:
-        StudentSearch = View('Student Search' , 'Staff_View.student_search')
+
+    if current_user.is_authenticated and current_user.user_type == 1:
+        StudentSearch = View('Student Search', 'Staff_View.student_search')
         MachineShop = View('Machine Shop', 'Main_View.home')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
@@ -53,6 +57,22 @@ def create_nav():
 
         Logout = View('Logout', 'login.logout')
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, Logout)
+    elif current_user.is_authenticated:
+        MachineShop = View('Machine Shop', 'Main_View.home')
+        Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
+        Home_view = View('Home', 'Main_View.home')
+        Cnc_view = View('CNC Booking', 'Booking_View.CNC')
+        Bridgeport_view = View('BridgePort Booking', 'Booking_View.Bridgeport')
+        Lathe_view = View('Lathe Booking', 'Booking_View.Lathe')
+        Syil_view = View('Syil Booking', 'Booking_View.Syil')
+        Booking_view = Subgroup('Booking',
+                                Cnc_view,
+                                Bridgeport_view,
+                                Lathe_view,
+                                Syil_view)
+
+        Logout = View('Logout', 'login.logout')
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Logout)
     else:
         login = View('Login', 'login.login_form')
         signup = View('Signup', 'login.signup')
