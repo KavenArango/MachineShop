@@ -19,17 +19,15 @@ WTForms
 <h1 align="center">Sign up</h1>
 
      <div class="container">
-        {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-        </div>
-        {% endfor %}
-    <form method="post">
-
-        {{ form.csrf_token }}
-        <h2>{{wtf.quick_form(form)}}</h2>
-
-    </form>
-    </div>
+         {% for message in get_flashed_messages() %}
+             <div class="alert alert-warning">
+                 <button type="button" class="close" data-dismiss="alert">&times;</button>
+                 {{ message }}
+             </div>
+         {% endfor %}
+         <form method="post">
+             {{ form.csrf_token }}
+             <h2>{{wtf.quick_form(form)}}</h2>
+         </form>
+     </div>
 {% endblock %}
