@@ -18,6 +18,9 @@
 {% block content %}
 
     <h1>{{ value + " Schedule"}}</h1>
+    <tr id ="MachineDropDown">
+        Welcome {{ current_user.first_name }}!
+    </tr>
 
 
     <table class="calendar table table-bordered">
@@ -36,11 +39,7 @@
 
             <td>8:00 AM - 9:00 AM</td>
 
-{#            <td class=" no-events" rowspan="1">#}
-{#                <a href="#" onclick="return showBookingForm(this.id,'WLLC 1A (Room #117)','10:00am - 11:00am, Sunday, December 8, 2019', '60');" title={{ value }} "((TIME FROM JS!!!!)) DATE FROM JS">&nbsp;</a>#}
-{#                    <div style="width: 99%; height: 100%;"></div>#}
-{#                </a>#}
-{#            </td>#}
+
         <tr></tr>
 
         </tbody>
@@ -63,15 +62,6 @@
 {#            </form>#}
 {#        </div>#}
 
-
-
-
-        <tbody id="form">
-
-            <td>8:00 AM - 9:00 AM</td>
-
-
-        </tbody>
 
 
     </table>
