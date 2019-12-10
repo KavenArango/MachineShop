@@ -18,7 +18,7 @@ def student_search():
     template = "StaffPage/StudentSearch.html"
     title = "Student Search"
     form = Staff_Student()
-    students = Student.query.filter(Student.user_id == Users.id).join(
+    students = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
         Users, Users.id == Student.user_id
     ).join(
         machines, machines.id == Student.machine_id
@@ -57,15 +57,24 @@ def student_detail(student_id):
         Users.email.label("email"),
         majors.major_name.label("major_name"),
         machines.machine_name.label("machine_name"),
-        Levels.description.label("description")
+        Levels.description.label("description"),
+        Users.id.label("User_id")
     ).first()
     form.first_name.data = post.first_name
     form.last_name.data = post.last_name
     form.email.data = post.email
     form.major.data = post.major_name
-    form.machine.data = post.machine_name
-    form.level.data = post.description
-    return render_template(template, title=title, form=form)
+
+    detail = Student.query.filter(Student.user_id == post.User_id).join(
+        machines, machines.id == Student.machine_id
+    ).join(
+        Levels, Levels.id == Student.level_id
+    ).with_entities(
+        machines.machine_name.label("machine_name"),
+        Levels.description.label("description")
+    ).all()
+
+    return render_template(template, title=title, form=form, detail=detail)
 
 
 

@@ -8,6 +8,4 @@ class Staff_Student(Form):
     last_name = StringField('last name')
     email = StringField('Email')
     major = StringField('Major')
-    machine = StringField('Machine')
-    level = StringField('Level')
 
