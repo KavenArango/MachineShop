@@ -41,15 +41,15 @@
 
 
     <table class="calendar table table-bordered">
-        <thead>
-            <tr id = "days">
-                <th width="10%">&nbsp;</th>
-                <th width="10%">Monday </th>
-                <th width="10%">Tuesday</th>
-                <th width="10%">Wednesday</th>
-                <th width="10%">Thursday</th>
-                <th width="10%">Friday</th>
-            </tr>
+        <thead id="days">
+{#            <tr id = "days">#}
+{#                <th width="10%">&nbsp;</th>#}
+{#                <th width="10%">Monday </th>#}
+{#                <th width="10%">Tuesday</th>#}
+{#                <th width="10%">Wednesday</th>#}
+{#                <th width="10%">Thursday</th>#}
+{#                <th width="10%">Friday</th>#}
+{#            </tr>#}
         </thead>
 
         <tbody id = "times">
@@ -62,40 +62,77 @@
 
 
 <script>
-    //window.onload = TimeSheet;
-    window.onload = DaySheet;
+    window.onload = TimeSheet;
+    {#window.onload = DaySheet;#}
 
     function TimeSheet()
     {
-        var time = 8;
+         var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        var text = "";
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+
+        newdate = year + "/" + month + "/" + day;
+
+        text+="<tr>\n<th width=\"10%\">&nbsp;</th>\n";
+        for(var i = 0; i < 5; i++)
+        {
+            text += "<th width=\"10%\">" +  days[i] + " " + year + "/" + month + "/" + (day+i);
+            text += "</th>";
+
+            {#text+= "<th width=\"10%\">"+ days[i] +"</th>\n";#}
+        }
+        text += "</tr>"
+
+        document.getElementById("days").innerHTML = text;
+
+        text ="";
+
+
+
+
+
+
+
+
+
+
+
+        var times = 8;
         var text = "";
         var hours;
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
-        while(time <= 16)
+        while(times <= 16)
         {
-            hours = time ;
+            hours = times ;
             text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours+1) % 12) || 12) + ":00" + ((hours+1) >= 12 ? 'PM' : 'AM' + "</td>");
             newdate = year + "/" + month + "/" + day;
+
             for(var i = 0; i < 5; i++)
             {
                 {#text += "<td class=\" no-events\" rowspan=\"1\">\n" +#}
-                {#        "   <a href=\"{{ url_for('Booking_View.MachineSchedule'"+ +")}}\">\n" +#}
+                {#        "   <a href=\"{{ url_for('Booking_View.MachineSchedule')}}\">\n" +#}
                 {#        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +#}
                 {#        "   </a>\n" +#}
                 {#        "</td>";#}
+                var stringTime = "this";
 
-                text+= "<td class=\" no-events\" rowspan=\"1\">\n" +
-                        "   <a href=\"{{ url_for('Booking_View.MachineScheduleConfirm', machine_id=MachineID.id, FIX ME RIGHT HERE PLEASEEEEEEEEE )}}\">\n" +
+                text += "<td class=\" no-events\" rowspan=\"1\">\n" +
+                        "   <a id=\"\" href=\"{{ url_for('Booking_View.MachineScheduleConfirm', machine_id=MachineID.id)}}\">{{ stringTime }}\n" +
                         "       <div style=\"width: 99%; height: 100%;\"></div>\n" +
                         "   </a>\n" +
                         "</td>";
+
+
                 newdate = year + "/" + month + "/" + (day+i);
 
             }
-            time++;
+            times++;
             text += "</tr>";
         }
         document.getElementById("times").innerHTML = text;
@@ -115,11 +152,15 @@
 
         newdate = year + "/" + month + "/" + day;
 
+        text+="<tr>\n<th width=\"10%\">&nbsp;</th>\n";
         for(var i = 0; i < 5; i++)
         {
-            text += "<th>" +  days[i] + " " + year + "/" + month + "/" + (day+i);
+            {#text += "<th width=\"10%\">" +  days[i] + " " + year + "/" + month + "/" + (day+i);#}
+            {#text += "</th>";#}
+
+            text+= "<th width=\"10%\">"+ days[i] +"</th>\n";
         }
-        text += "</th>";
+        text += "</tr>"
 
         document.getElementById("days").innerHTML = text;
     }

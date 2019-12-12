@@ -21,8 +21,8 @@ def MachineSchedule():
     return render_template(template, title=title, ball=ball, MachineID=MachineName)
 
 
-@Booking_View.route('/MachineSchedule/<machine_id><date>')
-def MachineScheduleConfirm(machine_id, date):
+@Booking_View.route('/MachineSchedule/<machine_id>')
+def MachineScheduleConfirm(machine_id):
     template = "BookingPage/booking.html"
     title = "Confirm Booking"
     form = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
