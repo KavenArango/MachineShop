@@ -9,7 +9,7 @@ from apps.BookingPage.forms import BookingForm
 Booking_View = Blueprint('Booking_View', __name__)
 
 
-@Booking_View.route('/booking', methods=['POST', 'GET'])
+@Booking_View.route('/booking')
 def MachineSchedule():
     template = "BookingPage/schedule.html"
     title = "Reserve"
