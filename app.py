@@ -60,6 +60,7 @@ def create_nav():
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView ,Logout)
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
+        Profile = View('Profile', 'Student_view.profile')
         Request  = View('Level Request', 'Student_view.requests')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
@@ -74,7 +75,7 @@ def create_nav():
                                 Syil_view)
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Profile,Request,Logout)
     else:
         login = View('Login', 'login.login_form')
         signup = View('Signup', 'login.signup')
