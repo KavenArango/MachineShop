@@ -17,14 +17,34 @@
 
 {% block content %}
 
-    <h1>{{ value + " Schedule"}}</h1>
+    <h1>{{MachineID.machine_name}} Schedule</h1>
+
+    <div class="dropdown" style="float:left;">
+        <button class="dropbtn">Machines</button>
+        <div class="dropdown-content" style="left:0;">
+
+
+
+            	{% for machine in ball%}
+                    {% if machine.machine_name != "Null" %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id) }}">{{ machine.machine_name }}</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+
+
+        </div>
+    </div>
 
 
     <table class="calendar table table-bordered">
         <thead>
-            <tr>
+            <tr id = "days">
                 <th width="10%">&nbsp;</th>
-                <th width="10%">Monday</th>
+                <th width="10%">Monday </th>
                 <th width="10%">Tuesday</th>
                 <th width="10%">Wednesday</th>
                 <th width="10%">Thursday</th>
@@ -32,78 +52,81 @@
             </tr>
         </thead>
 
-        <tbody id = "days">
+        <tbody id = "times">
 
-            <td>8:00 AM - 9:00 AM</td>
-
-{#            <td class=" no-events" rowspan="1">#}
-{#                <a href="#" onclick="return showBookingForm(this.id,'WLLC 1A (Room #117)','10:00am - 11:00am, Sunday, December 8, 2019', '60');" title={{ value }} "((TIME FROM JS!!!!)) DATE FROM JS">&nbsp;</a>#}
-{#                    <div style="width: 99%; height: 100%;"></div>#}
-{#                </a>#}
-{#            </td>#}
-        <tr></tr>
-
-        </tbody>
-
-
-{#        <div class="container">#}
-{#            {% for message in get_flashed_messages() %}#}
-{#                <div class="alert alert-warning">#}
-{#                    <button type="button" class="close" data-dismiss="alert">&times;</button>#}
-{#                    {{ message }}#}
-{#                </div>#}
-{#            {% endfor %}#}
-{##}
-{#            <form method="post">#}
-{#                <dl>#}
-{#                    {{ form.csrf_token }}#}
-{#                    <h2>{{ wtf.quick_form(form) }}</h2>#}
-{#                </dl>#}
-{#                <p><a href="{{ url_for('login.signup')}}">Need to Signup? Click Here</a></p>#}
-{#            </form>#}
-{#        </div>#}
-
-
-
-
-        <tbody id="form">
-
-            <td>8:00 AM - 9:00 AM</td>
 
 
         </tbody>
-
 
     </table>
 
 
+<script>
+    //window.onload = TimeSheet;
+    window.onload = DaySheet;
 
+    function TimeSheet()
+    {
+        var time = 8;
+        var text = "";
+        var hours;
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+        while(time <= 16)
+        {
+            hours = time ;
+            text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours+1) % 12) || 12) + ":00" + ((hours+1) >= 12 ? 'PM' : 'AM' + "</td>");
+            newdate = year + "/" + month + "/" + day;
+            for(var i = 0; i < 5; i++)
+            {
+                {#text += "<td class=\" no-events\" rowspan=\"1\">\n" +#}
+                {#        "   <a href=\"{{ url_for('Booking_View.MachineSchedule'"+ +")}}\">\n" +#}
+                {#        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +#}
+                {#        "   </a>\n" +#}
+                {#        "</td>";#}
+
+                text+= "<td class=\" no-events\" rowspan=\"1\">\n" +
+                        "   <a href=\"{{ url_for('Booking_View.MachineScheduleConfirm', machine_id=MachineID.id, FIX ME RIGHT HERE PLEASEEEEEEEEE )}}\">\n" +
+                        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +
+                        "   </a>\n" +
+                        "</td>";
+                newdate = year + "/" + month + "/" + (day+i);
+
+            }
+            time++;
+            text += "</tr>";
+        }
+        document.getElementById("times").innerHTML = text;
+    }
+
+
+
+
+    function DaySheet()
+    {
+        var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        var text = "";
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+
+        newdate = year + "/" + month + "/" + day;
+
+        for(var i = 0; i < 5; i++)
+        {
+            text += "<th>" +  days[i] + " " + year + "/" + month + "/" + (day+i);
+        }
+        text += "</th>";
+
+        document.getElementById("days").innerHTML = text;
+    }
+</script>
 
 
 {% endblock %}
 
 
-<script>
-        var time = 8;
-        var text = "";
-        var hours;
-        while(time <= 16)
-        {
-            hours = time ;
-            text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours+1) % 12) || 12) + ":00" + ((hours+1) >= 12 ? 'PM' : 'AM' + "</td>");
 
-            for(var i = 0; i < 5; i++)
-            {
-                text += "<td class=\" no-events\" rowspan=\"1\">\n" +
-                        "   <a href=\"{{ url_for('Booking_View.MachineSchedule')}}\">\n" +
-                        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +
-                        "   </a>\n" +
-                        "</td>";
-            }
-
-            time++;
-            text += "</tr>";
-
-        }
-        document.getElementById("days").innerHTML = text;
-    </script>

@@ -35,7 +35,7 @@ def signup():
                      email=form.email.data, password=hashed_password, user_type=0, passed_exam=-1)
         db.session.add(user)
         ID = Users.query.filter_by(username=form.username.data).first()
-        for i in range(0,5):
+        for i in range(0, 5):
             student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=-1)
             db.session.add(student)
         db.session.commit()
