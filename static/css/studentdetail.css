@@ -1,0 +1,70 @@
+h1{
+    color: #0c3270;
+}
+#data_table {
+    border: 2px solid #0c3270;
+    background-color: #f2f2f2;
+    width: 68%;
+    margin-right: 80px;
+    margin-left: 270px;
+    text-align: center;
+    margin-top: 25px;
+    border-collapse: collapse;
+    page-break-inside:auto;
+}
+
+#data_table tr
+{
+      page-break-inside:avoid;
+      page-break-after:auto
+}
+#data_table td, #data_table th
+{
+  border: 1px solid #AAAAAA;
+  padding: 3px 2px;
+}
+
+#data_table tbody td
+{
+  font-size: 17px;
+}
+#data_table tr:nth-child(even) {
+  background: #fee9b3;
+}
+#data_table thead {
+  background: #0c3270;
+    display:table-header-group;
+}
+
+#data_table thead th {
+  font-size: 19px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #0c3270;
+}
+
+#data_table thead th:first-child {
+  border-left: none;
+}
+
+#data_table tfoot {
+  font-size: 13px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #0c3270;
+    display:table-footer-group
+}
+#data_table tfoot td {
+  font-size: 13px;
+}
+#data_table tfoot .links {
+  text-align: right;
+}
+#data_table tfoot .links a{
+  display: inline-block;
+  background: #FFFFFF;
+  color: #0c3270;
+  padding: 2px 8px;
+  border-radius: 5px;
+}
