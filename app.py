@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask 
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
@@ -37,6 +37,7 @@ nav = Nav(app)
 
 from apps.accounts.models import Users
 
+
 @nav.navigation('my_nav')
 def create_nav():
 
@@ -45,15 +46,7 @@ def create_nav():
         MachineShop = View('Machine Shop', 'Main_View.home')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
-        Cnc_view = View('CNC Booking', 'Booking_View.CNC')
-        Bridgeport_view = View('BridgePort Booking', 'Booking_View.Bridgeport')
-        Lathe_view = View('Lathe Booking', 'Booking_View.Lathe')
-        Syil_view = View('Syil Booking', 'Booking_View.Syil')
-        Booking_view = Subgroup('Booking',
-                                Cnc_view,
-                                Bridgeport_view,
-                                Lathe_view,
-                                Syil_view)
+        Booking_view = Subgroup('Booking')
 
         Logout = View('Logout', 'login.logout')
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, Logout)
@@ -61,15 +54,7 @@ def create_nav():
         MachineShop = View('Machine Shop', 'Main_View.home')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
-        Cnc_view = View('CNC Booking', 'Booking_View.CNC')
-        Bridgeport_view = View('BridgePort Booking', 'Booking_View.Bridgeport')
-        Lathe_view = View('Lathe Booking', 'Booking_View.Lathe')
-        Syil_view = View('Syil Booking', 'Booking_View.Syil')
-        Booking_view = Subgroup('Booking',
-                                Cnc_view,
-                                Bridgeport_view,
-                                Lathe_view,
-                                Syil_view)
+        Booking_view = View('Booking', 'Booking_View.MachineSchedule')
 
         Logout = View('Logout', 'login.logout')
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Logout)

@@ -16,6 +16,3 @@ class Booking(db.Model):
 class GroupJoin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
-
-gi

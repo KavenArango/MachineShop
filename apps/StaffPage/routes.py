@@ -37,6 +37,7 @@ def student_search():
     ).all()
     return render_template(template, title=title, students=students, form=form)
 
+
 @Staff_View.route('/studentdetail/<student_id>')
 def student_detail(student_id):
     template = "StaffPage/studentdetail.html"
