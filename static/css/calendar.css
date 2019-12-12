@@ -14,8 +14,6 @@ h1{
 }
 
 
-
-
 table.calendar {
     margin-bottom: 0;
     position: absolute;
@@ -25,7 +23,6 @@ table.calendar {
     left:10%;
 
 }
-
 
 table.calendar > thead > tr > th {
     text-align: center;

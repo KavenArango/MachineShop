@@ -24,7 +24,6 @@ def login_form():
     return render_template(template, title=title, form=form)
 
 
-
 @login_view.route('/signup', methods=['get', 'post'])
 def signup():
     form = SignupForm()
@@ -41,10 +40,8 @@ def signup():
         db.session.commit()
         flash('Your account has been created! You may now log in', 'success')
         return redirect(url_for('login.login_form'))
-
-
-
     return render_template("accounts/signup.html", title="Signup", form=form)
+
 
 @login_view.route('/logout')
 def logout():

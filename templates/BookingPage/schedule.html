@@ -3,7 +3,7 @@
 
 
 {% block title %}
-WTForms
+    Booking Page
 {% endblock %}
 
 {% block navbar %}
@@ -13,717 +13,97 @@ WTForms
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/calendar.css') }}">
-
 {% endblock %}
 
 {% block content %}
 
-
     <h1>{{ value + " Schedule"}}</h1>
 
 
-   <table class="calendar table table-bordered">
+    <table class="calendar table table-bordered">
+        <thead>
+            <tr>
+                <th width="10%">&nbsp;</th>
+                <th width="10%">Monday</th>
+                <th width="10%">Tuesday</th>
+                <th width="10%">Wednesday</th>
+                <th width="10%">Thursday</th>
+                <th width="10%">Friday</th>
+            </tr>
+        </thead>
 
-    <thead>
-        <tr>
-            <th>&nbsp;</th>
-            <th width="20%">Monday</th>
-            <th width="20%">Tuesday</th>
-            <th width="20%">Wednesday</th>
-            <th width="20%">Thursday</th>
-            <th width="20%">Friday</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>08:00</td>
+        <tbody id = "days">
 
+            <td>8:00 AM - 9:00 AM</td>
 
+{#            <td class=" no-events" rowspan="1">#}
+{#                <a href="#" onclick="return showBookingForm(this.id,'WLLC 1A (Room #117)','10:00am - 11:00am, Sunday, December 8, 2019', '60');" title={{ value }} "((TIME FROM JS!!!!)) DATE FROM JS">&nbsp;</a>#}
+{#                    <div style="width: 99%; height: 100%;"></div>#}
+{#                </a>#}
+{#            </td>#}
+        <tr></tr>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
+        </tbody>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
+{#        <div class="container">#}
+{#            {% for message in get_flashed_messages() %}#}
+{#                <div class="alert alert-warning">#}
+{#                    <button type="button" class="close" data-dismiss="alert">&times;</button>#}
+{#                    {{ message }}#}
+{#                </div>#}
+{#            {% endfor %}#}
+{##}
+{#            <form method="post">#}
+{#                <dl>#}
+{#                    {{ form.csrf_token }}#}
+{#                    <h2>{{ wtf.quick_form(form) }}</h2>#}
+{#                </dl>#}
+{#                <p><a href="{{ url_for('login.signup')}}">Need to Signup? Click Here</a></p>#}
+{#            </form>#}
+{#        </div>#}
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
 
-        </tr>
-        <tr>
-            <td>08:30</td>
 
-          <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
+        <tbody id="form">
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
+            <td>8:00 AM - 9:00 AM</td>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
+        </tbody>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>09:00</td>
 
-             <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
+    </table>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
 
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>09:30</td>
 
-          <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>10:00</td>
-
-             <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>10:30</td>
-
-          <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>11:00</td>
-
-             <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-
-        </tr>
-        <tr>
-            <td>11:30</td>
-
-             <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>12:00</td>
-
-              <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-
-
-        </tr>
-        <tr>
-            <td>12:30</td>
-
-           <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>13:00</td>
-
-             <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>13:30</td>
-
-           <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-
-        </tr>
-        <tr>
-            <td>14:00</td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>14:30</td>
-
-             <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-
-        </tr>
-        <tr>
-            <td>15:00</td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>15:30</td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>16:00</td>
-
-           <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>16:30</td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>17:00</td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-            <td class=" no-events" rowspan="1">
-                <a href="{{ url_for('Booking_View.MachineSchedule')}}">
-                    <div style="width: 99%; height: 100%;"></div>
-                </a>
-            </td>
-
-        </tr>
-        <tr>
-            <td>17:30</td>
-
-
-            <td class=" no-events" rowspan="1"></td>
-            <td class=" no-events" rowspan="1"></td>
-            <td class=" no-events" rowspan="1"></td>
-            <td class=" no-events" rowspan="1"></td>
-            <td class=" no-events" rowspan="1"></td>
-
-
-        </tr>
-        <tr>
-            <td>18:00</td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-        </tr>
-        <tr>
-            <td>18:30</td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-            <td class=" no-events" rowspan="1"></td>
-
-        </tr>
-
-    </tbody>
-</table>
 {% endblock %}
+
+
+<script>
+        var time = 8;
+        var text = "";
+        var hours;
+        while(time <= 16)
+        {
+            hours = time ;
+            text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours+1) % 12) || 12) + ":00" + ((hours+1) >= 12 ? 'PM' : 'AM' + "</td>");
+
+            for(var i = 0; i < 5; i++)
+            {
+                text += "<td class=\" no-events\" rowspan=\"1\">\n" +
+                        "   <a href=\"{{ url_for('Booking_View.MachineSchedule')}}\">\n" +
+                        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +
+                        "   </a>\n" +
+                        "</td>";
+            }
+
+            time++;
+            text += "</tr>";
+
+        }
+        document.getElementById("days").innerHTML = text;
+    </script>
