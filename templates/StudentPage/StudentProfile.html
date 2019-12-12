@@ -17,16 +17,7 @@ WTForms
 {% endblock %}
 
 {% block content %}
-<h1 align="center">Student Detail</h1>
-    <div class="container">
-    <form methond = "Post" action="/">
-        <dl>
-            {{ wtf.quick_form(form) }}
-
-        </dl>
-
-    </form>
-    </div>
+<h1 align="center">{{ current_user.first_name }} {{ current_user.last_name }}</h1>
 
     <div class="table table-hover">
 
@@ -47,12 +38,10 @@ WTForms
 
 			<tbody>
 			   	{% for details in detail%}
-                    {% if details.machine_name != "Null" %}
                     <tr>
                         <td>{{ details.machine_name }}</td>
                         <td>{{ details.description }}</td>
 					</tr>
-                    {% endif %}
 				{% endfor %}
 			</tbody>
 		</table>

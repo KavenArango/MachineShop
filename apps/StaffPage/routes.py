@@ -1,13 +1,13 @@
-from flask import Blueprint, redirect, url_for, request, flash
+from flask import Blueprint,redirect,url_for, flash, abort
 from flask import render_template,g
 from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
-from apps.StaffPage.forms import Staff_Student, Staff_Request, Staff_AddMachine
+from apps.StaffPage.forms import Staff_Student, Staff_Request,PostForm
 from apps.Machine.models import machines
-from pymysql import NULL
-from sqlalchemy import and_
-from .models import Request, Request_Des
+from .models import Request, Request_Des,Post
+from flask_login import current_user
+
 
 Staff_View = Blueprint('Staff_View', __name__)
 
@@ -17,6 +17,7 @@ def student_search():
     template = "StaffPage/StudentSearch.html"
     title = "Student Search"
     form = Staff_Student()
+    
     students = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
         Users, Users.id == Student.user_id
     ).join(
@@ -118,7 +119,7 @@ def request_detail(request_id):
         Users.last_name.label("last_name"),
         machines.machine_name.label("machine_name"),
         Levels.description.label("description"),
-        Request_Des.description.label('Request')
+        Request_Des.description.label('Request'),
     ).first()
     form.first_name.data = post.first_name
     form.last_name.data = post.last_name
@@ -128,44 +129,86 @@ def request_detail(request_id):
 
 
     user = Users.query.filter_by(first_name=post.first_name).first()
+    machine = machines.query.filter_by(machine_name=post.machine_name).first()
+    level = Levels.query.filter_by(description=post.description).first()
+    student = Student.query.filter_by(user_id=user.id, machine_id=machine.id).first()
     levelUp = Student.query.filter_by(user_id=user.id).all()
-    if form.validate_on_submit():
+    currentLevel = Levels.query.filter_by(id=student.level_id).first()
+    form.current.data = currentLevel.description
 
+    if form.decline.data:
+        Request.query.filter_by(id=post.id).delete()
+        flash('Request has been Rejected')
+        return redirect(url_for('Staff_View.request_search'))
+
+
+    if form.validate_on_submit():
         if user.passed_exam < 1:
             user.passed_exam = 1
             for levelups in levelUp:
                 levelups.level_id = levelups.level_id + 1
             db.session.commit()
             Request.query.filter_by(id=post.id).delete()
+            flash('Request has been approved')
             return redirect(url_for('Staff_View.request_search'))
         else:
-            machine = machines.query.filter_by(machine_name=post.machine_name).first()
-            level = Levels.query.filter_by(description=post.description).first()
-            student = Student.query.filter_by(user_id=user.id, machine_id=machine.id).first()
+
             if student.level_id > level.id:
                 Request.query.filter_by(id=post.id).delete()
+                flash('Request has been Rejected! Student cant go back a level')
                 return redirect(url_for('Staff_View.request_search'))
+
             elif student.level_id != level.id:
                 if student.level_id + 2 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    flash('Request has been Rejected! Student cant skip a level')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 3 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    flash('Request has been Rejected! Student cant skip a level')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 4 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    flash('Request has been Rejected! Student cant skip a level')
                     return redirect(url_for('Staff_View.request_search'))
                 else:
                     student.level_id = level.id
                     db.session.commit()
                     Request.query.filter_by(id=post.id).delete()
+                    flash('Request has been approved')
                     return redirect(url_for('Staff_View.request_search'))
             else:
                 Request.query.filter_by(id=post.id).delete()
+                flash('Request has been Rejected! Student is already that level')
                 return redirect(url_for('Staff_View.request_search'))
 
     return render_template(template, title=title, form=form)
 
+@Staff_View.route("/post", methods=['GET', 'POST'])
+def newPost():
+    template = "StaffPage/createPost.html"
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data, author=current_user.first_name)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been created!', 'success')
+        return redirect(url_for('Student_view.post'))
+    return render_template(template, title='New Post', form=form, legend='New Post')
 
+@Staff_View.route("/post/<int:post_id>")
+def post(post_id):
+    post = Post.query.get(post_id)
+    return render_template("StaffPage/PostDetail.html", title=post.title, post=post)
 
-
+@Staff_View.route("/post/<int:post_id>/delete", methods=['POST'])
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user.first_name:
+        redirect('Student.view.post')
+        flash('You can not delete this post')
+    else:
+        db.session.delete(post)
+        db.session.commit()
+        flash('Your post has been deleted!', 'success')
+    return redirect(url_for('Student_view.post'))

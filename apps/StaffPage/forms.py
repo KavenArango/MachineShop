@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import InputRequired, length, Email, DataRequired,EqualTo,ValidationError
 from apps.accounts.models import Users
 from wtforms_components import read_only
@@ -21,6 +21,7 @@ class Staff_Request(Form):
     first_name = StringField('first name')
     last_name = StringField('last name')
     machine = StringField('Machine')
+    current = StringField('Current Level')
     level = StringField('Level')
     des = StringField('Request')
     accept = SubmitField('Accept')

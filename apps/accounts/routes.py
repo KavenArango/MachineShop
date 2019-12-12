@@ -32,7 +32,7 @@ def signup():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = Users(first_name=form.first_name.data, last_name=form.last_name.data, username=form.username.data,
-                     email=form.email.data, password=hashed_password, user_type=0, passed_exam=-1)
+                     email=form.email.data, password=hashed_password,user_type=0 , passed_exam=-1)
         db.session.add(user)
         ID = Users.query.filter_by(username=form.username.data).first()
         for i in range(0, 5):
