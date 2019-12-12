@@ -50,7 +50,7 @@ def create_nav():
         Booking_view = Subgroup('Booking')
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView ,Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView , Logout)
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
         Request  = View('Level Request', 'Student_view.requests')
@@ -59,13 +59,11 @@ def create_nav():
         Booking_view = View('Booking', 'Booking_View.MachineSchedule')
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request, Logout)
     else:
         login = View('Login', 'login.login_form')
         signup = View('Signup', 'login.signup')
         return Navbar(login, signup)
-
-
 
 
 if __name__ == '__main__':

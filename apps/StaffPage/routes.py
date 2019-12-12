@@ -74,6 +74,7 @@ def student_detail(student_id):
 
     return render_template(template, title=title, form=form, detail=detail)
 
+
 @Staff_View.route('/requestsearch')
 def request_search():
     template = "StaffPage/Request.html"

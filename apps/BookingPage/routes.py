@@ -16,7 +16,7 @@ def MachineSchedule():
     return render_template(template, title=title)
 
 
-@Booking_View.route('/MachineSchedule')
+@Booking_View.route('/MachineSchedule', method=['post', 'get'])
 def MachineScheduleConfirm():
     template = "BookingPage/booking.html"
     title = "Confirm Booking"
