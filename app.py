@@ -6,13 +6,16 @@ from flask_login import LoginManager, current_user
 
 app = Flask(__name__)
 
+
 app.config['SECRET_KEY'] = 'KILLME'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://MachineShop:KAVENSTEVESHANNONALLDUMB@25.78.65.33/machineshop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+
 
 from apps.Hompage.routes import Main_View
 from apps.StudentPage.routes import Student_view
@@ -22,14 +25,18 @@ from apps.Machine.routes import Machine_View
 from apps.BookingPage.routes import Booking_View
 from flask_bootstrap import Bootstrap
 
+
 app.register_blueprint(Main_View)
 app.register_blueprint(Student_view)
 app.register_blueprint(login_view)
 app.register_blueprint(Staff_View)
 app.register_blueprint(Machine_View)
 app.register_blueprint(Booking_View)
+
+
 from flask_nav import Nav
 from flask_nav.elements import Navbar, Subgroup, View, Link, Text, Separator
+from apps.Machine.models import machines
 
 bootstrap = Bootstrap(app)
 
@@ -47,17 +54,15 @@ def create_nav():
         MachineShop = View('Machine Shop', 'Main_View.home')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
-        Booking_view = Subgroup('Booking')
-
+        Booking_view = View('Booking', 'Booking_View.MachineSchedule')
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView , Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, Logout)
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
-        Request  = View('Level Request', 'Student_view.requests')
+        Request = View('Level Request', 'Student_view.requests')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
         Booking_view = View('Booking', 'Booking_View.MachineSchedule')
-
         Logout = View('Logout', 'login.logout')
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request, Logout)
     else:

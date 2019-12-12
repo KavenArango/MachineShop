@@ -1,5 +1,5 @@
-from flask import Blueprint,redirect,url_for
-from flask import render_template,g
+from flask import Blueprint, redirect, url_for
+from flask import render_template, g
 from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
@@ -125,7 +125,6 @@ def request_detail(request_id):
     form.machine.data = post.machine_name
     form.level.data = post.description
     form.des.data = post.Request
-
 
     user = Users.query.filter_by(first_name=post.first_name).first()
     levelUp = Student.query.filter_by(user_id=user.id).all()
