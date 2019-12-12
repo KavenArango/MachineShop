@@ -1,11 +1,14 @@
-from flask import Blueprint,redirect,url_for
+from flask import Blueprint, redirect, url_for, request, flash
 from flask import render_template,g
 from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
-from apps.StaffPage.forms import Staff_Student, Staff_Request
+from apps.StaffPage.forms import Staff_Student, Staff_Request, Staff_AddMachine
 from apps.Machine.models import machines
+from pymysql import NULL
+from sqlalchemy import and_
 from .models import Request, Request_Des
+from flask_paginate import Pagination, get_page_parameter
 
 Staff_View = Blueprint('Staff_View', __name__)
 
@@ -62,7 +65,7 @@ def student_detail(student_id):
     form.email.data = post.email
     form.major.data = post.major_name
 
-    detail = Student.query.filter(Student.user_id == post.User_id).join(
+    detail = Student.query.filter(Student.user_id == post.User_id).filter(machines.id != 0).join(
         machines, machines.id == Student.machine_id
     ).join(
         Levels, Levels.id == Student.level_id
@@ -163,3 +166,7 @@ def request_detail(request_id):
                 return redirect(url_for('Staff_View.request_search'))
 
     return render_template(template, title=title, form=form)
+
+
+
+

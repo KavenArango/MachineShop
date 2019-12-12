@@ -25,3 +25,17 @@ class Staff_Request(Form):
     des = StringField('Request')
     accept = SubmitField('Accept')
     decline = SubmitField('Reject')
+
+    def __init__(self, *args, **kwargs):
+        super(Staff_Request, self).__init__(*args, **kwargs)
+        read_only(self.first_name)
+        read_only(self.last_name)
+        read_only(self.machine)
+        read_only(self.level)
+        read_only(self.des)
+
+
+class Staff_AddMachine(Form):
+    machine_name = StringField('Machine Name')
+    description = StringField('Description')
+    submit = SubmitField('Add Machine')
