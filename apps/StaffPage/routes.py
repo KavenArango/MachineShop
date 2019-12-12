@@ -8,7 +8,6 @@ from apps.Machine.models import machines
 from pymysql import NULL
 from sqlalchemy import and_
 from .models import Request, Request_Des
-from flask_paginate import Pagination, get_page_parameter
 
 Staff_View = Blueprint('Staff_View', __name__)
 
