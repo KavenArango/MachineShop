@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, url_for, flash
 from flask import render_template,g
 from .forms import RequestForm, RequestExamForm, StudentForm
 from .models import Levels
-from apps.StaffPage.models import Request,Request_Des
+from apps.StaffPage.models import Request,Request_Des, Post
 from apps.Machine.models import machines
 from apps.StudentPage.models import Student,majors
 from apps.accounts.models import Users
@@ -60,9 +60,13 @@ def requests():
     else:
         form1.requests.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=1)]
         if form1.validate_on_submit():
-            request = Request(user_id=current_user.id, machine_id=0, level_id=-1, requests_id=form1.requests.data)
+            request = Request(user_id=current_user.id, machine_id= 0, level_id=-1, requests_id=form1.requests.data)
             db.session.add(request)
             db.session.commit()
             return redirect(url_for('Main_View.home'))
         return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1)
 
+@Student_view.route('/announcement')
+def post():
+    posts = Post.query.all()
+    return render_template("StudentPage/Post.html", title="Announcement", posts=posts)

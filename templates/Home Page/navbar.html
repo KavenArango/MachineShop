@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<link rel='stylesheet' href='{% static  "css/navbar.css" %}'/>
+<body>
+    <header>
+        <div >
+            <ul>
+                        {% if user.is_autheticated %}
+                            <li><a href="/">Logout</a></li>
+                           <li><a href="/student">Profile</a></li>
+
+                        {% else %}
+                            <li><a href="/">Login</a></li>
+                            <li><a href="signup/">Sign Up</a></li>
+                        {% endif %}
+            </ul>
+        </div>
+    </header>
+</body>
+</html>
+<div>
+    {% block content %}
+
+    {% endblock content %}
+</div>
+
+
+
+
+

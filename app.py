@@ -30,6 +30,7 @@ app.register_blueprint(Machine_View)
 app.register_blueprint(Booking_View)
 from flask_nav import Nav
 from flask_nav.elements import Navbar, Subgroup, View, Link, Text, Separator
+from apps.Machine.models import machines
 
 bootstrap = Bootstrap(app)
 
@@ -44,6 +45,8 @@ def create_nav():
         StudentSearch = View('Student Search', 'Staff_View.student_search')
         RequestView = View('Student Requests', 'Staff_View.request_search')
         MachineShop = View('Machine Shop', 'Main_View.home')
+        Post = View('Post', 'Staff_View.newPost')
+        announcement = View('Announcement', 'Student_view.post')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
         Cnc_view = View('CNC Booking', 'Booking_View.CNC')
@@ -57,10 +60,11 @@ def create_nav():
                                 Syil_view)
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView ,Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView , Post, announcement,Logout)
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
         Profile = View('Profile', 'Student_view.profile')
+        announcement = View('Announcement', 'Student_view.post')
         Request  = View('Level Request', 'Student_view.requests')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
@@ -68,6 +72,7 @@ def create_nav():
         Bridgeport_view = View('BridgePort Booking', 'Booking_View.Bridgeport')
         Lathe_view = View('Lathe Booking', 'Booking_View.Lathe')
         Syil_view = View('Syil Booking', 'Booking_View.Syil')
+
         Booking_view = Subgroup('Booking',
                                 Cnc_view,
                                 Bridgeport_view,
@@ -75,7 +80,7 @@ def create_nav():
                                 Syil_view)
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Profile,Request,Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Profile,Request , announcement,Logout)
     else:
         login = View('Login', 'login.login_form')
         signup = View('Signup', 'login.signup')
