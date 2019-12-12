@@ -13,8 +13,8 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(20),nullable=False)
     first_name = db.Column(db.String(20),nullable=False)
     last_name = db.Column(db.String(20),nullable=False)
-    user_type = db.Column(db.Integer,)
-
+    user_type = db.Column(db.Integer)
+    passed_exam = db.Column(db.Integer)
 
 class GroupJoin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
