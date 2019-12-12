@@ -47,9 +47,10 @@ p{
     border-collapse: collapse;
     page-break-inside:auto;
 }
+
 #data_table tr{
       page-break-inside:avoid;
-      page-break-after:auto
+      page-break-after:auto;
   }
 #data_table td, #data_table th {
   border: 1px solid #AAAAAA;
