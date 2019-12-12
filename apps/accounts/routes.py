@@ -24,6 +24,7 @@ def login_form():
     return render_template(template, title=title, form=form)
 
 
+
 @login_view.route('/signup', methods=['get', 'post'])
 def signup():
     form = SignupForm()
@@ -31,17 +32,19 @@ def signup():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = Users(first_name=form.first_name.data, last_name=form.last_name.data, username=form.username.data,
-                     email=form.email.data, password=hashed_password)
+                     email=form.email.data, password=hashed_password, passed_exam=-1)
         db.session.add(user)
         ID = Users.query.filter_by(username=form.username.data).first()
-        for i in range(0, 5):
-            student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=0)
+        for i in range(0,5):
+            student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=-1)
             db.session.add(student)
         db.session.commit()
         flash('Your account has been created! You may now log in', 'success')
         return redirect(url_for('login.login_form'))
-    return render_template("accounts/signup.html", title="Signup", form=form)
 
+
+
+    return render_template("accounts/signup.html", title="Signup", form=form)
 
 @login_view.route('/logout')
 def logout():

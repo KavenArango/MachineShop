@@ -8,6 +8,12 @@ class Staff_Student(Form):
     last_name = StringField('last name')
     email = StringField('Email')
     major = StringField('Major')
+
+class Staff_Request(Form):
+    first_name = StringField('first name')
+    last_name = StringField('last name')
     machine = StringField('Machine')
     level = StringField('Level')
-
+    des = StringField('Request')
+    accept = SubmitField('Accept')
+    decline = SubmitField('Reject')

@@ -43,21 +43,23 @@ def create_nav():
 
     if current_user.is_authenticated and current_user.user_type == 1:
         StudentSearch = View('Student Search', 'Staff_View.student_search')
+        RequestView = View('Student Requests', 'Staff_View.request_search')
         MachineShop = View('Machine Shop', 'Main_View.home')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
         Booking_view = Subgroup('Booking')
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView ,Logout)
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
+        Request  = View('Level Request', 'Student_view.requests')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
         Booking_view = View('Booking', 'Booking_View.MachineSchedule')
 
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,Logout)
     else:
         login = View('Login', 'login.login_form')
         signup = View('Signup', 'login.signup')
