@@ -16,7 +16,7 @@ WTForms
 {% endblock %}
 
 {% block content %}
-<h1 align="center">Sign up</h1>
+<h1 align="center">Request Form</h1>
 
      <div class="container">
         {% for message in get_flashed_messages() %}
@@ -27,9 +27,13 @@ WTForms
         {% endfor %}
     <form method="post">
 
-        {{ form.csrf_token }}
-        <h2>{{wtf.quick_form(form)}}</h2>
+        {{ form1.csrf_token }}
+        <h2>{{wtf.quick_form(form1)}}</h2>
+
 
     </form>
     </div>
 {% endblock %}
+
+
+

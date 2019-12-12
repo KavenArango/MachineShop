@@ -11,3 +11,11 @@ class Staff_Student(Form):
     machine = StringField('Machine')
     level = StringField('Level')
 
+class Staff_Request(Form):
+    first_name = StringField('first name')
+    last_name = StringField('last name')
+    machine = StringField('Machine')
+    level = StringField('Level')
+    des = StringField('Request')
+    accept = SubmitField('Accept')
+    decline = SubmitField('Reject')
