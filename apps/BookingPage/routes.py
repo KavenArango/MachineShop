@@ -25,7 +25,8 @@ def MachineSchedule():
 def MachineScheduleConfirm(machine_id):
     template = "BookingPage/booking.html"
     title = "Confirm Booking"
-    form = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
+    form=BookingForm()
+    bookings = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
         Users, Users.id == Student.user_id
     ).join(
         machines, machines.id == Student.machine_id
@@ -39,7 +40,7 @@ def MachineScheduleConfirm(machine_id):
         machines.machine_name.label("machine_name"),
         Levels.description.label("level")
     ).all()
-    return render_template(template, title=title, form=form)
+    return render_template(template, title=title, form=form, booking=bookings)
 
 
 @Booking_View.route('/booking/<machine_id>')
