@@ -40,3 +40,8 @@ class Staff_AddMachine(Form):
     machine_name = StringField('Machine Name')
     description = StringField('Description')
     submit = SubmitField('Add Machine')
+
+class PostForm(Form):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Post')
