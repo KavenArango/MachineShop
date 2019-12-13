@@ -21,6 +21,15 @@ def MachineSchedule():
     return render_template(template, title=title, ball=ball, MachineID=MachineName)
 
 
+@Booking_View.route('/booking/<machine_id>')
+def Machine_Details(machine_id):
+    template = "BookingPage/schedule.html"
+    title = "Reserve"
+    ball = machines.query.distinct(machines.machine_name).all()
+    MachineName = machines.query.filter_by(id=machine_id).first()
+    return render_template(template, title=title, ball=ball, MachineID=MachineName)
+
+
 @Booking_View.route('/MachineSchedule/<machine_id>')
 def MachineScheduleConfirm(machine_id):
     template = "BookingPage/booking.html"
@@ -43,11 +52,5 @@ def MachineScheduleConfirm(machine_id):
     return render_template(template, title=title, form=form, booking=bookings)
 
 
-@Booking_View.route('/booking/<machine_id>')
-def Machine_Details(machine_id):
-    template = "BookingPage/schedule.html"
-    title = "Reserve"
-    ball = machines.query.distinct(machines.machine_name).all()
-    MachineName = machines.query.filter_by(id=machine_id).first()
-    return render_template(template, title=title,ball=ball, MachineID=MachineName)
+
 

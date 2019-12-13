@@ -26,7 +26,7 @@
 
 
             	{% for machine in ball%}
-                    {% if machine.machine_name != "Null" %}
+                    {% if machine.machine_name != "Default" %}
                         <tr>
                             <td>
                                 <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id) }}">{{ machine.machine_name }}</a>
@@ -42,23 +42,21 @@
 
     <table class="calendar table table-bordered">
         <thead id="days">
-{#            <tr id = "days">#}
-{#                <th width="10%">&nbsp;</th>#}
-{#                <th width="10%">Monday </th>#}
-{#                <th width="10%">Tuesday</th>#}
-{#                <th width="10%">Wednesday</th>#}
-{#                <th width="10%">Thursday</th>#}
-{#                <th width="10%">Friday</th>#}
-{#            </tr>#}
+
+
         </thead>
 
         <tbody id = "times">
 
-
+            
 
         </tbody>
 
     </table>
+
+
+
+
 
 
 <script>
@@ -137,37 +135,6 @@
         }
         document.getElementById("times").innerHTML = text;
     }
-
-
-
-
-    function DaySheet()
-    {
-        var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-        var text = "";
-        var dateObj = new Date();
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
-
-        newdate = year + "/" + month + "/" + day;
-
-        text+="<tr>\n<th width=\"10%\">&nbsp;</th>\n";
-        for(var i = 0; i < 5; i++)
-        {
-            {#text += "<th width=\"10%\">" +  days[i] + " " + year + "/" + month + "/" + (day+i);#}
-            {#text += "</th>";#}
-
-            text+= "<th width=\"10%\">"+ days[i] +"</th>\n";
-        }
-        text += "</tr>"
-
-        document.getElementById("days").innerHTML = text;
-    }
 </script>
 
-
 {% endblock %}
-
-
-
