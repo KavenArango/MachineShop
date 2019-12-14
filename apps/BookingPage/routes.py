@@ -1,5 +1,6 @@
 from flask import Blueprint
 from flask import render_template
+from flask import Flask
 from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
@@ -30,11 +31,15 @@ def Machine_Details(machine_id):
     return render_template(template, title=title, ball=ball, MachineID=MachineName)
 
 
-@Booking_View.route('/MachineSchedule/<machine_id>')
-def MachineScheduleConfirm(machine_id):
+@Booking_View.route()
+
+
+
+@Booking_View.route('/MachineSchedule/<machine_id>/<string:MachineBlockDateAndTime>')
+def MachineScheduleConfirm(machine_id, MachineBlockDateAndTime):
     template = "BookingPage/booking.html"
     title = "Confirm Booking"
-    form=BookingForm()
+    form = BookingForm()
     bookings = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
         Users, Users.id == Student.user_id
     ).join(

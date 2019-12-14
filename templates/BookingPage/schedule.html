@@ -23,13 +23,11 @@
         <button class="dropbtn">Machines</button>
         <div class="dropdown-content" style="left:0;">
 
-
-
             	{% for machine in ball%}
                     {% if machine.machine_name != "Default" %}
                         <tr>
                             <td>
-                                <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id) }}">{{ machine.machine_name }}</a>
+                                <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id)}}">{{ machine.machine_name }}</a>
                             </td>
                         </tr>
                     {% endif %}
@@ -48,7 +46,12 @@
 
         <tbody id = "times">
 
-            
+{#            <td class=" no-events" rowspan="1">#}
+{#                <a href="{{ url_for('Booking_View.MachineScheduleConfirm',#}
+{#                machine_id=MachineID.id, MachineBlockDateAndTime="nut")}}".replace(="MachineBlockDateAndTime" ,time="time">#}
+{#                    <div style="width: 99%; height: 100%;"></div>#}
+{#                </a>#}
+{#            </td>#}
 
         </tbody>
 
@@ -61,20 +64,22 @@
 
 <script>
     window.onload = TimeSheet;
-    {#window.onload = DaySheet;#}
 
     function TimeSheet()
     {
-         var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        var times = 8;
+        var hours;
+        var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
         var text = "";
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
+        var newdate;
 
         newdate = year + "/" + month + "/" + day;
-
         text+="<tr>\n<th width=\"10%\">&nbsp;</th>\n";
+
         for(var i = 0; i < 5; i++)
         {
             text += "<th width=\"10%\">" +  days[i] + " " + year + "/" + month + "/" + (day+i);
@@ -82,29 +87,12 @@
 
             {#text+= "<th width=\"10%\">"+ days[i] +"</th>\n";#}
         }
+
         text += "</tr>"
-
         document.getElementById("days").innerHTML = text;
-
         text ="";
 
 
-
-
-
-
-
-
-
-
-
-        var times = 8;
-        var text = "";
-        var hours;
-        var dateObj = new Date();
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
         while(times <= 16)
         {
             hours = times ;
@@ -113,23 +101,25 @@
 
             for(var i = 0; i < 5; i++)
             {
+                var stringTime = "this";
+
+                text +="<td class=\" no-events\" rowspan=\"1\">\n" +
+                       "    <a href=\"{{ url_for('Booking_View.MachineScheduleConfirm',
+                                         machine_id=MachineID.id, MachineBlockDateAndTime="nut")}}\".replace(=\'nut\', stringTime >\n"+
+                       "        <div style=\"width: 99%; height: 100%;\"></div>\n"+
+                       "    </a>\n"+
+                       "</td>";
+
                 {#text += "<td class=\" no-events\" rowspan=\"1\">\n" +#}
-                {#        "   <a href=\"{{ url_for('Booking_View.MachineSchedule')}}\">\n" +#}
+                {#        "   <a href=\"{{ url_for('Booking_View.MachineScheduleConfirm',#}
+                {#        machine_id=MachineID.id, MachineBlockDateAndTime=stringTime)}}\">\n" +#}
                 {#        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +#}
                 {#        "   </a>\n" +#}
                 {#        "</td>";#}
-                var stringTime = "this";
-
-                text += "<td class=\" no-events\" rowspan=\"1\">\n" +
-                        "   <a id=\"\" href=\"{{ url_for('Booking_View.MachineScheduleConfirm', machine_id=MachineID.id)}}\">\n" +
-                        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +
-                        "   </a>\n" +
-                        "</td>";
-
 
                 newdate = year + "/" + month + "/" + (day+i);
-
             }
+
             times++;
             text += "</tr>";
         }
