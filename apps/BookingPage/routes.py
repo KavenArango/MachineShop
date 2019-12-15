@@ -47,7 +47,6 @@ def MachineScheduleConfirm(machine_id):
 def Machine_Details(machine_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
-    ball = machines.query.distinct(machines.machine_name).all()
     MachineName = machines.query.filter_by(id=machine_id).first()
-    return render_template(template, title=title,ball=ball, MachineID=MachineName)
+    return render_template(template, title=title, MachineID=MachineName)
 
