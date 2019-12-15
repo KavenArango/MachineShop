@@ -32,8 +32,6 @@
                         </tr>
                     {% endif %}
                 {% endfor %}
-
-
         </div>
     </div>
 
@@ -46,24 +44,29 @@
 
         <tbody id = "times">
 
-{#            <td class=" no-events" rowspan="1">#}
-{#                <a href="{{ url_for('Booking_View.MachineScheduleConfirm',#}
-{#                machine_id=MachineID.id, MachineBlockDateAndTime="nut")}}".replace(="MachineBlockDateAndTime" ,time="time">#}
-{#                    <div style="width: 99%; height: 100%;"></div>#}
-{#                </a>#}
-{#            </td>#}
+                <td class=" no-events" rowspan="1">
+                    <a machineTime="time" machineDate="date" machine="{{ MachineID.id }}" onclick="moveNumbers(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('machine'))" >
+                        <div style="width: 99%; height: 100%;"></div>
+                    </a>
+                </td>
+
+
 
         </tbody>
 
     </table>
 
+    <tr>
+        <table id="confirmationTable">
 
+        </table>
+    </tr>
 
 
 
 
 <script>
-    window.onload = TimeSheet;
+    //window.onload = TimeSheet;
 
     function TimeSheet()
     {
@@ -84,8 +87,6 @@
         {
             text += "<th width=\"10%\">" +  days[i] + " " + year + "/" + month + "/" + (day+i);
             text += "</th>";
-
-            {#text+= "<th width=\"10%\">"+ days[i] +"</th>\n";#}
         }
 
         text += "</tr>"
@@ -125,6 +126,17 @@
         }
         document.getElementById("times").innerHTML = text;
     }
+
+
+
+
+    function moveNumbers(time,date,machine)
+    {
+        {#var url = {{ url_for('Booking_View.MachineScheduleConfirm')}};#}
+
+        document.getElementById("confirmationTable").innerHTML = "<tr>"+ time + " " + date +" " + machine + "</tr>";
+    }
+
 </script>
 
 {% endblock %}

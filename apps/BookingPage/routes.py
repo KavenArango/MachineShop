@@ -1,5 +1,4 @@
-from flask import Blueprint
-from flask import render_template
+from flask import Blueprint, render_template, request, jsonify
 from flask import Flask
 from app import db
 from apps.accounts.models import Users
@@ -31,8 +30,21 @@ def Machine_Details(machine_id):
     return render_template(template, title=title, ball=ball, MachineID=MachineName)
 
 
-@Booking_View.route()
+@Booking_View.route('/process', methods=['POST'])
+def process():
+    Machine_ID = request.form['machine']
+    MachineBookingDate = request.form['date']
+    MachineBookingTime = request.form['time']
+    if Machine_ID and MachineBookingDate and MachineBookingTime:
+        newMachineBookingDate = MachineBookingDate[::-1]
+        newMachineBookingTime = MachineBookingTime[::-1]
+        newMachine_ID = Machine_ID[::-1]
 
+        return jsonify({'Machine Booked Date': newMachineBookingDate,
+                        'Machine Booked Time': newMachineBookingTime,
+                        'Machine ID': newMachine_ID})
+
+    return jsonify({'error': 'Missing date'})
 
 
 @Booking_View.route('/MachineSchedule/<machine_id>/<string:MachineBlockDateAndTime>')
