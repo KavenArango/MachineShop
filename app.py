@@ -55,9 +55,6 @@ def create_nav():
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
         Booking_view = View('Booking', 'Booking_View.MachineSchedule')
-        Separator()
-        Text("Booking")
-        Subgroup('Machines', Link('Bridgeport', 'Booking_view.MachineSchedule, 1'))
         Logout = View('Logout', 'login.logout')
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, Logout)
     elif current_user.is_authenticated:
@@ -65,14 +62,12 @@ def create_nav():
         Request = View('Level Request', 'Student_view.requests')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
-        Booking_view = Subgroup(
-            'Booking',
-            View('Bridgeport', 'Booking_View.Machine_Details', machine_id='1'),
-            View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),
-            View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
-            View('Syil', 'Booking_View.Machine_Details', machine_id='4')
-        )
-
+        Booking_view = View('Booking', 'Booking_View.MachineSchedule')
+        Booking_view = Subgroup('Booking',
+                                View('Bridgeport', 'Booking_View.Machine_Details', machine_id='1'),
+                                View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),
+                                View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
+                                View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
         Logout = View('Logout', 'login.logout')
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request, Logout)
     else:
