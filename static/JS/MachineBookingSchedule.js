@@ -4,9 +4,11 @@ $(document).ready(function(){
 
         $.ajax({
             data:{
-                // MachineBookingDate: ,
-                // MachineBookingTime: ,
-                // Machine_ID: ,
+                Current_User: ,
+                Machine_ID: ,
+                MachineBookingTime: ,
+                MachineBookingDate: ,
+                DateMachineBooked: ,
 
             }
         })

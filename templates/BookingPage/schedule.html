@@ -44,11 +44,11 @@
 
         <tbody id = "times">
 
-                <td class=" no-events" rowspan="1">
-                    <a machineTime="time" machineDate="date" machine="{{ MachineID.id }}" onclick="moveNumbers(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('machine'))" >
-                        <div style="width: 99%; height: 100%;"></div>
-                    </a>
-                </td>
+{#                <td class=" no-events" rowspan="1">#}
+{#                    <a style="background-color: red" machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'))" >#}
+{#                        <div style="width: 99%; height: 100%;"></div>#}
+{#                    </a>#}
+{#                </td>#}
 
 
 
@@ -66,13 +66,13 @@
 
 
 <script>
-    //window.onload = TimeSheet;
+    window.onload = TimeSheet;
 
     function TimeSheet()
     {
         var times = 8;
         var hours;
-        var days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+        var dayOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
         var text = "";
         var dateObj = new Date();
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -81,15 +81,14 @@
         var newdate;
 
         newdate = year + "/" + month + "/" + day;
-        text+="<tr>\n<th width=\"10%\">&nbsp;</th>\n";
+        text+="<tr>\n<th width=\"12%\">&nbsp;</th>\n";
 
         for(var i = 0; i < 5; i++)
         {
-            text += "<th width=\"10%\">" +  days[i] + " " + year + "/" + month + "/" + (day+i);
+            text += "<th width=\"10%\">" +  dayOfTheWeek[i]  + "<br>" + month + "/" + (day+i) + "/" + year;
             text += "</th>";
         }
 
-        text += "</tr>"
         document.getElementById("days").innerHTML = text;
         text ="";
 
@@ -97,30 +96,18 @@
         while(times <= 16)
         {
             hours = times ;
-            text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours+1) % 12) || 12) + ":00" + ((hours+1) >= 12 ? 'PM' : 'AM' + "</td>");
+            text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours+1) % 12) || 12) + ":00 " + ((hours+1) >= 12 ? 'PM' : 'AM' + "</td>");
             newdate = year + "/" + month + "/" + day;
 
             for(var i = 0; i < 5; i++)
             {
-                var stringTime = "this";
-
-                text +="<td class=\" no-events\" rowspan=\"1\">\n" +
-                       "    <a href=\"{{ url_for('Booking_View.MachineScheduleConfirm',
-                                         machine_id=MachineID.id, MachineBlockDateAndTime="nut")}}\".replace(=\'nut\', stringTime >\n"+
-                       "        <div style=\"width: 99%; height: 100%;\"></div>\n"+
-                       "    </a>\n"+
-                       "</td>";
-
-                {#text += "<td class=\" no-events\" rowspan=\"1\">\n" +#}
-                {#        "   <a href=\"{{ url_for('Booking_View.MachineScheduleConfirm',#}
-                {#        machine_id=MachineID.id, MachineBlockDateAndTime=stringTime)}}\">\n" +#}
-                {#        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +#}
-                {#        "   </a>\n" +#}
-                {#        "</td>";#}
-
                 newdate = year + "/" + month + "/" + (day+i);
+                text +="<td class=\" no-events\" rowspan=\"1\">\n" +
+                       "    <a machineTime=\""+ times +"\" machineDate=\"" + newdate + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'))\" >\n" +
+                       "        <div style=\"width: 99%; height: 100%;\"></div>\n" +
+                       "    </a>\n" +
+                       "</td>";
             }
-
             times++;
             text += "</tr>";
         }
@@ -130,11 +117,25 @@
 
 
 
-    function moveNumbers(time,date,machine)
+    function bookingConfirmation(time,date)
     {
-        {#var url = {{ url_for('Booking_View.MachineScheduleConfirm')}};#}
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+        var newdate;
+        newdate = year + "/" + month + "/" + day;
+        {#obj.style.backgroundColor = "red";#}
+        var text = "<tr>";
+        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"User_ID\" value=\"{{ current_user.id }}\" readonly>";
+        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"Machine_ID\" value=\"{{ MachineID.id }}\" readonly>";
+        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingTime\" value=\"" + time +"\" readonly>";
+        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingDate\" value=\"" + date + "\" readonly>";
+        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"DateMachineBooked\" value=\"" + newdate +"\" readonly>";
+        text += "<input type=\"submit\" value=\"Continue\">";
 
-        document.getElementById("confirmationTable").innerHTML = "<tr>"+ time + " " + date +" " + machine + "</tr>";
+        text += "</tr>";
+        document.getElementById("confirmationTable").innerHTML = text;
     }
 
 </script>
