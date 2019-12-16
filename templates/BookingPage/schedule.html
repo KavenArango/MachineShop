@@ -21,6 +21,8 @@
 
 	<script src="{{ url_for('static', filename='js/form.js') }}"></script>
     <title></title>
+
+
 </head>
 
     <h1>{{MachineID.machine_name}} Schedule</h1>
@@ -78,13 +80,15 @@
 
 <script>
     {#window.onload = TimeSheet;#}
-    {# window.onload = start;#}
+     window.onload = start;
 
-    {#function start() {#}
-    {#    TimeSheet();#}
-    {#    click();#}
+    function start() {
+        TimeSheet();
+        click();
+    }
 
-        function TimeSheet() {
+        function TimeSheet()
+        {
             var times = 8;
             var hours;
             var dayOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
@@ -115,10 +119,11 @@
 
                     newTime = year + "/" + month + "/" + (day + i);
 
-
-{#                    {{ for block in Booking }}#}
-
-
+                    {#JTime = #}
+                    {##}
+                    {#{% for block in stick %}#}
+                    {#    {% print(block) %}#}
+                    {#{% endfor %}#}
 
 
 

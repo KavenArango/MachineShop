@@ -18,8 +18,11 @@ def Machine_Details(machine_id):
     title = "Reserve"
     MachineName = machines.query.filter_by(id=machine_id).first()
     ball = machines.query.distinct(machines.machine_name).all()
-    stick = Booking.query.distinct(Booking.Key).first()
-    return render_template(template, title=title, ball=ball, MachineID=MachineName)
+    stick = Booking.query.with_entities(
+        Booking.Key.label("key")
+    ).all()
+
+    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName)
 
 
 @Booking_View.route('/process', methods=['POST'])
