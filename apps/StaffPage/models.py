@@ -1,6 +1,5 @@
 from flask import Flask
 from app import db
-from datetime import datetime
 from apps.accounts import models
 from apps.StudentPage import models
 from apps.Machine import models

@@ -104,6 +104,20 @@
 
             for(var i = 0; i < 5; i++)
             {
+                {#text += "<td class=\" no-events\" rowspan=\"1\">\n" +#}
+                {#        "   <a href=\"{{ url_for('Booking_View.MachineSchedule')}}\">\n" +#}
+                {#        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +#}
+                {#        "   </a>\n" +#}
+                {#        "</td>";#}
+
+
+                text += "<td class=\" no-events\" rowspan=\"1\">\n" +
+                        "   <a id=\"\" href=\"{{ url_for('Booking_View.MachineScheduleConfirm', machine_id=MachineID.id)}}\">\n" +
+                        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +
+                        "   </a>\n" +
+                        "</td>";
+
+
                 newdate = year + "/" + month + "/" + (day+i);
                 text +="<td class=\" no-events\" rowspan=\"1\">\n" +
                        "    <a id=\"" + year + month + (day+i) + times + "\" machineTime=\""+ times +"\" machineDate=\"" + newdate + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +

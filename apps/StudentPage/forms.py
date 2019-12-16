@@ -13,8 +13,3 @@ class RequestForm(FlaskForm):
 class RequestExamForm(FlaskForm):
     requests = SelectField("Request", coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit Form')
-
-
-class StudentForm(FlaskForm):
-    email = StringField('Email')
-    major = StringField('Major')
