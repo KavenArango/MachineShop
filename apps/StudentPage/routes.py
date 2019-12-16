@@ -4,12 +4,44 @@ from .forms import RequestForm, RequestExamForm
 from .models import Levels
 from apps.StaffPage.models import Request, Request_Des
 from apps.Machine.models import machines
-from apps.StudentPage.models import Student
+from apps.accounts.models import Users
+from apps.StudentPage.models import Student, majors
 from flask_login import current_user
 from app import db
 from apps.StaffPage.models import Post
 Student_view = Blueprint('Student_view', __name__)
 
+
+@Student_view.route('/studentprofile')
+def profile():
+    template = "StudentPage/StudentProfile.html"
+    title = "Profile"
+    post = Student.query.filter(Student.user_id == current_user.id).filter(Student.machine_id ).join(
+        Users, Users.id == Student.user_id
+    ).join(
+        machines, machines.id == Student.machine_id
+    ).join(
+        majors, majors.id == Student.major_id
+    ).join(
+        Levels, Levels.id == Student.level_id
+    ).with_entities(
+        Student.id.label("id"),
+        machines.machine_name.label("machine_name"),
+        Levels.description.label("description"),
+        Users.id.label("User_id")
+    ).first()
+
+
+    detail = Student.query.filter(Student.user_id == post.User_id).join(
+        machines, machines.id == Student.machine_id
+    ).join(
+        Levels, Levels.id == Student.level_id
+    ).with_entities(
+        machines.machine_name.label("machine_name"),
+        Levels.description.label("description")
+    ).all()
+
+    return render_template(template, title=title, detail=detail)
 
 @Student_view.route('/request', methods=['get', 'post'])
 def requests():

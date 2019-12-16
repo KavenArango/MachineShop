@@ -38,10 +38,12 @@ WTForms
 
 			<tbody>
 			   	{% for details in detail%}
+                    {% if details.machine_name != "Default" %}
                     <tr>
                         <td>{{ details.machine_name }}</td>
                         <td>{{ details.description }}</td>
 					</tr>
+                    {% endif %}
 				{% endfor %}
 			</tbody>
 		</table>
