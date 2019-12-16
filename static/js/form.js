@@ -10,10 +10,17 @@ $(document).ready(function(){
                 MachineBookingTime: $('#MachineBookingTime').val(),
                 MachineBookingDate: $('#MachineBookingDate').val(),
                 DateMachineBooked:  $('#DateMachineBooked').val(),
-          },
+            },
 			type : 'POST',
 			url : '/process',
-		});
+            success: function() {
+                alert('Booking Confirmed');
+            },
+
+            error: function() {
+                alert('Error occured');
+            }
+        });
 		event.preventDefault();
 	});
 });
