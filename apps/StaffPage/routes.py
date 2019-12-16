@@ -1,11 +1,11 @@
-from flask import Blueprint,redirect,url_for, flash, abort
-from flask import render_template,g
+from flask import Blueprint, redirect, url_for, flash, abort
+from flask import render_template, g
 from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
-from apps.StaffPage.forms import Staff_Student, Staff_Request,PostForm
+from apps.StaffPage.forms import Staff_Student, Staff_Request, PostForm
 from apps.Machine.models import machines
-from .models import Request, Request_Des,Post
+from .models import Request, Request_Des, Post
 from flask_login import current_user
 
 
