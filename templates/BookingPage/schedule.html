@@ -43,6 +43,9 @@
         </div>
     </div>
 
+    <div class = "bull1">
+
+    </div>
 
     <table class="calendar table table-bordered">
         <thead id="days">
@@ -52,20 +55,8 @@
 
         <tbody id = "times">
 
-                <td class= "no-events" rowspan="1">
-                    <a id="key" machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >
-                        <div style="width: 99%; height: 100%;"></div>
-                    </a>
-
-                </td>
 
 
-                <td class= "has-events" rowspan="1" readonly>
-                    <a id="key" machineTime="time" machineDate="date" readonly>
-                        <div style="width: 99%; height: 100%;" readonly></div>
-                    </a>
-
-                </td>
 
         </tbody>
 
@@ -118,6 +109,10 @@
                 for (var i = 0; i < 5; i++) {
 
                     newTime = year + "/" + month + "/" + (day + i);
+                    var JTime = JSON.stringify(year + month + (day + i) + times)
+
+
+
 
                     {#JTime = #}
                     {##}
@@ -127,17 +122,19 @@
 
 
 
-
                     text += "<td class=\" no-events\" rowspan=\"1\">\n" +
                         "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
                         "        <div style=\"width: 99%; height: 100%;\"></div>\n" +
                         "    </a>\n" +
                         "</td>";
+
+
                 }
                 times++;
                 text += "</tr>";
             }
             document.getElementById("times").innerHTML = text;
+
         }
 
 
@@ -175,5 +172,10 @@
             var tdElm = e.target || e.srcElement;
             tdElm.style.backgroundColor = '#ff9900';
         }
+
+
+
+
+
 </script>
 {% endblock %}
