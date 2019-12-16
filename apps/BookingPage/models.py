@@ -13,6 +13,7 @@ class Booking(db.Model):
     machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
     booking_For_Date = db.Column(db.DATE)
     Booked_date = db.Column(db.DATE)
+
     Start_Time = db.Column(db.Time)
     Key = db.Column(db.Integer)
 
