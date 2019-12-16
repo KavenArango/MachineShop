@@ -13,7 +13,7 @@ class Booking(db.Model):
     machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
     booking_For_Date = db.Column(db.DATE)
     Start_Time = db.Column(db.DATETIME)
-
+    Key = db.Column(db.Integer)
 
 class GroupJoin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
