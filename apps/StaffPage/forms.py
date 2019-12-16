@@ -46,3 +46,4 @@ class PostForm(Form):
     content = TextAreaField('Content', validators=[DataRequired()])
     submit = SubmitField('Post')
 
+

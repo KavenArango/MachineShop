@@ -9,13 +9,13 @@ from datetime import datetime
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    group_id = db.Column(db.Integer, db.ForeignKey('group_join.id'))
+    #group_id = db.Column(db.Integer, db.ForeignKey('group_join.id'))
     machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
     booking_For_Date = db.Column(db.DATE)
-    Start_Time = db.Column(db.DATETIME)
+    Booked_date = db.Column(db.DATE)
+    Start_Time = db.Column(db.Time)
     Key = db.Column(db.Integer)
 
-
-class GroupJoin(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+# class GroupJoin(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))

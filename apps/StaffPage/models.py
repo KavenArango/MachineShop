@@ -1,4 +1,5 @@
 from flask import Flask
+from datetime import datetime
 from app import db
 from apps.accounts import models
 from apps.StudentPage import models
@@ -12,8 +13,8 @@ class Staff(db.Model):
 
 
 class Request_Des(db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        description = db.Column(db.String(150))
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(150))
 
 
 class Request(db.Model):
