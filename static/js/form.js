@@ -12,7 +12,7 @@ $(document).ready(function(){
                 DateMachineBooked:  $('#DateMachineBooked').val(),
           },
 			type : 'POST',
-			url : 'Booking_View.process'
+			url : '/process',
 		});
 		event.preventDefault();
 	});
