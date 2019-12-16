@@ -7,6 +7,7 @@ from apps.Machine.models import machines
 from apps.StudentPage.models import Student
 from flask_login import current_user
 from app import db
+from apps.StaffPage.models import Post
 Student_view = Blueprint('Student_view', __name__)
 
 
@@ -34,3 +35,8 @@ def requests():
             db.session.commit()
             return redirect(url_for('Main_View.home'))
         return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1)
+
+@Student_view.route('/announcement')
+def post():
+    posts = Post.query.all()
+    return render_template("StudentPage/Post.html", title="Announcement", posts=posts)
