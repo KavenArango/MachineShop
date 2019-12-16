@@ -49,12 +49,12 @@
 
         <tbody id = "times">
 
-{#                <td class=" no-events" rowspan="1">#}
-{#                    <a id="key" style="background-color: red" machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >#}
+{#                <td class= "no-events" rowspan="1">#}
+{#                    <a id="key"  machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >#}
 {#                        <div style="width: 99%; height: 100%;"></div>#}
 {#                    </a>#}
-{#                </td>#}
 
+{#                </td>#}
 
 
         </tbody>
@@ -69,8 +69,13 @@
 
 
 <script>
-    window.onload = TimeSheet;
+    {#window.onload = TimeSheet;#}
+     window.onload = start;
 
+    function start() {
+        TimeSheet();
+        click();
+    }
     function TimeSheet()
     {
         var times = 8;
@@ -104,19 +109,6 @@
 
             for(var i = 0; i < 5; i++)
             {
-                {#text += "<td class=\" no-events\" rowspan=\"1\">\n" +#}
-                {#        "   <a href=\"{{ url_for('Booking_View.MachineSchedule')}}\">\n" +#}
-                {#        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +#}
-                {#        "   </a>\n" +#}
-                {#        "</td>";#}
-
-
-                text += "<td class=\" no-events\" rowspan=\"1\">\n" +
-                        "   <a id=\"\" href=\"{{ url_for('Booking_View.MachineScheduleConfirm', machine_id=MachineID.id)}}\">\n" +
-                        "       <div style=\"width: 99%; height: 100%;\"></div>\n" +
-                        "   </a>\n" +
-                        "</td>";
-
 
                 newdate = year + "/" + month + "/" + (day+i);
                 text +="<td class=\" no-events\" rowspan=\"1\">\n" +
@@ -154,5 +146,19 @@
 
         document.getElementById("confirmationTable").innerHTML = text;
     }
+
+    function click(){
+
+    var all = document.getElementsByTagName("td");
+    for (var i=0;i<all.length;i++) {
+        all[i].onclick = inputClickHandler;
+    }
+    };
+
+        function inputClickHandler(e){
+                 e = e||window.event;
+                 var tdElm = e.target||e.srcElement;
+                     tdElm.style.backgroundColor = '#ff9900';
+        }
 </script>
 {% endblock %}

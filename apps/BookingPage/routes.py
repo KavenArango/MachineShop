@@ -26,6 +26,7 @@ def Machine_Details(machine_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
     MachineName = machines.query.filter_by(id=machine_id).first()
+    ball = machines.query.distinct(machines.machine_name).all()
 
     return render_template(template, title=title, ball=ball, MachineID=MachineName)
 
@@ -44,26 +45,7 @@ def process():
     # if Machine_ID and MachineBookingDate and MachineBookingTime and Block_ID and User_ID and DateMachineBooked:
 
 
-# @Booking_View.route('/MachineSchedule/<machine_id>/<string:MachineBlockDateAndTime>')
-# def MachineScheduleConfirm(machine_id, MachineBlockDateAndTime):
-#     template = "BookingPage/booking.html"
-#     title = "Confirm Booking"
-#     form = BookingForm()
-#     bookings = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
-#         Users, Users.id == Student.user_id
-#     ).join(
-#         machines, machines.id == Student.machine_id
-#     ).join(
-#         Levels, Levels.id == Student.level_id
-#     ).with_entities(
-#         Student.id.label("id"),
-#         Users.first_name.label("first_name"),
-#         Users.last_name.label("last_name"),
-#         Users.email.label("email"),
-#         machines.machine_name.label("machine_name"),
-#         Levels.description.label("level")
-#     ).all()
-#     return render_template(template, title=title, form=form, booking=bookings)
+
 
 
 

@@ -3,6 +3,7 @@ from app import db
 from apps.accounts import models
 from apps.StudentPage import models
 from apps.Machine import models
+from datetime import datetime
 
 
 class Staff(db.Model):
