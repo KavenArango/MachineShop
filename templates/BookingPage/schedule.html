@@ -49,12 +49,12 @@
 
         <tbody id = "times">
 
-{#                <td class=" no-events" rowspan="1">#}
-{#                    <a id="key" style="background-color: red" machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >#}
+{#                <td class= "no-events" rowspan="1">#}
+{#                    <a id="key"  machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >#}
 {#                        <div style="width: 99%; height: 100%;"></div>#}
 {#                    </a>#}
-{#                </td>#}
 
+{#                </td>#}
 
 
         </tbody>
@@ -69,8 +69,13 @@
 
 
 <script>
-    window.onload = TimeSheet;
+    {#window.onload = TimeSheet;#}
+     window.onload = start;
 
+    function start() {
+        TimeSheet();
+        click();
+    }
     function TimeSheet()
     {
         var times = 8;
@@ -104,6 +109,7 @@
 
             for(var i = 0; i < 5; i++)
             {
+
                 newdate = year + "/" + month + "/" + (day+i);
                 text +="<td class=\" no-events\" rowspan=\"1\">\n" +
                        "    <a id=\"" + year + month + (day+i) + times + "\" machineTime=\""+ times +"\" machineDate=\"" + newdate + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
@@ -140,5 +146,19 @@
 
         document.getElementById("confirmationTable").innerHTML = text;
     }
+
+    function click(){
+
+    var all = document.getElementsByTagName("td");
+    for (var i=0;i<all.length;i++) {
+        all[i].onclick = inputClickHandler;
+    }
+    };
+
+        function inputClickHandler(e){
+                 e = e||window.event;
+                 var tdElm = e.target||e.srcElement;
+                     tdElm.style.backgroundColor = '#ff9900';
+        }
 </script>
 {% endblock %}

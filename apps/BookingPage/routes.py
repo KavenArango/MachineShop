@@ -27,6 +27,7 @@ def Machine_Details(machine_id):
     title = "Reserve"
     MachineName = machines.query.filter_by(id=machine_id).first()
     ball = machines.query.distinct(machines.machine_name).all()
+
     return render_template(template, title=title, ball=ball, MachineID=MachineName)
 
 
@@ -44,3 +45,12 @@ def process():
         db.session.add(book)
         db.session.commit()
     return 'Block ID:'
+
+
+
+
+
+
+
+
+

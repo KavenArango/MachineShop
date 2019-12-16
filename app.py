@@ -65,7 +65,6 @@ def create_nav():
         Request = View('Level Request', 'Student_view.requests')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
-        Booking_view = View('Booking', 'Booking_View.MachineSchedule')
         Booking_view = Subgroup('Booking',
                                 View('Bridgeport', 'Booking_View.Machine_Details', machine_id='1'),
                                 View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),

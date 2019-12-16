@@ -74,8 +74,13 @@ table.calendar > tbody > tr > td.has-events {
     border-radius: 4px;
 }
 
-table.calendar > tbody > tr > td.has-events > div {
+table.calendar > tbody > tr > td.has-events > a > div {
     background-color: #cc0000;
+    border-left: 1px solid white;
+}
+
+table.calendar > tbody > tr > td.maybe-event > a > div {
+    background-color: #ff9900;
     border-left: 1px solid white;
 }
 
