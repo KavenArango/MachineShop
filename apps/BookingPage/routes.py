@@ -41,6 +41,11 @@ def process():
     DateMachineBooked = request.form['DateMachineBooked']
     print(Block_ID)
     print(User_ID)
+    print(Machine_ID)
+    print(MachineBookingDate)
+    print(MachineBookingTime)
+    print(DateMachineBooked)
+
    # return 'Block ID:'
 
     # if Machine_ID and MachineBookingDate and MachineBookingTime and Block_ID and User_ID and DateMachineBooked:
