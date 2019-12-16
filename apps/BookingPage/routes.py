@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request
+import json
 from flask import Flask
 from app import db
 from apps.accounts.models import Users
@@ -21,7 +22,6 @@ def Machine_Details(machine_id):
     stick = Booking.query.with_entities(
         Booking.Key.label("key")
     ).all()
-
     return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName)
 
 

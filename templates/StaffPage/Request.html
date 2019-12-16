@@ -16,11 +16,18 @@ Staff Page
 {% endblock %}
 
 {% block content %}
-<title>Home</title>
-    <h1> Student Requests </h1>
-    <p> You are now using the student request table from here you can </p>
-    <p>select a student id to confirm or deny their request!</p>
-    <!-- The divider for the welcome paragraph at the top of the homepage -->
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+        {% endfor %}
+<title>Request</title>
+    <h1>Machine Shop Request Table</h1>
+    <p> Welcome to the Request table! Here you can accept or deny students request to level up or submited there safty exam.</p>
+    <p> If you need to see a more information about a student's request you can click on
+        their name.</p>
+
 <div class="table-responsive">
 
 		<table class="table" id="data_table">
@@ -33,11 +40,12 @@ Staff Page
                 <th scope="col">Request</th>
 			</tr>
 			</thead>
+
 			<tbody>
 			   	{% for request in requests %}
                     <tr>
                         <td><a href="{{ url_for('Staff_View.request_detail', request_id=request.id) }}"> {{ request.id }}</a></td>
-						<td><a> {{ request.first_name}} {{request.last_name}}</a></td>
+						<td><a href="{{ url_for('Staff_View.request_detail', request_id=request.id) }}"> {{ request.first_name}} {{request.last_name}}</a></td>
                         <td><a>{{ request.machine_name }}</a></td>
                         <td><a>{{ request.level }}</a></td>
                         <td><a>{{ request.Request}}</a></td>
