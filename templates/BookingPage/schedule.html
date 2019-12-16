@@ -22,7 +22,6 @@
 	<script src="{{ url_for('static', filename='js/form.js') }}"></script>
     <title></title>
 
-
 </head>
 
     <h1>{{MachineID.machine_name}} Schedule</h1>
@@ -52,6 +51,12 @@
 
         <tbody id = "times">
 
+                {% for block in stick %}
+
+                {% if block  %}
+
+                {% endif %}
+
                 <td class= "no-events" rowspan="1">
                     <a id="key" machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >
                         <div style="width: 99%; height: 100%;"></div>
@@ -80,12 +85,12 @@
 
 <script>
     {#window.onload = TimeSheet;#}
-     window.onload = start;
-
-    function start() {
-        TimeSheet();
-        click();
-    }
+    {# window.onload = start;#}
+    {##}
+    {#function start() {#}
+    {#    TimeSheet();#}
+    {#    click();#}
+    {#}#}
 
         function TimeSheet()
         {
@@ -99,6 +104,8 @@
             var year = dateObj.getUTCFullYear();
             var newTime;
 
+
+
             newTime = year + "/" + month + "/" + day;
             text += "<tr>\n<th width=\"12%\">&nbsp;</th>\n";
 
@@ -110,6 +117,7 @@
             text = "";
 
 
+
             while (times <= 16) {
                 hours = times;
                 text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours + 1) % 12) || 12) + ":00 " + ((hours + 1) >= 12 ? 'PM' : 'AM' + "</td>");
@@ -119,17 +127,28 @@
 
                     newTime = year + "/" + month + "/" + (day + i);
 
-                    {#JTime = #}
-                    {##}
-                    {#{% for block in stick %}#}
-                    {#    {% print(block) %}#}
-                    {#{% endfor %}#}
+                    let BlockID = {
+                        ID:  year + month + (day + i) + times + {{ MachineID.id }}
+                    };
+
+
+
+                    var JTime = JSON.stringify(BlockID);
+
+
+
+
+{#                    {% for block in stick %}#}
+{#                        {% if block == json.load(JTime) %}#}
+{##}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
 
 
 
 
                     text += "<td class=\" no-events\" rowspan=\"1\">\n" +
-                        "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
+                        "    <a id=\"" + year + month + (day + i) + times + {{ MachineID.id }} + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
                         "        <div style=\"width: 99%; height: 100%;\"></div>\n" +
                         "    </a>\n" +
                         "</td>";
