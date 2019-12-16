@@ -12,22 +12,13 @@ from datetime import datetime
 Booking_View = Blueprint('Booking_View', __name__)
 
 
-@Booking_View.route('/booking')
-def MachineSchedule():
-    template = "BookingPage/schedule.html"
-    title = "Reserve"
-    MachineName = "Machine"
-    ball = machines.query.distinct(machines.machine_name).all()
-    return render_template(template, title=title, ball=ball, MachineID=MachineName)
-
-
 @Booking_View.route('/booking/<machine_id>')
 def Machine_Details(machine_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
     MachineName = machines.query.filter_by(id=machine_id).first()
     ball = machines.query.distinct(machines.machine_name).all()
-
+    stick = Booking.query.distinct(Booking.Key).first()
     return render_template(template, title=title, ball=ball, MachineID=MachineName)
 
 

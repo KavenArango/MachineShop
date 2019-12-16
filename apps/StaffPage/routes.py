@@ -36,6 +36,7 @@ def student_search():
     ).all()
     return render_template(template, title=title, students=students, form=form)
 
+
 @Staff_View.route('/studentdetail/<student_id>')
 def student_detail(student_id):
     template = "StaffPage/studentdetail.html"
@@ -74,6 +75,7 @@ def student_detail(student_id):
     ).all()
 
     return render_template(template, title=title, form=form, detail=detail)
+
 
 @Staff_View.route('/requestsearch')
 def request_search():
@@ -126,7 +128,6 @@ def request_detail(request_id):
     form.level.data = post.description
     form.des.data = post.Request
 
-
     user = Users.query.filter_by(first_name=post.first_name).first()
     levelUp = Student.query.filter_by(user_id=user.id).all()
     if form.validate_on_submit():
@@ -166,6 +167,7 @@ def request_detail(request_id):
 
     return render_template(template, title=title, form=form)
 
+
 @Staff_View.route("/post", methods=['GET', 'POST'])
 def newPost():
     template = "StaffPage/createPost.html"
@@ -178,10 +180,12 @@ def newPost():
         return redirect(url_for('Student_view.post'))
     return render_template(template, title='New Post', form=form, legend='New Post')
 
+
 @Staff_View.route("/post/<int:post_id>")
 def post(post_id):
     post = Post.query.get(post_id)
     return render_template("StaffPage/PostDetail.html", title=post.title, post=post)
+
 
 @Staff_View.route("/post/<int:post_id>/delete", methods=['POST'])
 def delete_post(post_id):

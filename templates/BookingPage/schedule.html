@@ -20,6 +20,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 	<script src="{{ url_for('static', filename='js/form.js') }}"></script>
+    <title></title>
 </head>
 
     <h1>{{MachineID.machine_name}} Schedule</h1>
@@ -49,13 +50,20 @@
 
         <tbody id = "times">
 
-{#                <td class= "no-events" rowspan="1">#}
-{#                    <a id="key"  machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >#}
-{#                        <div style="width: 99%; height: 100%;"></div>#}
-{#                    </a>#}
+                <td class= "no-events" rowspan="1">
+                    <a id="key" machineTime="time" machineDate="date" onclick="bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))" >
+                        <div style="width: 99%; height: 100%;"></div>
+                    </a>
 
-{#                </td>#}
+                </td>
 
+
+                <td class= "has-events" rowspan="1" readonly>
+                    <a id="key" machineTime="time" machineDate="date" readonly>
+                        <div style="width: 99%; height: 100%;" readonly></div>
+                    </a>
+
+                </td>
 
         </tbody>
 
@@ -70,95 +78,97 @@
 
 <script>
     {#window.onload = TimeSheet;#}
-     window.onload = start;
+    {# window.onload = start;#}
 
-    function start() {
-        TimeSheet();
-        click();
-    }
-    function TimeSheet()
-    {
-        var times = 8;
-        var hours;
-        var dayOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
-        var text = "";
-        var dateObj = new Date();
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
-        var newdate;
+    {#function start() {#}
+    {#    TimeSheet();#}
+    {#    click();#}
 
-        newdate = year + "/" + month + "/" + day;
-        text+="<tr>\n<th width=\"12%\">&nbsp;</th>\n";
+        function TimeSheet() {
+            var times = 8;
+            var hours;
+            var dayOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+            var text = "";
+            var dateObj = new Date();
+            var month = dateObj.getUTCMonth() + 1; //months from 1-12
+            var day = dateObj.getUTCDate();
+            var year = dateObj.getUTCFullYear();
+            var newTime;
 
-        for(var i = 0; i < 5; i++)
-        {
-            text += "<th width=\"10%\">" +  dayOfTheWeek[i]  + "<br>" + month + "/" + (day+i) + "/" + year;
-            text += "</th>";
-        }
+            newTime = year + "/" + month + "/" + day;
+            text += "<tr>\n<th width=\"12%\">&nbsp;</th>\n";
 
-        document.getElementById("days").innerHTML = text;
-        text ="";
-
-
-        while(times <= 16)
-        {
-            hours = times ;
-            text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours+1) % 12) || 12) + ":00 " + ((hours+1) >= 12 ? 'PM' : 'AM' + "</td>");
-            newdate = year + "/" + month + "/" + day;
-
-            for(var i = 0; i < 5; i++)
-            {
-
-                newdate = year + "/" + month + "/" + (day+i);
-                text +="<td class=\" no-events\" rowspan=\"1\">\n" +
-                       "    <a id=\"" + year + month + (day+i) + times + "\" machineTime=\""+ times +"\" machineDate=\"" + newdate + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
-                       "        <div style=\"width: 99%; height: 100%;\"></div>\n" +
-                       "    </a>\n" +
-                       "</td>";
+            for (var i = 0; i < 5; i++) {
+                text += "<th width=\"10%\">" + dayOfTheWeek[i] + "<br>" + month + "/" + (day + i) + "/" + year;
+                text += "</th>";
             }
-            times++;
-            text += "</tr>";
+            document.getElementById("days").innerHTML = text;
+            text = "";
+
+
+            while (times <= 16) {
+                hours = times;
+                text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours + 1) % 12) || 12) + ":00 " + ((hours + 1) >= 12 ? 'PM' : 'AM' + "</td>");
+                newTime = year + "/" + month + "/" + day;
+
+                for (var i = 0; i < 5; i++) {
+
+                    newTime = year + "/" + month + "/" + (day + i);
+
+
+{#                    {{ for block in Booking }}#}
+
+
+
+
+
+
+                    text += "<td class=\" no-events\" rowspan=\"1\">\n" +
+                        "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
+                        "        <div style=\"width: 99%; height: 100%;\"></div>\n" +
+                        "    </a>\n" +
+                        "</td>";
+                }
+                times++;
+                text += "</tr>";
+            }
+            document.getElementById("times").innerHTML = text;
         }
-        document.getElementById("times").innerHTML = text;
-    }
 
 
-    function bookingConfirmation(time,date,blockId)
-    {
-        var dateObj = new Date();
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
-        var newdate;
-        newdate = year + "/" + month + "/" + day;
-        {#obj.style.backgroundColor = "red";#}
-        var text = "<tr>";
+        function bookingConfirmation(time, date, blockId) {
+            var dateObj = new Date();
+            var month = dateObj.getUTCMonth() + 1; //months from 1-12
+            var day = dateObj.getUTCDate();
+            var year = dateObj.getUTCFullYear();
+            var newdate;
+            newdate = year + "/" + month + "/" + day;
+            var text = "<tr>";
 
-        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"blockId\" value=\"" + blockId +"\" readonly>";
-        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"User_ID\" value=\"{{ current_user.id }}\" readonly>";
-        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"Machine_ID\" value=\"{{ MachineID.id }}\" readonly>";
-        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingTime\" value=\"" + time +"\" readonly>";
-        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingDate\" value=\"" + date + "\" readonly>";
-        text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"DateMachineBooked\" value=\"" + newdate +"\" readonly>";
-        text += "<button type=\"submit\">Confirm</button>";
-        text += "</tr>";
+            text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"blockId\" value=\"" + blockId + "\" readonly>";
+            text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"User_ID\" value=\"{{ current_user.id }}\" readonly>";
+            text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"Machine_ID\" value=\"{{ MachineID.id }}\" readonly>";
+            text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingTime\" value=\"" + time + "\" readonly>";
+            text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingDate\" value=\"" + date + "\" readonly>";
+            text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"DateMachineBooked\" value=\"" + newdate + "\" readonly>";
+            text += "<button type=\"submit\">Confirm</button>";
+            text += "</tr>";
 
-        document.getElementById("confirmationTable").innerHTML = text;
-    }
+            document.getElementById("confirmationTable").innerHTML = text;
+        }
 
-    function click(){
+        function click() {
 
-    var all = document.getElementsByTagName("td");
-    for (var i=0;i<all.length;i++) {
-        all[i].onclick = inputClickHandler;
-    }
-    };
+            var all = document.getElementsByTagName("td");
+            for (var i = 0; i < all.length; i++) {
+                all[i].onclick = inputClickHandler;
+            }
+        };
 
-        function inputClickHandler(e){
-                 e = e||window.event;
-                 var tdElm = e.target||e.srcElement;
-                     tdElm.style.backgroundColor = '#ff9900';
+        function inputClickHandler(e) {
+            e = e || window.event;
+            var tdElm = e.target || e.srcElement;
+            tdElm.style.backgroundColor = '#ff9900';
         }
 </script>
 {% endblock %}

@@ -13,8 +13,8 @@ class Staff(db.Model):
 
 
 class Request_Des(db.Model):
-        id = db.Column(db.Integer, primary_key=True)
-        description = db.Column(db.String(150))
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String(150))
 
 
 class Request(db.Model):
