@@ -26,9 +26,9 @@ def Machine_Details(machine_id):
     ).all()
     jsonStick = json.dumps(stick)
     # print(stick)
-    print(jsonStick)
+    # print(jsonStick)
 
-    pprint.pprint(jsonStick)
+    # pprint.pprint(jsonStick)
     return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick)
 
 

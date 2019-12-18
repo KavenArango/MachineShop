@@ -68,95 +68,117 @@
     </tr>
 
 
-<script>
-    {#window.onload = TimeSheet;#}
-     window.onload = start;
 
-    function start() {
-        TimeSheet();
-        click();
-    }
 
+
+    <script>
+        {#window.onload = TimeSheet;#}
+        window.onload = start;
+
+        function start()
+        {
+            TimeSheet();
+            click();
+        }
+
+        function getWeekDay(date)
+        {
+            //Create an array containing each day, starting with Sunday.
+            var weekday = new Array(7);
+            weekday[0] = "Sunday";
+            weekday[1] = "Monday";
+            weekday[2] = "Tuesday";
+            weekday[3] = "Wednesday";
+            weekday[4] = "Thursday";
+            weekday[5] = "Friday";
+            weekday[6] = "Saturday";
+            return weekday[date];
+        }
         function TimeSheet()
         {
-            var times = 8;
+            var Hour24Times = 8;
             var hours;
-            var dayOfTheWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
             var text = "";
             var dateObj = new Date();
-            var month = dateObj.getUTCMonth() + 1; //months from 1-12
-            var day = dateObj.getUTCDate();
-            var year = dateObj.getUTCFullYear();
-            var newTime;
+            var weekDays = [];
+            var i = 0;
+
+            while(weekDays.length < 5)
+            {
+                if (getWeekDay(((dateObj.getDay() + i) % 7)) !== "Sunday" && getWeekDay(((dateObj.getDay() + i) % 7)) !== "Saturday") {
+                    weekDays.push(new Date((dateObj.getMonth() + 1) + ' ' + (dateObj.getDate() + i) + ' ' + dateObj.getFullYear()));
+                }
+                i++;
+            }
+
 
             jsondata = {{ jsonStick }}
-
-            testkey=[]
+            testkey=[];
             Object.keys(jsondata).forEach(function (key) {
-                value = jsondata[key][0]
+                value = jsondata[key][0];
                 {#console.log(value)#}
                 testkey.push(jsondata[key][0])
-            })
+            });
             {#console.log(testkey)#}
 
 
-            newTime = year + "/" + month + "/" + day;
             text += "<tr>\n<th width=\"12%\">&nbsp;</th>\n";
 
-            for (var i = 0; i < 5; i++) {
-                text += "<th width=\"10%\">" + dayOfTheWeek[i] + "<br>" + month + "/" + (day + i) + "/" + year;
+
+            for (var i = 0; i < 5; i++)
+            {
+                console.log(weekDays[i].getDate())
+                text += "<th width=\"10%\">" + getWeekDay(((weekDays[i].getDay())%7)) + "<br>" + (weekDays[i].getMonth()+1) + "/" + weekDays[i].getDate() + "/" + weekDays[i].getFullYear();
                 text += "</th>";
             }
             document.getElementById("days").innerHTML = text;
             text = "";
 
 
-            while (times <= 16) {
-                hours = times;
+            while (Hour24Times <= 16)
+            {
+                hours = Hour24Times;
                 text += "<td>" + ((hours % 12) || 12) + ":00 " + (hours >= 12 ? 'PM' : 'AM') + " - " + (((hours + 1) % 12) || 12) + ":00 " + ((hours + 1) >= 12 ? 'PM' : 'AM' + "</td>");
-                newTime = year + "/" + month + "/" + day;
 
-                for (var i = 0; i < 5; i++) {
-                    newTime = year + "/" + month + "/" + (day + i);
-                    anothertime = (year.toString() +  month.toString()  + (day + i).toString() + times.toString()).trim();
+                for (var i = 0; i < 5; i++)
+                {
+                    anothertime = (weekDays[i].getFullYear().toString() +  (weekDays[i].getMonth()+1).toString()  + weekDays[i].getDate().toString() + Hour24Times.toString()).trim();
+                    var JTime = JSON.stringify(weekDays[i].getFullYear() + (weekDays[i].getMonth()+1) + weekDays[i].getDate() + Hour24Times)
 
-                    var JTime = JSON.stringify(year + month + (day + i) + times)
-
-                    if(testkey.toString().trim().includes(anothertime)){
+                    if(testkey.toString().trim().includes(anothertime))
+                    {
                         console.log('DEBUG: has events')
-                         text += "<td class=\" has-events\" rowspan=\"1\">\n" +
-                             "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" , this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
-                             "        <div style=\"width: 99%; height: 100%;\" ></div>\n" +
-                             "    </a>\n" +
-                             "</td>"
-
-                     } else {
-                         console.log('DEBUG: no events')
-                         text += "<td class=\" no-events\" rowspan=\"1\">\n" +
-                             "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
-                             "        <div style=\"width: 99%; height: 100%;\" ></div>\n" +
-                             "    </a>\n" +
-                             "</td>"
-                     }
-
-
+                        text += "<td class=\" has-events\" rowspan=\"1\">\n" +
+                                "    <a id=\"" + weekDays[i].getFullYear() + (weekDays[i].getMonth()+1) + weekDays[i].getDate() + Hour24Times + "\" machineTime=\"" + Hour24Times + "\" machineDate=\"" + weekDays[0].getFullYear() + "/" +(weekDays[0].getMonth()+1) + "/" + weekDays[0].getDate() + "\" , this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
+                                "        <div style=\"width: 99%; height: 100%;\" ></div>\n" +
+                                "    </a>\n" +
+                                "</td>"
+                    } else
+                        {
+                            console.log('DEBUG: no events')
+                            text += "<td class=\" no-events\" rowspan=\"1\">\n" +
+                                    "    <a id=\"" + weekDays[i].getFullYear() + (weekDays[i].getMonth()+1) + weekDays[i].getDate() + Hour24Times + "\" machineTime=\"" + Hour24Times + "\" machineDate=\"" + weekDays[0].getFullYear() + "/" + (weekDays[0].getMonth()+1) + "/" + weekDays[0].getDate() + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
+                                    "        <div style=\"width: 99%; height: 100%;\" ></div>\n" +
+                                    "    </a>\n" +
+                                    "</td>"
+                        }
                 }
-                times++;
+                Hour24Times++;
                 text += "</tr>";
             }
             document.getElementById("times").innerHTML = text;
-
         }
 
 
-        function bookingConfirmation(time, date, blockId) {
+        function bookingConfirmation(time, date, blockId)
+        {
             var dateObj = new Date();
-            var month = dateObj.getUTCMonth() + 1; //months from 1-12
-            var day = dateObj.getUTCDate();
-            var year = dateObj.getUTCFullYear();
-            var newdate;
-            newdate = year + "/" + month + "/" + day;
+            var month = dateObj.getMonth() + 1; //months from 1-12
+            var day = dateObj.getDate();
+            var year = dateObj.getFullYear();
+            var newdate = year + "/" + month + "/" + day;
             var text = "<tr>";
+
 
             text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"blockId\" value=\"" + blockId + "\" readonly>";
             text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"User_ID\" value=\"{{ current_user.id }}\" readonly>";
@@ -170,23 +192,23 @@
             document.getElementById("confirmationTable").innerHTML = text;
         }
 
-        function click() {
-
+        function click()
+        {
             var all = document.getElementsByClassName("no-events");
-            for (var i = 0; i < all.length; i++) {
+            for (var i = 0; i < all.length; i++)
+            {
                 all[i].onclick = inputClickHandler;
             }
-        };
+        }
 
-        function inputClickHandler(e) {
+        function inputClickHandler(e)
+        {
             e = e || window.event;
             var tdElm = e.target || e.srcElement;
             tdElm.style.backgroundColor = '#ff9900';
         }
+    </script>
 
 
 
-
-
-</script>
 {% endblock %}
