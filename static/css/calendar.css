@@ -13,6 +13,8 @@ h1{
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 }
 
+
+
 button{
     background-color: #4CAF50; /* Green */
     border: none;
@@ -28,6 +30,7 @@ button{
 table.calendar {
     margin-bottom: 0;
     position: absolute;
+
     width:80%;
     height:80%;
     top:15%;
@@ -60,7 +63,10 @@ table.calendar > tbody > tr > td.no-events {
 }
 
 table.calendar > tbody > tr > td.no-events > a > div {
+    position: relative;
     background-color: #009900;
+    z-index: 0;
+
     border-left: 1px solid white;
 }
 

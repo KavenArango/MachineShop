@@ -27,6 +27,7 @@
 
     <h1>{{MachineID.machine_name}} Schedule</h1>
 
+
     <div class="dropdown" style="float:left;">
         <button class="dropbtn">Machines</button>
         <div class="dropdown-content" style="left:0;">
@@ -43,9 +44,6 @@
         </div>
     </div>
 
-    <div class = "bull1">
-
-    </div>
 
     <table class="calendar table table-bordered">
         <thead id="days">
@@ -61,6 +59,7 @@
         </tbody>
 
     </table>
+
 
     <tr>
         <form id="confirmationTable">
@@ -90,6 +89,17 @@
             var year = dateObj.getUTCFullYear();
             var newTime;
 
+            jsondata = {{ jsonStick }}
+
+            testkey=[]
+            Object.keys(jsondata).forEach(function (key) {
+                value = jsondata[key][0]
+                {#console.log(value)#}
+                testkey.push(jsondata[key][0])
+            })
+            {#console.log(testkey)#}
+
+
             newTime = year + "/" + month + "/" + day;
             text += "<tr>\n<th width=\"12%\">&nbsp;</th>\n";
 
@@ -107,26 +117,27 @@
                 newTime = year + "/" + month + "/" + day;
 
                 for (var i = 0; i < 5; i++) {
-
                     newTime = year + "/" + month + "/" + (day + i);
+                    anothertime = (year.toString() +  month.toString()  + (day + i).toString() + times.toString()).trim();
+
                     var JTime = JSON.stringify(year + month + (day + i) + times)
 
+                    if(testkey.toString().trim().includes(anothertime)){
+                        console.log('DEBUG: has events')
+                         text += "<td class=\" has-events\" rowspan=\"1\">\n" +
+                             "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" , this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
+                             "        <div style=\"width: 99%; height: 100%;\" ></div>\n" +
+                             "    </a>\n" +
+                             "</td>"
 
-
-
-                    {#JTime = #}
-                    {##}
-                    {#{% for block in stick %}#}
-                    {#    {% print(block) %}#}
-                    {#{% endfor %}#}
-
-
-
-                    text += "<td class=\" no-events\" rowspan=\"1\">\n" +
-                        "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
-                        "        <div style=\"width: 99%; height: 100%;\"></div>\n" +
-                        "    </a>\n" +
-                        "</td>";
+                     } else {
+                         console.log('DEBUG: no events')
+                         text += "<td class=\" no-events\" rowspan=\"1\">\n" +
+                             "    <a id=\"" + year + month + (day + i) + times + "\" machineTime=\"" + times + "\" machineDate=\"" + newTime + "\" onclick=\"bookingConfirmation(this.getAttribute('machineTime'), this.getAttribute('machineDate'), this.getAttribute('id'))\" >\n" +
+                             "        <div style=\"width: 99%; height: 100%;\" ></div>\n" +
+                             "    </a>\n" +
+                             "</td>"
+                     }
 
 
                 }
@@ -161,7 +172,7 @@
 
         function click() {
 
-            var all = document.getElementsByTagName("td");
+            var all = document.getElementsByClassName("no-events");
             for (var i = 0; i < all.length; i++) {
                 all[i].onclick = inputClickHandler;
             }

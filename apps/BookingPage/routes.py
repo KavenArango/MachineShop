@@ -1,3 +1,5 @@
+import pprint
+
 from flask import Blueprint, render_template, request
 import json
 from flask import Flask
@@ -19,10 +21,15 @@ def Machine_Details(machine_id):
     title = "Reserve"
     MachineName = machines.query.filter_by(id=machine_id).first()
     ball = machines.query.distinct(machines.machine_name).all()
-    stick = Booking.query.with_entities(
+    stick = Booking.query.filter(Booking.machine_id == machine_id).with_entities(
         Booking.Key.label("key")
     ).all()
-    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName)
+    jsonStick = json.dumps(stick)
+    # print(stick)
+    print(jsonStick)
+
+    pprint.pprint(jsonStick)
+    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick)
 
 
 @Booking_View.route('/process', methods=['POST'])
