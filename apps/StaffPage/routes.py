@@ -6,13 +6,13 @@ from apps.StudentPage.models import Student, majors, Levels
 from apps.StaffPage.forms import Staff_Student, Staff_Request, PostForm
 from apps.Machine.models import machines
 from .models import Request, Request_Des, Post
-from flask_login import current_user
-
+from flask_login import current_user, login_required
 
 Staff_View = Blueprint('Staff_View', __name__)
 
 
 @Staff_View.route('/studentsearch')
+@login_required
 def student_search():
     template = "StaffPage/StudentSearch.html"
     title = "Student Search"
@@ -38,6 +38,7 @@ def student_search():
 
 
 @Staff_View.route('/studentdetail/<student_id>')
+@login_required
 def student_detail(student_id):
     template = "StaffPage/studentdetail.html"
     title = "Student Detail"
@@ -78,6 +79,7 @@ def student_detail(student_id):
 
 
 @Staff_View.route('/requestsearch')
+@login_required
 def request_search():
     template = "StaffPage/Request.html"
     title = "Request Search"
@@ -102,6 +104,7 @@ def request_search():
 
 
 @Staff_View.route('/requestsearch/<request_id>', methods=['get', 'post'])
+@login_required
 def request_detail(request_id):
     template = "StaffPage/requestdetails.html"
     title = "Request Detail"
@@ -169,6 +172,7 @@ def request_detail(request_id):
 
 
 @Staff_View.route("/post", methods=['GET', 'POST'])
+@login_required
 def newPost():
     template = "StaffPage/createPost.html"
     form = PostForm()
@@ -182,12 +186,14 @@ def newPost():
 
 
 @Staff_View.route("/post/<int:post_id>")
+@login_required
 def post(post_id):
     post = Post.query.get(post_id)
     return render_template("StaffPage/PostDetail.html", title=post.title, post=post)
 
 
 @Staff_View.route("/post/<int:post_id>/delete", methods=['POST'])
+@login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user.first_name:

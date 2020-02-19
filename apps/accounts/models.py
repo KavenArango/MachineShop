@@ -16,7 +16,8 @@ class Users(db.Model, UserMixin):
     user_type = db.Column(db.Integer)
     passed_exam = db.Column(db.Integer)
 
-
+    def __repr__(self):
+        return '<Users %r>' % (self.first_name + " " + self.last_name)
 
 
 
