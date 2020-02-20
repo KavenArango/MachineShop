@@ -1,8 +1,10 @@
 import pprint
 
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 import json
 from flask import Flask
+from flask_login import login_required, current_user
+
 from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
@@ -16,9 +18,14 @@ Booking_View = Blueprint('Booking_View', __name__)
 
 
 @Booking_View.route('/booking/<machine_id>')
+@login_required
 def Machine_Details(machine_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
+    if(current_user.passed_exam < 0):
+        flash('You Must Pass Safety Exam To Access Booking', 'success')
+        return redirect(url_for('Main_View.home'))
+
     MachineName = machines.query.filter_by(id=machine_id).first()
     ball = machines.query.distinct(machines.machine_name).all()
     stick = Booking.query.filter(Booking.machine_id == machine_id).with_entities(
@@ -33,6 +40,7 @@ def Machine_Details(machine_id):
 
 
 @Booking_View.route('/process', methods=['POST'])
+@login_required
 def process():
     Block_ID = request.form['blockId']
     User_ID = request.form['User_ID']
