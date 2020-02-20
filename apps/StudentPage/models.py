@@ -9,11 +9,8 @@ class Levels(db.Model):
     level = db.Column(db.Integer)
     description = db.Column(db.String(150))
 
-    def __init__(self,level, descriptions):
-        self.level = level
-        self.description = descriptions
     def __repr__(self):
-        return  '<{}>'.format(self.level)
+        return '<Levels %r>' % (self.description)
 
 class Student_level(db.Model):
     id = db.Column(db.Integer, primary_key=True)

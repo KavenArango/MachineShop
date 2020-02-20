@@ -6,13 +6,14 @@ from apps.StaffPage.models import Request, Request_Des
 from apps.Machine.models import machines
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app import db
 from apps.StaffPage.models import Post
 Student_view = Blueprint('Student_view', __name__)
 
 
 @Student_view.route('/studentprofile')
+@login_required
 def profile():
     template = "StudentPage/StudentProfile.html"
     title = "Profile"
@@ -44,6 +45,7 @@ def profile():
     return render_template(template, title=title, detail=detail)
 
 @Student_view.route('/request', methods=['get', 'post'])
+@login_required
 def requests():
     form = RequestForm()
     form1 = RequestExamForm()
@@ -69,6 +71,7 @@ def requests():
         return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1)
 
 @Student_view.route('/announcement')
+@login_required
 def post():
     posts = Post.query.all()
     return render_template("StudentPage/Post.html", title="Announcement", posts=posts)

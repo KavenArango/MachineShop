@@ -16,6 +16,8 @@ class Request_Des(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(150))
 
+    def __repr__(self):
+        return '<Request_Des %r>' % (self.description)
 
 class Request(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -24,6 +26,10 @@ class Request(db.Model):
     level_id = db.Column(db.Integer, db.ForeignKey('levels.id'))
     requests_id = db.Column(db.Integer, db.ForeignKey('request__des.id'))
 
+    user = db.relationship('Users', backref=db.backref('user_id', lazy='dynamic'))
+    machine = db.relationship('machines', backref=db.backref('machine_id', lazy='dynamic'))
+    level = db.relationship('Levels', backref=db.backref('level_id', lazy='dynamic'))
+    request = db.relationship('Request_Des', backref=db.backref('requests_id', lazy='dynamic'))
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
