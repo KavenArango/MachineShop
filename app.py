@@ -1,12 +1,18 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request
 from flask_bcrypt import Bcrypt
+from flask_uploads import uploaded_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+from werkzeug.utils import secure_filename
 
+
+UPLOAD_FOLDER = "static/images"
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 app.config['SECRET_KEY'] = 'KILLME'
@@ -64,6 +70,7 @@ from apps.BookingPage.models import Booking
 from apps.StaffPage.models import Request, Post
 from apps.Admin.routes import MyAdminView
 
+
 @login_manager.user_loader
 def load_user(id):
     return Users.query.get(id)
@@ -86,13 +93,13 @@ def create_nav():
                                 View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
                                 View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,an, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,
                       admin_booking, an, Logout)
     elif current_user.is_authenticated and current_user.user_type == 3:
         Logout = View('Logout', 'login.logout')
         checkIn = View('Check In Table', 'Tool_View.CheckIn')
         CheckInForm = View('Check In Form', 'Tool_View.CheckInSignIn')
-        return Navbar( checkIn,CheckInForm,Logout )
+        return Navbar(checkIn, CheckInForm, Logout)
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
         Request = View('Level Request', 'Student_view.requests')
