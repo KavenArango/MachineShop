@@ -4,7 +4,7 @@
 body
 {
     font-family: source-sans-pro;
-    background-color: #0b3f8e;
+    background-color: #f2cc6d;
     text-align: center;
 }
 
@@ -17,13 +17,13 @@ body
     margin-top: 100px;
     width: 38%;
     height: 500px;
-    box-shadow: 30px 30px 30px #093577;
+    box-shadow: 30px 30px 30px #bf9c43;
 }
 .img-icon
 {
     position: fixed;
     z-index: 10;
-    top: -10px;
+    top: 3px;
     left: 41%;
 }
 
@@ -36,13 +36,5 @@ h1
 #log-btndiv
 {
 
-    display: inline-block;
-}
-
-.col-lg-9
-{
-
-    margin-left: 12%;
-    padding-bottom: 20px;
     display: inline-block;
 }
