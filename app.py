@@ -25,6 +25,7 @@ from apps.accounts.routes import login_view
 from apps.StaffPage.routes import Staff_View
 from apps.Machine.routes import Machine_View
 from apps.BookingPage.routes import Booking_View
+from apps.AdminBookingPage.routes import admin_booking_View
 from flask_bootstrap import Bootstrap
 
 
@@ -34,6 +35,7 @@ app.register_blueprint(login_view)
 app.register_blueprint(Staff_View)
 app.register_blueprint(Machine_View)
 app.register_blueprint(Booking_View)
+app.register_blueprint(admin_booking_View)
 
 
 from flask_nav import Nav
@@ -55,7 +57,7 @@ nav = Nav(app)
 
 from apps.accounts.models import Users
 from apps.accounts.models import Users
-from apps.Machine.models import machines, machine_image, machine_shop_map , machine_type
+from apps.Machine.models import machines, machine_image, machine_shop_map, machine_type
 from apps.BookingPage.models import Booking
 from apps.StaffPage.models import Request, Post
 from apps.Admin.routes import MyAdminView
@@ -76,16 +78,19 @@ def create_nav():
         post = View('Post', 'Student_view.post')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
+        admin_booking = View('admin booking', 'adminBooking_View.bookingpage')
         Booking_view = Subgroup('Booking', View('Bridgeport', 'Booking_View.Machine_Details', machine_id='1'),
                                 View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),
                                 View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
                                 View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,an, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,
+                      admin_booking, an, Logout)
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
         Request = View('Level Request', 'Student_view.requests')
         post = View('Post', 'Student_view.post')
+        admin_booking = View('admin booking', 'adminBooking_View.bookingpage')
         Studend = View('Profile', 'Student_view.profile')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
@@ -95,7 +100,8 @@ def create_nav():
                                 View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
                                 View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,Studend,post, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request, Studend, post,
+                      admin_booking, Logout)
 
     else:
         login = View('Login', 'login.login_form')

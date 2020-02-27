@@ -1,0 +1,74 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Machine Descriptions
+{% endblock %}
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+{#        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/MachineDes.css') }}">#}
+
+{% endblock %}
+
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>MachineInfo</title>
+
+
+</head>
+    <body id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <h1></h1>
+
+
+{#    <div class="saftey">#}
+{#        <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}'  width="300" height="300" onclick="copy(this)" >#}
+{#    </div>#}
+
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="31">
+    </div>
+
+
+         <div class="bridgeport">
+
+            <div class="bridgeport_img">
+         <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/Bridgeport.jpg")}}' width="300" height="300"/>
+             </div>
+
+         </div>
+
+    <form method=POST enctype=multipart/form-data action="{{ url_for('upload') }}">
+        <input type=file name=photo>
+        <input type="submit">
+    </form>
+
+
+    </body>
+
+
+
+    <script>
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+    </script>
+
+
+{% endblock %}
