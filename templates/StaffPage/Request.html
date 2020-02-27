@@ -33,6 +33,7 @@ Staff Page
 		<table class="table" id="data_table">
 			<thead>
 			<tr>
+                <th scope="col">Reject</th>
 				<th scope="col">ID</th>
 				<th scope="col">Name</th>
                 <th scope="col">Machine</th>
@@ -44,6 +45,9 @@ Staff Page
 			<tbody>
 			   	{% for request in requests %}
                     <tr>
+                       <td><form action="{{ url_for('Staff_View.delete_request', requestDelete_id=request.id) }}" method="post">
+                        <input class="btn btn-danger" type="submit" value="Reject">
+                    </form></td>
                         <td><a href="{{ url_for('Staff_View.request_detail', request_id=request.id) }}"> {{ request.id }}</a></td>
 						<td><a href="{{ url_for('Staff_View.request_detail', request_id=request.id) }}"> {{ request.first_name}} {{request.last_name}}</a></td>
                         <td><a>{{ request.machine_name }}</a></td>

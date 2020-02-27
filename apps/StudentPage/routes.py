@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, flash
 from flask import render_template, g
-from .forms import RequestForm, RequestExamForm
+from .forms import RequestForm, RequestExamForm, Student_info
 from .models import Levels
 from apps.StaffPage.models import Request, Request_Des
 from apps.Machine.models import machines
@@ -43,6 +43,39 @@ def profile():
     ).all()
 
     return render_template(template, title=title, detail=detail)
+@Student_view.route('/studentProfileInfo/<user_id>' , methods=['get', 'post'])
+@login_required
+def studentProfileInfo(user_id):
+    template = "StudentPage/StudentInfoEdit.html"
+    title = "Student Detail"
+    form = Student_info()
+    post = Users.query.filter(Users.id == user_id).join(
+        Student, Student.user_id == Users.id
+    ).join(
+        majors, majors.id == Student.major_id
+    ).with_entities(
+        Student.id.label("id"),
+        Users.first_name.label("first_name"),
+        Users.last_name.label("last_name"),
+        Users.email.label("email"),
+        majors.major_name.label("major_name"),
+
+
+    ).first()
+    form.first_name.data = post.first_name
+    form.last_name.data = post.last_name
+    form.email.data = post.email
+    form.major.data = post.major_name
+    user = Users.query.filter_by(email=form.email.data).first()
+    if form.validate_on_submit():
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        db.session.commit()
+        flash('Your Info Has Been Updated', 'success')
+
+        #You Are HERE STEVEN
+        return redirect(url_for('Student_view.profile'))
+    return render_template(template, title=title, form=form)
 
 @Student_view.route('/request', methods=['get', 'post'])
 @login_required
@@ -50,7 +83,7 @@ def requests():
     form = RequestForm()
     form1 = RequestExamForm()
 
-    if current_user.passed_exam == 1:
+    if current_user.passed_exam >= 0:
         form.request.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=2)]
         form.level.choices = [(Level.level, Level.description) for Level in Levels.query.all()]
         form.machine.choices = [(Machine.id, Machine.machine_name) for Machine in machines.query.all()]
