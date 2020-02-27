@@ -39,3 +39,10 @@ class machine_shop_map(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     machine_join_id = db.Column(db.Integer, db.ForeignKey('machine_join.id'))
+
+class tool_User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(80), nullable=False)
+    first_name = db.Column(db.String(20), nullable=False)
+    last_name = db.Column(db.String(20), nullable=False)
+    tool = db.Column(db.String(100), nullable=False)

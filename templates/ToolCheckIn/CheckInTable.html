@@ -1,0 +1,73 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Check In Table
+{% endblock %}
+
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/studentsearch.css') }}">
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+
+<title>Check In Table</title>
+    <h1>Machine Shop Tool Check In</h1>
+    <p> Welcome to the Tool Check In! From here you can Check in to use small tools</p>
+    <p><a href="{{ url_for('Tool_View.CheckInSignIn' ) }}"> Check In</a></p>
+    <!-- The divider for the welcome paragraph at the top of the homepage -->
+<div class="table-responsive">
+
+
+
+
+		<table class="table table-hover" id="data_table">
+			<thead>
+			<tr>
+
+				<th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Tool</th>
+                <th scope="col">Check Out</th>
+
+			</tr>
+			</thead>
+
+                <tfoot>
+            <tr>
+            <td colspan="4">
+                <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
+            </td>
+            </tr>
+            </tfoot>
+
+			<tbody>
+			   	{% for CheckIn in CheckInUser%}
+                    <tr>
+
+						<td> {{ CheckIn.first_name}} {{CheckIn.last_name}} </td>
+                        <td>{{ CheckIn.email }}</td>
+                        <td>{{ CheckIn.tool}}</td>
+                      <td> <a  class="fa fa-ok glyphicon glyphicon-ok" href="{{ url_for('Tool_View.Checkout', CheckOut_id=CheckIn.id) }}" >CheckOut</a>
+                      </td>
+					</tr>
+
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+    </div>
+{% endblock %}

@@ -25,6 +25,7 @@ from apps.accounts.routes import login_view
 from apps.StaffPage.routes import Staff_View
 from apps.Machine.routes import Machine_View
 from apps.BookingPage.routes import Booking_View
+from apps.ToolCheckIn.routes import Tool_View
 from flask_bootstrap import Bootstrap
 
 
@@ -34,6 +35,7 @@ app.register_blueprint(login_view)
 app.register_blueprint(Staff_View)
 app.register_blueprint(Machine_View)
 app.register_blueprint(Booking_View)
+app.register_blueprint(Tool_View)
 
 
 from flask_nav import Nav
@@ -82,6 +84,11 @@ def create_nav():
                                 View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
         Logout = View('Logout', 'login.logout')
         return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,an, Logout)
+    elif current_user.is_authenticated and current_user.user_type == 3:
+        Logout = View('Logout', 'login.logout')
+        checkIn = View('Check In Table', 'Tool_View.CheckIn')
+        CheckInForm = View('Check In Form', 'Tool_View.CheckInSignIn')
+        return Navbar( checkIn,CheckInForm,Logout )
     elif current_user.is_authenticated:
         MachineShop = View('Machine Shop', 'Main_View.home')
         Request = View('Level Request', 'Student_view.requests')
