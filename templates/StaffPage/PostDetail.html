@@ -17,7 +17,13 @@ WTForms
 {% endblock %}
 
 {% block content %}
-
+<div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+        {% endfor %}
 
     <div class="container">
             <h2 >{{ post.title }}</h2>
@@ -27,15 +33,24 @@ WTForms
              <small> On: {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
 
-
+        <div class="button">
         {% if post.author == current_user.first_name%}
-            <form action="{{ url_for('Staff_View.delete_post', post_id=post.id) }}" method="POST">
+             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('Staff_View.update_post', post_id=post.id) }}">Update</a>
+
+            <form action="{{ url_for('Staff_View.delete_post', post_id=post.id) }}" method="post">
                 <input class="btn btn-danger" type="submit" value="Delete">
             </form>
+        {% elif current_user.user_type > 0 %}
+
+           <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('Staff_View.update_post', post_id=post.id) }}">Update</a>
+
+            <form action="{{ url_for('Staff_View.delete_post', post_id=post.id) }}" method="post">
+                <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+
         {% endif %}
+        </div>
     </div>
 
-
+</div>
 {% endblock%}
-
-

@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, flash, abort
+from flask import Blueprint, redirect, url_for, flash, abort, request
 from flask import render_template, g
 from app import db
 from apps.accounts.models import Users
@@ -6,13 +6,13 @@ from apps.StudentPage.models import Student, majors, Levels
 from apps.StaffPage.forms import Staff_Student, Staff_Request, PostForm
 from apps.Machine.models import machines
 from .models import Request, Request_Des, Post
-from flask_login import current_user
-
+from flask_login import current_user, login_required
 
 Staff_View = Blueprint('Staff_View', __name__)
 
 
 @Staff_View.route('/studentsearch')
+@login_required
 def student_search():
     template = "StaffPage/StudentSearch.html"
     title = "Student Search"
@@ -38,6 +38,7 @@ def student_search():
 
 
 @Staff_View.route('/studentdetail/<student_id>')
+@login_required
 def student_detail(student_id):
     template = "StaffPage/studentdetail.html"
     title = "Student Detail"
@@ -78,6 +79,7 @@ def student_detail(student_id):
 
 
 @Staff_View.route('/requestsearch')
+@login_required
 def request_search():
     template = "StaffPage/Request.html"
     title = "Request Search"
@@ -100,8 +102,16 @@ def request_search():
     ).all()
     return render_template(template, title=title, requests=requests, form=form)
 
+@Staff_View.route("/requestsearch/int::<requestDelete_id>/delete", methods=[ 'post'])
+@login_required
+def delete_request(requestDelete_id):
+    Request.query.filter_by(id=requestDelete_id).delete()
+    db.session.commit()
+    flash('You have Rejected the request', 'success')
+    return redirect(url_for('Staff_View.request_search'))
 
 @Staff_View.route('/requestsearch/<request_id>', methods=['get', 'post'])
+@login_required
 def request_detail(request_id):
     template = "StaffPage/requestdetails.html"
     title = "Request Detail"
@@ -132,12 +142,13 @@ def request_detail(request_id):
     levelUp = Student.query.filter_by(user_id=user.id).all()
     if form.validate_on_submit():
 
-        if user.passed_exam < 1:
-            user.passed_exam = 1
+        if user.passed_exam == -1:
+            user.passed_exam = 0
             for levelups in levelUp:
                 levelups.level_id = levelups.level_id + 1
             db.session.commit()
             Request.query.filter_by(id=post.id).delete()
+            flash('test1')
             return redirect(url_for('Staff_View.request_search'))
         else:
             machine = machines.query.filter_by(machine_name=post.machine_name).first()
@@ -145,30 +156,38 @@ def request_detail(request_id):
             student = Student.query.filter_by(user_id=user.id, machine_id=machine.id).first()
             if student.level_id > level.id:
                 Request.query.filter_by(id=post.id).delete()
+                flash('test2')
                 return redirect(url_for('Staff_View.request_search'))
             elif student.level_id != level.id:
                 if student.level_id + 2 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    flash('test3')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 3 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    flash('test4')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 4 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    flash('test5')
                     return redirect(url_for('Staff_View.request_search'))
                 else:
                     student.level_id = level.id
                     db.session.commit()
                     Request.query.filter_by(id=post.id).delete()
+                    flash('test6')
                     return redirect(url_for('Staff_View.request_search'))
             else:
                 Request.query.filter_by(id=post.id).delete()
+                flash('test7')
                 return redirect(url_for('Staff_View.request_search'))
 
     return render_template(template, title=title, form=form)
 
 
+
 @Staff_View.route("/post", methods=['GET', 'POST'])
+@login_required
 def newPost():
     template = "StaffPage/createPost.html"
     form = PostForm()
@@ -182,12 +201,31 @@ def newPost():
 
 
 @Staff_View.route("/post/<int:post_id>")
+@login_required
 def post(post_id):
     post = Post.query.get(post_id)
     return render_template("StaffPage/PostDetail.html", title=post.title, post=post)
 
 
-@Staff_View.route("/post/<int:post_id>/delete", methods=['POST'])
+@Staff_View.route("/post/<int:post_id>/update", methods=['get', 'post'])
+@login_required
+def update_post(post_id):
+    post = Post.query.get(post_id)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('Staff_View.post', post_id=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.content.data = post.content
+    return render_template('StaffPage/createPost.html', title='Update Post',
+                           form=form, legend='Update Post')
+
+@Staff_View.route("/post/<int:post_id>/delete", methods=['post'])
+@login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     if post.author != current_user.first_name:
