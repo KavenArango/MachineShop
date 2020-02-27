@@ -20,6 +20,9 @@ def login_form():
         if user and bcrypt.check_password_hash(user.password, form.password.data) and user.user_type == 2:
             login_user(user)
             return redirect(url_for('admin.index'))
+        elif user and bcrypt.check_password_hash(user.password, form.password.data) and user.user_type == 3:
+            login_user(user)
+            return redirect(url_for('Tool_View.CheckIn'))
         elif user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
             return redirect(url_for('Main_View.home'))
