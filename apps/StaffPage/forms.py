@@ -24,7 +24,7 @@ class Staff_Request(Form):
     level = StringField('Level')
     des = StringField('Request')
     accept = SubmitField('Accept')
-    decline = SubmitField('Reject')
+
 
     def __init__(self, *args, **kwargs):
         super(Staff_Request, self).__init__(*args, **kwargs)

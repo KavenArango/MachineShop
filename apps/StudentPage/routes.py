@@ -44,13 +44,15 @@ def profile():
 
     return render_template(template, title=title, detail=detail)
 
+
+
 @Student_view.route('/request', methods=['get', 'post'])
 @login_required
 def requests():
     form = RequestForm()
     form1 = RequestExamForm()
 
-    if current_user.passed_exam == 1:
+    if current_user.passed_exam >= 0:
         form.request.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=2)]
         form.level.choices = [(Level.level, Level.description) for Level in Levels.query.all()]
         form.machine.choices = [(Machine.id, Machine.machine_name) for Machine in machines.query.all()]

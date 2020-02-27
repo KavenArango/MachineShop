@@ -36,7 +36,6 @@ def CheckInSignIn():
 @Tool_View.route('/checkout/<CheckOut_id>', methods=['get', 'post'])
 @login_required
 def Checkout(CheckOut_id):
-    CheckInUser = tool_User.query.all()
     tool_User.query.filter_by(id=CheckOut_id).delete()
     flash('You have Checked Out', 'success')
     return redirect(url_for('Tool_View.CheckIn'))
