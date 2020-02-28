@@ -15,7 +15,13 @@ Machine Descriptions
 {% endblock %}
 
 {% block content %}
-
+ <div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+        {% endfor %}
 <head>
     <meta charset="UTF-8">
     <title>MachineInfo</title>
@@ -44,8 +50,8 @@ Machine Descriptions
          </div>
 
     <form method=post>
-        <input type=file name=file>
-        <input type=submit value=Upload>
+      <input type=file name=files >
+      <input type=submit value=Upload>
     </form>
 
 

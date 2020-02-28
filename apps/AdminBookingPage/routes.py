@@ -1,6 +1,6 @@
 import os
 from app import ALLOWED_EXTENSIONS, uploaded_file, app
-from flask import Flask, flash, request, redirect, url_for
+from flask import Flask, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from apps.Machine.models import building, room, machine_image
 from flask import Blueprint
@@ -37,5 +37,13 @@ def bookingpage():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return redirect(url_for('uploaded_file', filename=filename))
+
     return render_template(template)
+
+
+@app.route('/adminbooking/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+
 
