@@ -42,7 +42,10 @@ class machine_shop_map(db.Model):
 
 class tool_User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(80), nullable=False)
-    first_name = db.Column(db.String(20), nullable=False)
-    last_name = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(80),nullable=False)
+    first_name = db.Column(db.String(20),nullable=False)
+    last_name = db.Column(db.String(20),nullable=False)
     tool = db.Column(db.String(100), nullable=False)
+    check_in_date = db.Column(db.DATE, nullable=False)
+    check_out_date = db.Column(db.DATE, nullable=True)
+    checked = db.Column(db.BOOLEAN)

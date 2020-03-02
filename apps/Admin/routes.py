@@ -7,9 +7,10 @@ from flask_login import login_user, current_user, logout_user, login_required
 from app import admin, db
 from flask_admin.contrib.sqla import ModelView
 from apps.accounts.models import Users
-from apps.Machine.models import machines,machine_type,machine_image,machine_shop_map, room
+from apps.Machine.models import machines,machine_type,machine_image,machine_shop_map, room, tool_User
 from apps.BookingPage.models import Booking
 from apps.StaffPage.models import Request,Post, Request_Des
+
 
 class MyAdminView(ModelView):
     def is_accessible(self):
@@ -67,3 +68,4 @@ admin.add_view(MachineType(machine_type, db.session))
 admin.add_view(MyAdminView(machine_image,db.session))
 admin.add_view(MyAdminView(machine_shop_map,db.session))
 admin.add_view(MyAdminView(room,db.session))
+admin.add_view(MyAdminView(tool_User, db.session))

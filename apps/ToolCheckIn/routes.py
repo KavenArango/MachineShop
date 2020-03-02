@@ -4,7 +4,7 @@ from app import db
 from flask_login import login_required
 from .forms import CheckInForm, CheckIn_Users, Checkout
 from apps.Machine.models import tool_User
-
+from datetime import datetime
 Tool_View = Blueprint('Tool_View', __name__)
 
 @Tool_View.route('/checkIn', methods=['get', 'post'])
@@ -26,7 +26,7 @@ def CheckInSignIn():
     if form.validate_on_submit():
 
         toolUser = tool_User(first_name=form.first_name.data, last_name=form.last_name.data,email=form.email.data,
-                             tool=form.tool.data)
+                             tool=form.tool.data, check_in_date=datetime.now(), checked= 0 )
         db.session.add(toolUser)
         db.session.commit()
         flash('Your Check In Was Successfuly made', 'success')
@@ -36,6 +36,9 @@ def CheckInSignIn():
 @Tool_View.route('/checkout/<CheckOut_id>', methods=['get', 'post'])
 @login_required
 def Checkout(CheckOut_id):
-    tool_User.query.filter_by(id=CheckOut_id).delete()
+    user = tool_User.query.filter_by(id=CheckOut_id).first()
+    user.checked = 1
+    user.check_out_date = datetime.now()
+    db.session.commit()
     flash('You have Checked Out', 'success')
     return redirect(url_for('Tool_View.CheckIn'))

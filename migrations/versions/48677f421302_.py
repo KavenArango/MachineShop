@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e79be85298ac
-Revises: 7ab1afa1f041
-Create Date: 2020-02-15 22:42:16.156581
+Revision ID: 48677f421302
+Revises: 
+Create Date: 2020-03-01 17:29:07.552982
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e79be85298ac'
-down_revision = '7ab1afa1f041'
+revision = '48677f421302'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -26,15 +26,15 @@ def upgrade():
     op.create_foreign_key(None, 'machines', 'machine_type', ['machine_type_id'], ['id'])
     op.create_foreign_key(None, 'post', 'users', ['author'], ['first_name'])
     op.create_foreign_key(None, 'request', 'request__des', ['requests_id'], ['id'])
-    op.create_foreign_key(None, 'request', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'request', 'levels', ['level_id'], ['id'])
+    op.create_foreign_key(None, 'request', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'request', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'room', 'building', ['building_id'], ['id'])
     op.create_foreign_key(None, 'staff', 'users', ['user_id'], ['id'])
-    op.create_foreign_key(None, 'student', 'majors', ['major_id'], ['id'])
-    op.create_foreign_key(None, 'student', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'student', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'student', 'levels', ['level_id'], ['id'])
+    op.create_foreign_key(None, 'student', 'majors', ['major_id'], ['id'])
+    op.create_foreign_key(None, 'student', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'student', ['student_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'levels', ['level_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'machines', ['machine_id'], ['id'])
