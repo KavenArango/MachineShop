@@ -4,7 +4,8 @@ from app import db, bcrypt, login_manager
 from apps.accounts.models import Users
 from flask_login import login_user, current_user, logout_user, login_required
 from apps.StudentPage.models import majors, Student
-
+from app import mail
+from flask_mail import Message
 
 login_view = Blueprint('login', __name__)
 
@@ -43,6 +44,8 @@ def signup():
             student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=-1)
             db.session.add(student)
         db.session.commit()
+        msg = Message('Your Account Has Been Created', recipients=[form.email.data])
+        mail.send(msg)
         flash('Your account has been created! You may now log in', 'success')
         return redirect(url_for('login.login_form'))
 

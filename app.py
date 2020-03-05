@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
-
+from flask_mail import Mail
 
 
 app = Flask(__name__)
@@ -14,7 +14,20 @@ app.config['SECRET_KEY'] = 'KILLME'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://MachineShop:KAVENSTEVESHANNONALLDUMB@25.78.65.33/machineshop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+# app.config['MAIL_DEBUG'] =
+app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
+app.config['MAIL_PASSWORD'] = "Coronavirus"
+app.config['MAIL_DEFAULT_SENDER'] = "idea.lab.snhu@gmail.com"
+app.config['MAIL_MAX_EMAILS'] = None
+app.config['MAIL_SUPRESS_SEND'] = False
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
 
+
+mail = Mail(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
