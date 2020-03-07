@@ -5,12 +5,20 @@ from flask_login import LoginManager, current_user
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_mail import Mail
+from itsdangerous import URLSafeTimedSerializer
 
+import nexmo
 
 app = Flask(__name__)
 
+client = nexmo.Client(key="716ab2fb", secret="y5ZvDW0kP29dzzpa")
+
+
 
 app.config['SECRET_KEY'] = 'KILLME'
+
+url = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://MachineShop:KAVENSTEVESHANNONALLDUMB@25.78.65.33/machineshop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

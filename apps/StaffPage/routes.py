@@ -138,7 +138,7 @@ def request_detail(request_id):
     form.level.data = post.description
     form.des.data = post.Request
 
-    user = Users.query.filter_by(first_name=post.first_name).first()
+    user = Users.query.filter_by(first_name=post.first_name, last_name=post.last_name).first()
     levelUp = Student.query.filter_by(user_id=user.id).all()
     if form.validate_on_submit():
 
