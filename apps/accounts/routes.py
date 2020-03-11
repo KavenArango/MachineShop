@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, app, Markup
-from apps.accounts.forms import LoginForm, SignupForm
+from apps.accounts.forms import LoginForm, SignupForm, resetForm, forgetForm
 from app import db, bcrypt, login_manager, client, url
 from apps.accounts.models import Users
 from flask_login import login_user, current_user, logout_user, login_required
@@ -34,6 +34,7 @@ def login_form():
         else:
             flash('Username or Password Incorrect')
     return render_template(template, title=title, form=form)
+
 @login_view.route('/signup', methods=['get', 'post'])
 def signup():
     form = SignupForm()
@@ -65,16 +66,66 @@ def signup():
 @login_view.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
+
         email = url.loads(token, salt='email-confirm', max_age=900)
 
     except SignatureExpired:
         flash(Markup('The Token is Expired! <a href="/resend" class="alert-link">Resend Email Verification</a>' ))
+        return redirect(url_for('login.login_form'))
+    except:
+        flash(Markup('The Token doesnt Exisit!'))
         return redirect(url_for('login.login_form'))
     user = Users.query.filter_by(email=email).first()
     user.email_ver = 1
     db.session.commit()
     flash('Email has be verified! You may log in')
     return redirect(url_for('login.login_form'))
+
+@login_view.route('/forgotPassword', methods=['get', 'post'])
+def forgotPassword():
+    form = forgetForm()
+    if form.validate_on_submit():
+        token = url.dumps(form.email.data, salt='pass-confirm')
+
+        msg = Message('Forgot Password', recipients=[form.email.data])
+        link = url_for('login.reset_pass',token=token, _external=True)
+        msg.html = '<h1>Forgot Password</h1> Please Click on the link to reset password! {}'.format(link)
+        mail.send(msg)
+        flash('An Email Has Been Sent To Reset Your Password', 'success')
+        return redirect(url_for('login.login_form'))
+
+
+
+    return render_template("accounts/forgot.html", form=form)
+
+
+@login_view.route('/resetPass/<token>')
+def reset_pass(token):
+    try:
+
+       email = url.loads(token, salt='pass-confirm', max_age=900)
+
+    except SignatureExpired:
+        flash(Markup('The Token is Expired! <a href="/resend" class="alert-link">Resend Email Verification</a>' ))
+        return redirect(url_for('login.login_form'))
+    except:
+        flash(Markup('The Token doesnt Exisit!'))
+        return redirect(url_for('login.login_form'))
+    return redirect(url_for('login.reset_input', token=token))
+
+@login_view.route('/resetInput/<token>', methods=['get', 'post'])
+def reset_input(token):
+    template = 'accounts/reset_pass.html'
+    email = url.loads(token, salt='pass-confirm', max_age=900)
+    user = Users.query.filter_by(email=email).first()
+    form = resetForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Password Has been Reset ! You may log in')
+        return redirect(url_for('login.login_form'))
+    return render_template(template, form=form)
 
 @login_view.route('/resend')
 @login_required

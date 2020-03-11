@@ -29,28 +29,23 @@ Login
 
  <div id="loginbox">
 
-     <img src='{{  url_for( 'static' , filename= "images/humanicon.png")}}' class = "img-icon" width="300" height="428" />
+
 
 
      <form method="post">
          {{ form.csrf_token() }}
- <h1>User Login</h1>
-      <div class="form-group col-lg-9">
-     {{ wtf.form_field(form.username, class='form-control',
-        placeholder='Username') }}
-    </div>
+ <h1>Reset Password</h1>
+
  <div class="form-group col-lg-9">
-     {{ wtf.form_field(form.password, class='form-control',
-        placeholder='Password') }}
+     {{ wtf.form_field(form.email, class='form-control',
+        placeholder='Email') }}
     </div>
 
  <div id="log-btndiv">
 
   {{ form.submit(class_="btn btn-outline-dark btn-lg ") }}
-     
-     <p><a href="{{ url_for('login.forgotPassword')}}">Forgot Password?</a></p>
-  <p>New user? <a href="{{ url_for('login.signup')}}">register here</a></p>
-    <p>Send <a href="{{ url_for('login.send')}}">send it</a></p>
+
+
  </div>
   </form>
 </div>
