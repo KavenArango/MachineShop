@@ -10,7 +10,7 @@ Machine Descriptions
 
 {% block styles %}
 {{super()}}
-{#        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/MachineDes.css') }}">#}
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/AdminBooking/AdminBookingPage.css') }}">
 
 {% endblock %}
 
@@ -28,13 +28,24 @@ Machine Descriptions
 
 
 </head>
+
+ <div class="dropdown" style="float:left;">
+        <button class="dropbtn">upload images</button>
+        <div class="dropdown-content" style="left:0;">
+
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('adminBooking_View.room')}}">Room</a>
+                            </td>
+                        </tr>
+        </div>
+    </div>
+
     <body id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <h1></h1>
 
 
-{#    <div class="saftey">#}
-{#        <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}'  width="300" height="300" onclick="copy(this)" >#}
-{#    </div>#}
+
+
 
     <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
         <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="31">

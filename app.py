@@ -73,6 +73,7 @@ app.register_blueprint(admin_booking_View)
 app.register_blueprint(Tool_View)
 
 
+
 from flask_nav import Nav
 from flask_nav.elements import Navbar, Subgroup, View, Link, Text, Separator
 from apps.Machine.models import machines
@@ -81,7 +82,7 @@ class MyAdminIndexView(AdminIndexView):
     def is_accessible(self):
         return current_user.is_authenticated and current_user.user_type == 2
     def inaccessible_callback(self, name, **kwargs):
-        if current_user.is_authenticated :
+        if current_user.is_authenticated:
             return redirect(url_for('Main_View.home'))
         else:
             return redirect(url_for('login.login_form'))
@@ -91,7 +92,6 @@ admin = Admin(app, index_view=MyAdminIndexView(), template_mode="bootstrap3")
 nav = Nav(app)
 from navBar import my_nav
 nav.register_element('my_nav', my_nav)
-from apps.accounts.models import Users
 from apps.accounts.models import Users
 from apps.Machine.models import machines, machine_image, machine_shop_map, machine_type
 from apps.BookingPage.models import Booking

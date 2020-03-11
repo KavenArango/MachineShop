@@ -1,0 +1,75 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Machine Descriptions
+{% endblock %}
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/AdminBooking/RoomEdit.css') }}">
+
+{% endblock %}
+
+{% block content %}
+ <div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+        {% endfor %}
+<head>
+    <meta charset="UTF-8">
+    <title>MachineInfo</title>
+
+
+</head>
+
+     <div class="dropdown" style="float:left;">
+         <button class="dropbtn">upload images</button>
+         <div class="dropdown-content" style="left:0;">
+             <tr>
+                 <td>
+                     <input type="radio" id="male" name="gender" value="male">
+                     <label for="male">Male</label><br>
+                 </td>
+             </tr>
+         </div>
+     </div>
+
+     <body>
+
+
+   <form method=post enctype=multipart/form-data>
+       <input type=file name=file>
+       <input type=submit value=Upload>
+   </form>
+
+
+    </body>
+
+
+
+    <script>
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+    </script>
+
+
+{% endblock %}
