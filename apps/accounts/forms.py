@@ -26,3 +26,11 @@ class SignupForm(FlaskForm):
         user = Users.query.filter_by(email=email.data).first()
         if user:
             raise ValidationError('That email is taken. Please choose a different one.')
+
+class resetForm(FlaskForm):
+    password = PasswordField("", validators=[DataRequired()])
+    submit = SubmitField("Change")
+
+class forgetForm(FlaskForm):
+    email = StringField("", validators=[DataRequired(), Email()])
+    submit = SubmitField("Reset")
