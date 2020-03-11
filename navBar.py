@@ -19,8 +19,9 @@ def my_nav():
                                 View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),
                                 View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
                                 View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
+        admin_view = View("Admin booking", "adminBooking_View.bookingpage")
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,an, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,an,admin_view, Logout)
     elif current_user.is_authenticated and current_user.user_type == 3:
         Logout = View('Logout', 'login.logout')
         checkIn = View('Check In Table', 'Tool_View.CheckIn')
@@ -33,13 +34,14 @@ def my_nav():
         Studend = View('Profile', 'Student_view.profile')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
+        admin_view = View("Admin booking", "adminBooking_View.bookingpage")
         Booking_view = Subgroup('Booking',
                                 View('Bridgeport', 'Booking_View.Machine_Details', machine_id='1'),
                                 View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),
                                 View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
                                 View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,Studend,post, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,Studend,post,admin_view, Logout)
 
     else:
         login = View('Login', 'login.login_form')

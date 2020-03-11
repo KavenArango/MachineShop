@@ -37,14 +37,16 @@ def bookingpage():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
+    #       TELL USER IMAGE HAS BEEN SENT
 
     return render_template(template)
 
 
-@app.route('/adminbooking/<filename>')
-def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+@admin_booking_View.route('/adminbooking/room', methods=['get', 'post'])
+@login_required
+def room():
+    template = "adminBookingPage/RoomEdit.html"
 
+    return render_template(template)
 
 
