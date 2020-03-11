@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ffaff97de0fb
-Revises: 62e4bbe82ed0
-Create Date: 2020-02-20 09:56:11.432945
+Revision ID: dade491ae466
+Revises: cea49849d2b0
+Create Date: 2020-03-01 18:34:57.718765
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ffaff97de0fb'
-down_revision = '62e4bbe82ed0'
+revision = 'dade491ae466'
+down_revision = 'cea49849d2b0'
 branch_labels = None
 depends_on = None
 
@@ -25,18 +25,18 @@ def upgrade():
     op.create_foreign_key(None, 'machine_shop_map', 'machine_join', ['machine_join_id'], ['id'])
     op.create_foreign_key(None, 'machines', 'machine_type', ['machine_type_id'], ['id'])
     op.create_foreign_key(None, 'post', 'users', ['author'], ['first_name'])
-    op.create_foreign_key(None, 'request', 'levels', ['level_id'], ['id'])
     op.create_foreign_key(None, 'request', 'request__des', ['requests_id'], ['id'])
+    op.create_foreign_key(None, 'request', 'levels', ['level_id'], ['id'])
     op.create_foreign_key(None, 'request', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'request', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'room', 'building', ['building_id'], ['id'])
     op.create_foreign_key(None, 'staff', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'student', 'levels', ['level_id'], ['id'])
-    op.create_foreign_key(None, 'student', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'student', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'student', 'majors', ['major_id'], ['id'])
-    op.create_foreign_key(None, 'student_level', 'machines', ['machine_id'], ['id'])
+    op.create_foreign_key(None, 'student', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'student', ['student_id'], ['id'])
+    op.create_foreign_key(None, 'student_level', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'levels', ['level_id'], ['id'])
     # ### end Alembic commands ###
 

@@ -56,6 +56,7 @@ Check In Table
 
 			<tbody>
 			   	{% for CheckIn in CheckInUser%}
+                    {% if CheckIn.checked == 0 %}
                     <tr>
 
 						<td> {{ CheckIn.first_name}} {{CheckIn.last_name}} </td>
@@ -64,7 +65,7 @@ Check In Table
                       <td> <a  class="fa fa-ok glyphicon glyphicon-ok" href="{{ url_for('Tool_View.Checkout', CheckOut_id=CheckIn.id) }}" >CheckOut</a>
                       </td>
 					</tr>
-
+                {% endif %}
 				{% endfor %}
 			</tbody>
 		</table>

@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
-WTForms
+Register
 {% endblock %}
 
 {% block navbar %}
@@ -11,25 +11,59 @@ WTForms
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/login-signup/login.css') }}">
+    <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/login-signup/signup.css') }}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Untitled Document</title>
+    <link href="css/bootstrap-4.4.1.css" rel="stylesheet" type="text/css">
 
 {% endblock %}
-
 {% block content %}
-<h1 align="center">Sign up</h1>
-
-     <div class="container">
-        {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-        </div>
-        {% endfor %}
-    <form method="post">
-
-        {{ form.csrf_token }}
-        <h2>{{wtf.quick_form(form)}}</h2>
-
-    </form>
+     {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
     </div>
+        {% endfor %}
+
+ <div id="loginbox">
+
+     <img src='{{  url_for( 'static' , filename= "images/pencilicon.png")}}' class = "img-icon" width="300" height="400" />
+
+
+     <form method="post">
+         {{ form.csrf_token() }}
+ <h1>Register</h1>
+      <div class="form-group col-md-6">
+     {{ wtf.form_field(form.first_name, class='form-control',
+        placeholder='First name') }}
+    </div>
+ <div class="form-group col-md-6">
+     {{ wtf.form_field(form.last_name, class='form-control',
+        placeholder='Last name') }}
+    </div>
+ <div class="form-group col-md-6">
+     {{ wtf.form_field(form.username, class='form-control',
+        placeholder='Username') }}
+    </div>
+          <div class="form-group col-md-6">
+     {{ wtf.form_field(form.major, class='form-control') }}
+    </div>
+          <div class="form-group col-md-6">
+     {{ wtf.form_field(form.email, class='form-control',
+        placeholder='Email') }}
+    </div>
+          <div class="form-group col-md-6">
+     {{ wtf.form_field(form.password, class='form-control',
+        placeholder='Password') }}
+    </div>
+ <div id="log-btndiv">
+
+  {{ form.submit(class_="btn btn-outline-dark btn-lg ") }}
+
+ </div>
+  </form>
+</div>
+
 {% endblock %}

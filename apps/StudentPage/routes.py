@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, flash
+from flask import Blueprint, redirect, url_for, flash, Markup
 from flask import render_template, g
 from .forms import RequestForm, RequestExamForm
 from .models import Levels
@@ -9,6 +9,7 @@ from apps.StudentPage.models import Student, majors
 from flask_login import current_user, login_required
 from app import db
 from apps.StaffPage.models import Post
+
 Student_view = Blueprint('Student_view', __name__)
 
 
@@ -51,7 +52,9 @@ def profile():
 def requests():
     form = RequestForm()
     form1 = RequestExamForm()
-
+    if (current_user.email_ver < 1):
+        #flash(Markup('You Must Verify Email To Access <a href="/resend" class="alert-link">Resend Email Verification?</a>',))
+        return redirect(url_for('Main_View.home'))
     if current_user.passed_exam >= 0:
         form.request.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=2)]
         form.level.choices = [(Level.level, Level.description) for Level in Levels.query.all()]

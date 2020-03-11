@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0a4c4a037f44
-Revises: 11afd374ca5d
-Create Date: 2020-02-20 10:01:12.060447
+Revision ID: ce9c3d5c35fa
+Revises: 71efb89fd286
+Create Date: 2020-03-01 18:33:12.261617
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0a4c4a037f44'
-down_revision = '11afd374ca5d'
+revision = 'ce9c3d5c35fa'
+down_revision = '71efb89fd286'
 branch_labels = None
 depends_on = None
 
@@ -25,16 +25,16 @@ def upgrade():
     op.create_foreign_key(None, 'machine_shop_map', 'machine_join', ['machine_join_id'], ['id'])
     op.create_foreign_key(None, 'machines', 'machine_type', ['machine_type_id'], ['id'])
     op.create_foreign_key(None, 'post', 'users', ['author'], ['first_name'])
+    op.create_foreign_key(None, 'request', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'request', 'levels', ['level_id'], ['id'])
     op.create_foreign_key(None, 'request', 'request__des', ['requests_id'], ['id'])
-    op.create_foreign_key(None, 'request', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'request', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'room', 'building', ['building_id'], ['id'])
     op.create_foreign_key(None, 'staff', 'users', ['user_id'], ['id'])
-    op.create_foreign_key(None, 'student', 'users', ['user_id'], ['id'])
     op.create_foreign_key(None, 'student', 'machines', ['machine_id'], ['id'])
-    op.create_foreign_key(None, 'student', 'levels', ['level_id'], ['id'])
     op.create_foreign_key(None, 'student', 'majors', ['major_id'], ['id'])
+    op.create_foreign_key(None, 'student', 'users', ['user_id'], ['id'])
+    op.create_foreign_key(None, 'student', 'levels', ['level_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'student', ['student_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'machines', ['machine_id'], ['id'])
     op.create_foreign_key(None, 'student_level', 'levels', ['level_id'], ['id'])

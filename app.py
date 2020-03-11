@@ -11,22 +11,45 @@ from werkzeug.utils import secure_filename
 UPLOAD_FOLDER = "static/media"
 ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
+from flask_mail import Mail
+from itsdangerous import URLSafeTimedSerializer
 
+import nexmo
 
 app = Flask(__name__)
+
+client = nexmo.Client(key="716ab2fb", secret="y5ZvDW0kP29dzzpa")
+
 
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 app.config['SECRET_KEY'] = 'KILLME'
+
+url = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://MachineShop:KAVENSTEVESHANNONALLDUMB@25.78.65.33/machineshop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+# app.config['MAIL_DEBUG'] =
+app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
+app.config['MAIL_PASSWORD'] = "Clownpictures"
+app.config['MAIL_DEFAULT_SENDER'] = "idea.lab.snhu@gmail.com"
+app.config['MAIL_MAX_EMAILS'] = None
+app.config['MAIL_SUPRESS_SEND'] = False
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
 
+
+mail = Mail(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+
 
 
 from apps.Hompage.routes import Main_View
@@ -66,7 +89,8 @@ class MyAdminIndexView(AdminIndexView):
 bootstrap = Bootstrap(app)
 admin = Admin(app, index_view=MyAdminIndexView(), template_mode="bootstrap3")
 nav = Nav(app)
-
+from navBar import my_nav
+nav.register_element('my_nav', my_nav)
 from apps.accounts.models import Users
 from apps.accounts.models import Users
 from apps.Machine.models import machines, machine_image, machine_shop_map, machine_type
@@ -80,51 +104,6 @@ def load_user(id):
     return Users.query.get(id)
 
 
-@nav.navigation('my_nav')
-def create_nav():
-
-    if current_user.is_authenticated and current_user.user_type == 1:
-        StudentSearch = View('Student Search', 'Staff_View.student_search')
-        RequestView = View('Student Requests', 'Staff_View.request_search')
-        MachineShop = View('Machine Shop', 'Main_View.home')
-        an = View('Announcment', 'Staff_View.newPost')
-        post = View('Post', 'Student_view.post')
-        Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
-        Home_view = View('Home', 'Main_View.home')
-        admin_booking = View('admin booking', 'adminBooking_View.bookingpage')
-        Booking_view = Subgroup('Booking', View('Bridgeport', 'Booking_View.Machine_Details', machine_id='1'),
-                                View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),
-                                View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
-                                View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
-        Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, StudentSearch, RequestView, post,
-                      admin_booking, an, Logout)
-    elif current_user.is_authenticated and current_user.user_type == 3:
-        Logout = View('Logout', 'login.logout')
-        checkIn = View('Check In Table', 'Tool_View.CheckIn')
-        CheckInForm = View('Check In Form', 'Tool_View.CheckInSignIn')
-        return Navbar(checkIn, CheckInForm, Logout)
-    elif current_user.is_authenticated:
-        MachineShop = View('Machine Shop', 'Main_View.home')
-        Request = View('Level Request', 'Student_view.requests')
-        post = View('Post', 'Student_view.post')
-        admin_booking = View('admin booking', 'adminBooking_View.bookingpage')
-        Studend = View('Profile', 'Student_view.profile')
-        Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
-        Home_view = View('Home', 'Main_View.home')
-        Booking_view = Subgroup('Booking',
-                                View('Bridgeport', 'Booking_View.Machine_Details', machine_id='1'),
-                                View('HAAS', 'Booking_View.Machine_Details', machine_id='2'),
-                                View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
-                                View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
-        Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request, Studend, post,
-                      admin_booking, Logout)
-
-    else:
-        login = View('Login', 'login.login_form')
-        signup = View('Signup', 'login.signup')
-        return Navbar(login, signup)
 
 
 if __name__ == '__main__':

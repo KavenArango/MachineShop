@@ -5,36 +5,54 @@
 Machine Descriptions
 {% endblock %}
 
+{% block styles %}
+{{super()}}
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Machine Description</title>
+    <!-- Bootstrap -->
+    <link href="file:///Macintosh HD/Users/shannondonahue/Documents/css/bootstrap-4.4.1.css" rel="stylesheet">
+      <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/testing.css') }}">
+{% endblock %}
 {% block navbar %}
         {{ nav.my_nav.render() }}
 {% endblock %}
 
-{% block styles %}
-{{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/MachineDes.css') }}">
-
-{% endblock %}
-
 {% block content %}
+  <body>
 
-<head>
-    <meta charset="UTF-8">
-    <title>MachineInfo</title>
+    <section>
+      <div class="jumbotron text-center mt-2">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <h1>Machine Descriptions</h1>
+              <p>This page contains the descriptions to all of the large machinary the Innovation lab has to offer. Please be sure to read the safety message at the the top of the page.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="top">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1>Stop Please Read</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+    	<div class="container">
 
-
-</head>
-    <body>
-    <h1>Machine Information</h1>
-
-    <div class="saftey">
-
-            <div class="safety_img">
-         <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' width="300" height="300"/>
-             </div>
-             <div class="saftey_text">
-                 <h2>Stop Please Read</h2>
-                 <h3>Safety Message</h3>
-                <ul2 style = "list-style-type:circle;">
+        <div class="row">
+          <div class="col-md-6 col-12 text-center">
+            <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' width = "400" height="400">
+          </div>
+          <div class="col-md-6 col-12 text-center mt-md-0 mt-2">
+            <h2>Safety Message</h2>
+            <ul2 style = "list-style-type:circle;">
                     <li>Safety Glasses required: Yes (Required to walk in to Machine Shop)</li>
                     <li>Safety Shoes: Yes (Required to walk in to Machine Shop)</li>
                     <li>Long Pants: Yes (Required to walk in to Machine Shop)</li>
@@ -42,78 +60,58 @@ Machine Descriptions
                     <li>If you have long hair, you must tie your hair back to keep it out of the way of the machine.</li>
                     <li>Never wear gloves while operating this machine.</li>
                 </ul2>
+          </div>
+        </div>
+        </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1>Machines</h1>
+            <h4>Bellow are all the machines we have to offer</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-12 text-center">
+            <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/Bridgeport.jpg")}}' width="400" height="400">
+            <h3>Bridgeport</h3>
+            <h4>The Bridgeport milling machine is used to machine a stock material into an object through user input. This 3-axes machine can use many different milling ends and is equipped with a hands-free system to make it easier to mill in a straight line. Milling is the process of machining an object—commonly stock material—using rotary cutters to remove excess material.</h4>
+          </div>
+          <div class="col-md-6 col-12 text-center mt-md-0 mt-2">
+            <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/Lathe.jpg")}}' width="400" height="400">
+            <h3>Lathe</h3>
+            <h4>The lathe uses rotational motion to mill a stock material—that is, by turning or boring the material—into an object through user input. Milling is the process of machining an object—commonly stock material—using rotary cutters to remove excess material.</h4>
+          </div>
+        </div>
+		  <div class="row">
+          <div class="col-md-6 col-12 text-center">
+            <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/HAAS.jpg")}}' width="400" height="400">
+            <h3>HAAS VF2</h3>
+            <h4>The HAAS CNC milling machine is used to mill an object using computer code, specifically G- or M-code. This is the larger of the two CNC machines at CETA. Milling is the process of machining an object—commonly stock material—using rotary cutters to remove excess material.</h4>
+          </div>
+          <div class="col-md-6 col-12 text-center mt-md-0 mt-2">
+            <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/Syil.jpg")}}' width="400" height="400">
+            <h3>Syil</h3>
+            <h4>The Syil CNC milling machine is used to mill an object using computer code, specifically G- or M-code. This is the smaller of the two CNC machines at CETA. Milling is the process of machining an object—commonly stock material—using rotary cutters to remove excess material.</h4>
+          </div>
+        </div>
+      </div>
 
-                 </div>
-         </div>
-
-         <div class="bridgeport">
-
-            <div class="bridgeport_img">
-         <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/Bridgeport.jpg")}}' width="300" height="300"/>
-             </div>
-             <div class="bridgeport_text">
-                 <h2>Bridgeport</h2>
-                <h3> Description</h3>
-                <p>
-                    The Bridgeport milling machine is used to machine a stock material into an object through user input.
-                    This 3-axes machine can use many different milling ends and is equipped with a hands-free system to
-                    make it easier to mill in a straight line. Milling is the process of machining an object—commonly
-                    stock material—using rotary cutters to remove excess material.
-                </p>
-
-                 </div>
-         </div>
-
-            <div class="HAAS">
-
-            <div class="HAAS_img">
-            <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/HAAS.jpg")}}' width="300" height="300"/>
-             </div>
-             <div class="HAAS_text">
-                 <h2>HAAS VF2</h2>
-                 <h3>Description</h3>
-                 <p>
-                   The HAAS CNC milling machine is used to mill an object using computer code, specifically G- or
-                    M-code. This is the larger of the two CNC machines at CETA. Milling is the process of machining an
-                    object—commonly stock material—using rotary cutters to remove excess material.
-                 </p>
-
-                 </div>
-         </div>
-
-    <div class="lathe">
-
-            <div class="lathe_img">
-            <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/Lathe.jpg")}}' width="300" height="300"/>
-             </div>
-             <div class="lathe_text">
-                 <h2>Lathe</h2>
-                 <h3>Description</h3>
-                 <p>
-                     The lathe uses rotational motion to mill a stock material—that is, by turning or boring the
-                     material—into an object through user input. Milling is the process of machining an object—commonly
-                     stock material—using rotary cutters to remove excess material.
-                 </p>
-
-                 </div>
-         </div>
-
-    <div class="syil">
-
-            <div class="syil_img">
-            <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/Syil.jpg")}}' width="300" height="300"/>
-             </div>
-             <div class="syil_text">
-                 <h2>Syil</h2>
-                 <h3>Description</h3>
-                 <p>
-                    The Syil CNC milling machine is used to mill an object using computer code, specifically G- or
-                     M-code. This is the smaller of the two CNC machines at CETA. Milling is the process of machining an
-                     object—commonly stock material—using rotary cutters to remove excess material.
-                 </p>
-
-                 </div>
-         </div>
-
-    </body>
+    </section>
+    <footer class="text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <p>Copyright © MyCompany. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="file:///Macintosh HD/Users/shannondonahue/Documents/js/jquery-3.4.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="file:///Macintosh HD/Users/shannondonahue/Documents/js/popper.min.js"></script>
+    <script src="file:///Macintosh HD/Users/shannondonahue/Documents/js/bootstrap-4.4.1.js"></script>
+  </body>
 {% endblock %}
