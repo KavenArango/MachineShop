@@ -1,9 +1,16 @@
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request
 from flask_bcrypt import Bcrypt
+from flask_uploads import uploaded_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
+from werkzeug.utils import secure_filename
+
+
+UPLOAD_FOLDER = "static/media"
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+
 from flask_mail import Mail
 from itsdangerous import URLSafeTimedSerializer
 
@@ -13,6 +20,9 @@ app = Flask(__name__)
 
 client = nexmo.Client(key="716ab2fb", secret="y5ZvDW0kP29dzzpa")
 
+
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 app.config['SECRET_KEY'] = 'KILLME'
@@ -48,6 +58,7 @@ from apps.accounts.routes import login_view
 from apps.StaffPage.routes import Staff_View
 from apps.Machine.routes import Machine_View
 from apps.BookingPage.routes import Booking_View
+from apps.AdminBookingPage.routes import admin_booking_View
 from apps.ToolCheckIn.routes import Tool_View
 from flask_bootstrap import Bootstrap
 
@@ -58,6 +69,7 @@ app.register_blueprint(login_view)
 app.register_blueprint(Staff_View)
 app.register_blueprint(Machine_View)
 app.register_blueprint(Booking_View)
+app.register_blueprint(admin_booking_View)
 app.register_blueprint(Tool_View)
 
 
@@ -81,10 +93,11 @@ from navBar import my_nav
 nav.register_element('my_nav', my_nav)
 from apps.accounts.models import Users
 from apps.accounts.models import Users
-from apps.Machine.models import machines, machine_image, machine_shop_map , machine_type
+from apps.Machine.models import machines, machine_image, machine_shop_map, machine_type
 from apps.BookingPage.models import Booking
 from apps.StaffPage.models import Request, Post
 from apps.Admin.routes import MyAdminView
+
 
 @login_manager.user_loader
 def load_user(id):

@@ -22,7 +22,7 @@ Booking_View = Blueprint('Booking_View', __name__)
 def Machine_Details(machine_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
-    if(current_user.passed_exam < 0):
+    if current_user.passed_exam < 0:
         flash('You Must Pass Safety Exam To Access Booking', 'success')
         return redirect(url_for('Main_View.home'))
 

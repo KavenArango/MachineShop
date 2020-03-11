@@ -8,8 +8,9 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
     <content url="file://$MODULE_DIR$/venv/lib/python3.7/site-packages" />
-    <orderEntry type="jdk" jdkName="Python 3.7 (MachineShop1)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.6 (MachineShop)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="source-sans-pro:n2:default" level="application" />
   </component>
   <component name="TemplatesService">
     <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
@@ -18,8 +19,5 @@
         <option value="$MODULE_DIR$/templates" />
       </list>
     </option>
-  </component>
-  <component name="TestRunnerService">
-    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
 </module>
