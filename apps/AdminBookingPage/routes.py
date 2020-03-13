@@ -2,7 +2,7 @@ import os
 from app import ALLOWED_EXTENSIONS, uploaded_file, app
 from flask import Flask, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
-from apps.Machine.models import building, room, machine_image
+from apps.Machine import models
 from flask import Blueprint
 from flask import render_template, session
 from flask_login import current_user, login_required

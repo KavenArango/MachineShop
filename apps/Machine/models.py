@@ -48,4 +48,4 @@ class tool_User(db.Model):
     tool = db.Column(db.String(100), nullable=False)
     check_in_date = db.Column(db.DATE, nullable=False)
     check_out_date = db.Column(db.DATE, nullable=True)
-    checked = db.Column(db.BOOLEAN)
+    checked = db.Column(db.Integer)

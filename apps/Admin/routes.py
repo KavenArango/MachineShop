@@ -4,12 +4,13 @@ from flask_admin.actions import action
 from flask_admin.babel import gettext, ngettext
 from flask_admin.contrib import sqla
 from flask_login import login_user, current_user, logout_user, login_required
-from app import admin, db
+from app import db, app, admin
 from flask_admin.contrib.sqla import ModelView
 from apps.accounts.models import Users
-from apps.Machine.models import machines,machine_type,machine_image,machine_shop_map, room, tool_User
+from apps.Machine import models
 from apps.BookingPage.models import Booking
 from apps.StaffPage.models import Request, Post, Request_Des
+
 
 
 
@@ -70,13 +71,13 @@ class RequestView(ModelView):
 
 
 admin.add_view(User(Users, db.session))
-admin.add_view(Machines(machines, db.session))
+admin.add_view(Machines(models.machines, db.session))
 admin.add_view(MyAdminView(Booking, db.session))
 admin.add_view(RequestView(Request, db.session))
 admin.add_view(MyAdminView(Request_Des, db.session))
 admin.add_view(Posts(Post, db.session))
-admin.add_view(MachineType(machine_type, db.session))
-admin.add_view(MyAdminView(machine_image,db.session))
-admin.add_view(MyAdminView(machine_shop_map,db.session))
-admin.add_view(MyAdminView(room,db.session))
-admin.add_view(MyAdminView(tool_User, db.session))
+admin.add_view(MachineType(models.machine_type, db.session))
+admin.add_view(MyAdminView(models.machine_image,db.session))
+admin.add_view(MyAdminView(models.machine_shop_map,db.session))
+admin.add_view(MyAdminView(models.room,db.session))
+admin.add_view(MyAdminView(models.tool_User, db.session))
