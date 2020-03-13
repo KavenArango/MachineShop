@@ -46,7 +46,7 @@ def bookingpage():
 @login_required
 def room():
     template = "adminBookingPage/RoomEdit.html"
-
+    RoomNumber = machines.query.distinct(machines.machine_name).all()
     return render_template(template)
 
 

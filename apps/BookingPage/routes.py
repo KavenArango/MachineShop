@@ -35,7 +35,7 @@ def Machine_Details(machine_id):
     # print(stick)
     # print(jsonStick)
 
-    # pprint.pprint(jsonStick)
+    # print.pprint(jsonStick)
     return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick)
 
 

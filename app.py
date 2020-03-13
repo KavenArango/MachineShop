@@ -29,6 +29,7 @@ app.config['SECRET_KEY'] = 'KILLME'
 
 url = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://MachineShop:KAVENSTEVESHANNONALLDUMB@25.78.65.33/machineshop'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
