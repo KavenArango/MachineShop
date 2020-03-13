@@ -4,7 +4,8 @@ from flask_bcrypt import Bcrypt
 from flask_uploads import uploaded_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
-
+from flask_admin import Admin, AdminIndexView
+from flask_admin.contrib.sqla import ModelView
 
 
 
@@ -89,7 +90,17 @@ app.register_blueprint(Tool_View)
 
 
 
+class MyAdminIndexView(AdminIndexView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.user_type == 2
 
+    def inaccessible_callback(self, name, **kwargs):
+        if current_user.is_authenticated :
+            return redirect(url_for('Main_View.home'))
+        else:
+            return redirect(url_for('login.login_form'))
+
+admin = Admin(app, index_view=MyAdminIndexView(), template_mode="bootstrap3")
 
 
 
@@ -121,7 +132,7 @@ def my_nav():
         checkIn = View('Check In Table', 'Tool_View.CheckIn')
         CheckInForm = View('Check In Form', 'Tool_View.CheckInSignIn')
         return Navbar( checkIn,CheckInForm,Logout )
-    elif current_user.is_authenticated:
+    elif current_user.is_authenticated and current_user.user_type == 0:
         MachineShop = View('Machine Shop', 'Main_View.home')
         Request = View('Level Request', 'Student_view.requests')
         post = View('Post', 'Student_view.post')
