@@ -42,11 +42,11 @@ def signup():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = Users(first_name=form.first_name.data, last_name=form.last_name.data, username=form.username.data,
-                     email=form.email.data, password=hashed_password,user_type=0 , passed_exam=-1, email_ver=0)
+                     email=form.email.data, password=hashed_password,user_type=0 , passed_exam=1, email_ver=0)
         db.session.add(user)
         ID = Users.query.filter_by(username=form.username.data).first()
-        for i in range(0, 5):
-            student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=-1)
+        for i in range(1, 6):
+            student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=1)
             db.session.add(student)
         db.session.commit()
 

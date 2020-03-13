@@ -1,9 +1,9 @@
 from flask import Blueprint, redirect, url_for, flash, Markup
 from flask import render_template, g
-from .forms import RequestForm, RequestExamForm
-from .models import Levels
+from apps.StudentPage.forms import RequestForm, RequestExamForm
+from apps.StudentPage.models import Levels
 from apps.StaffPage.models import Request, Request_Des
-from apps.Machine.models import machines
+from apps.Machine import models
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors
 from flask_login import current_user, login_required
@@ -21,25 +21,25 @@ def profile():
     post = Student.query.filter(Student.user_id == current_user.id).filter(Student.machine_id ).join(
         Users, Users.id == Student.user_id
     ).join(
-        machines, machines.id == Student.machine_id
+        models.machines, models.machines.id == Student.machine_id
     ).join(
         majors, majors.id == Student.major_id
     ).join(
         Levels, Levels.id == Student.level_id
     ).with_entities(
         Student.id.label("id"),
-        machines.machine_name.label("machine_name"),
+        models.machines.machine_name.label("machine_name"),
         Levels.description.label("description"),
         Users.id.label("User_id")
     ).first()
 
 
     detail = Student.query.filter(Student.user_id == post.User_id).join(
-        machines, machines.id == Student.machine_id
+        models.machines, models.machines.id == Student.machine_id
     ).join(
         Levels, Levels.id == Student.level_id
     ).with_entities(
-        machines.machine_name.label("machine_name"),
+        models.machines.machine_name.label("machine_name"),
         Levels.description.label("description")
     ).all()
 
@@ -58,7 +58,7 @@ def requests():
     if current_user.passed_exam >= 0:
         form.request.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=2)]
         form.level.choices = [(Level.level, Level.description) for Level in Levels.query.all()]
-        form.machine.choices = [(Machine.id, Machine.machine_name) for Machine in machines.query.all()]
+        form.machine.choices = [(Machine.id, Machine.machine_name) for Machine in models.machines.query.all()]
         if form.validate_on_submit():
             request = Request(user_id=current_user.id, machine_id=form.machine.data,
                               level_id=form.level.data, requests_id=form.request.data)
