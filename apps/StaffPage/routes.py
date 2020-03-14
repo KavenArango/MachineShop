@@ -4,7 +4,7 @@ from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
 from apps.StaffPage.forms import Staff_Student, Staff_Request, PostForm
-from apps.Machine.models import machines
+from apps.Machine import models
 from .models import Request, Request_Des, Post
 from flask_login import current_user, login_required
 
@@ -17,11 +17,13 @@ def student_search():
     template = "StaffPage/StudentSearch.html"
     title = "Student Search"
     form = Staff_Student()
-    students = Student.query.distinct(Users.email).group_by(Users.email).filter(Student.user_id == Users.id).join(
+
+    students = Student.query.filter(Student.user_id == Users.id).distinct(Users.email).join(
         Users, Users.id == Student.user_id
     ).join(
         majors, majors.id == Student.major_id
     ).with_entities(
+        Users.id.label("id"),
         Users.first_name.label("first_name"),
         Users.last_name.label("last_name"),
         Users.email.label("email"),
@@ -36,10 +38,10 @@ def student_detail(student_id):
     template = "StaffPage/studentdetail.html"
     title = "Student Detail"
     form = Staff_Student()
-    post = Student.query.filter(Student.id == student_id).join(
+    post = Student.query.filter(Student.user_id == student_id).join(
         Users, Users.id == Student.user_id
     ).join(
-        machines, machines.id == Student.machine_id
+        models.machines, models.machines.id == Student.machine_id
     ).join(
         majors, majors.id == Student.major_id
     ).join(
@@ -50,7 +52,7 @@ def student_detail(student_id):
         Users.last_name.label("last_name"),
         Users.email.label("email"),
         majors.major_name.label("major_name"),
-        machines.machine_name.label("machine_name"),
+        models.machines.machine_name.label("machine_name"),
         Levels.description.label("description"),
         Users.id.label("User_id")
     ).first()
@@ -59,12 +61,12 @@ def student_detail(student_id):
     form.email.data = post.email
     form.major.data = post.major_name
 
-    detail = Student.query.filter(Student.user_id == post.User_id).filter(machines.id != 0).join(
-        machines, machines.id == Student.machine_id
+    detail = Student.query.filter(Student.user_id == post.User_id).filter(models.machines.id != 0).join(
+        models.machines, models.machines.id == Student.machine_id
     ).join(
         Levels, Levels.id == Student.level_id
     ).with_entities(
-        machines.machine_name.label("machine_name"),
+        models.machines.machine_name.label("machine_name"),
         Levels.description.label("description")
     ).all()
 
@@ -80,7 +82,7 @@ def request_search():
     requests = Request.query.filter(Request.user_id == Users.id).join(
         Users, Users.id == Request.user_id
     ).join(
-        machines, machines.id == Request.machine_id
+        models.machines, models.machines.id == Request.machine_id
     ).join(
         Levels, Levels.id == Request.level_id
     ).join(
@@ -89,7 +91,7 @@ def request_search():
         Request.id.label("id"),
         Users.first_name.label("first_name"),
         Users.last_name.label("last_name"),
-        machines.machine_name.label("machine_name"),
+        models.machines.machine_name.label("machine_name"),
         Levels.description.label("level"),
         Request_Des.description.label('Request')
     ).all()
@@ -112,7 +114,7 @@ def request_detail(request_id):
     post = Request.query.filter(Request.id == request_id).join(
         Users, Users.id == Request.user_id
     ).join(
-        machines, machines.id == Request.machine_id
+        models.machines, models.machines.id == Request.machine_id
     ).join(
         Levels, Levels.id == Request.level_id
     ).join(
@@ -121,7 +123,7 @@ def request_detail(request_id):
         Request.id.label("id"),
         Users.first_name.label("first_name"),
         Users.last_name.label("last_name"),
-        machines.machine_name.label("machine_name"),
+        models.machines.machine_name.label("machine_name"),
         Levels.description.label("description"),
         Request_Des.description.label('Request')
     ).first()
@@ -131,47 +133,53 @@ def request_detail(request_id):
     form.level.data = post.description
     form.des.data = post.Request
 
-    user = Users.query.filter_by(first_name=post.first_name).first()
+    user = Users.query.filter_by(id=Request.user_id).first()
     levelUp = Student.query.filter_by(user_id=user.id).all()
     if form.validate_on_submit():
 
-        if user.passed_exam == -1:
-            user.passed_exam = 0
+        if user.passed_exam < 2:
+            user.passed_exam = 2
             for levelups in levelUp:
                 levelups.level_id = levelups.level_id + 1
-            db.session.commit()
             Request.query.filter_by(id=post.id).delete()
+            db.session.commit()
             flash('test1')
             return redirect(url_for('Staff_View.request_search'))
         else:
-            machine = machines.query.filter_by(machine_name=post.machine_name).first()
+            machine = models.machines.query.filter_by(machine_name=post.machine_name).first()
             level = Levels.query.filter_by(description=post.description).first()
             student = Student.query.filter_by(user_id=user.id, machine_id=machine.id).first()
             if student.level_id > level.id:
                 Request.query.filter_by(id=post.id).delete()
+                db.session.commit()
                 flash('test2')
                 return redirect(url_for('Staff_View.request_search'))
             elif student.level_id != level.id:
                 if student.level_id + 2 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    db.session.commit()
                     flash('test3')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 3 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    db.session.commit()
                     flash('test4')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 4 == level.id:
                     Request.query.filter_by(id=post.id).delete()
+                    db.session.commit()
                     flash('test5')
                     return redirect(url_for('Staff_View.request_search'))
                 else:
                     student.level_id = level.id
-                    db.session.commit()
+
                     Request.query.filter_by(id=post.id).delete()
+                    db.session.commit()
                     flash('test6')
                     return redirect(url_for('Staff_View.request_search'))
             else:
                 Request.query.filter_by(id=post.id).delete()
+                db.session.commit()
                 flash('test7')
                 return redirect(url_for('Staff_View.request_search'))
 

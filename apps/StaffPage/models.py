@@ -35,6 +35,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    author = db.Column(db.String, db.ForeignKey('users.first_name'), nullable=False)
+    content = db.Column(db.String(255), nullable=False)
+    author = db.Column(db.ForeignKey('users.id'), nullable=False)
+
+    user = db.relationship('Users', backref=db.backref('author', lazy='dynamic'))
 

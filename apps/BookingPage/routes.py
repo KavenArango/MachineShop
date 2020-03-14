@@ -8,7 +8,7 @@ from flask_login import login_required, current_user
 from app import db
 from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
-from apps.Machine.models import machines
+from apps.Machine import models
 from apps.BookingPage.models import Booking
 from apps.BookingPage.forms import BookingForm
 from datetime import datetime
@@ -22,12 +22,12 @@ Booking_View = Blueprint('Booking_View', __name__)
 def Machine_Details(machine_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
-    if(current_user.passed_exam < 0):
+    if current_user.passed_exam < 0:
         flash('You Must Pass Safety Exam To Access Booking', 'success')
         return redirect(url_for('Main_View.home'))
 
-    MachineName = machines.query.filter_by(id=machine_id).first()
-    ball = machines.query.distinct(machines.machine_name).all()
+    MachineName = models.machines.query.filter_by(id=machine_id).first()
+    ball = models.machines.query.distinct(models.machines.machine_name).all()
     stick = Booking.query.filter(Booking.machine_id == machine_id).with_entities(
         Booking.Key.label("key")
     ).all()
@@ -35,7 +35,7 @@ def Machine_Details(machine_id):
     # print(stick)
     # print(jsonStick)
 
-    # pprint.pprint(jsonStick)
+    # print.pprint(jsonStick)
     return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick)
 
 
