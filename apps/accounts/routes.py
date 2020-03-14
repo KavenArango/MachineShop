@@ -52,9 +52,9 @@ def signup():
 
         token = url.dumps(form.email.data, salt='email-confirm')
 
-        msg = Message('Welcome to the Machine Shop', recipients=[form.email.data])
+        msg = Message(subject='Welcome to the Machine Shop', recipients=[form.email.data])
         link = url_for('login.confirm_email',token=token, _external=True)
-        msg.html = '<h1>Welcome to the Machine Shop</h1> Please verify your email {}'.format(link)
+        msg.html = 'Please verify your email <a href="{}">Click Me </a>'.format(link)
         mail.send(msg)
         flash('Your account has been created! You may now log in', 'success')
         return redirect(url_for('login.login_form'))
@@ -87,9 +87,9 @@ def forgotPassword():
     if form.validate_on_submit():
         token = url.dumps(form.email.data, salt='pass-confirm')
 
-        msg = Message('Forgot Password', recipients=[form.email.data])
+        msg = Message(subject='Forgot Password', recipients=[form.email.data])
         link = url_for('login.reset_pass',token=token, _external=True)
-        msg.html = '<h1>Forgot Password</h1> Please Click on the link to reset password! {}'.format(link)
+        msg.html = 'Please Click on the link to reset password! <a href="{}">Click Me </a>'.format(link)
         mail.send(msg)
         flash('An Email Has Been Sent To Reset Your Password', 'success')
         return redirect(url_for('login.login_form'))
@@ -132,9 +132,9 @@ def reset_input(token):
 def resend():
     token = url.dumps(current_user.email, salt='email-confirm')
 
-    msg = Message('Email Conformation', recipients=[current_user.email])
+    msg = Message(subject='Email Conformation', recipients=[current_user.email])
     link = url_for('login.confirm_email', token=token, _external=True)
-    msg.html = '<h1>Email Conformation</h1> Please verify your email {}'.format(link)
+    msg.html = 'Please verify your email <a href="{}">Click Me </a>'.format(link)
     mail.send(msg)
     #logout_user()
     flash('Email Verification sent!')
