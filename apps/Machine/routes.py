@@ -8,6 +8,6 @@ Machine_View = Blueprint('Machine_View', __name__)
 @Machine_View.route('/machine')
 @login_required
 def Machine():
-    template = "Machine/MachineDes.html"
+    template = "Machine/testing.html"
     return render_template(template)
 
