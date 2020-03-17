@@ -30,14 +30,23 @@ Machine Descriptions
 </head>
 
      <div class="dropdown" style="float:left;">
-         <button class="dropbtn">upload images</button>
+         <button class="dropbtn">Select Room</button>
          <div class="dropdown-content" style="left:0;">
-             <tr>
-                 <td>
-                     <input type="radio" id="male" name="gender" value="male">
-                     <label for="male">Male</label><br>
-                 </td>
-             </tr>
+{#             {% for machine in ball%}#}
+                 <tr>
+                     <td>
+                         <input type="radio" id="103" name="103" value="103">
+                         <label for="103">103</label><br>
+                     </td>
+                 </tr>
+
+{#                 <tr>#}
+{#                     <td>#}
+{#                         <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id)}}">{{ machine.machine_name }}</a>#}
+{#                     </td>#}
+{#                 </tr>#}
+{#             {% endfor %}#}
+
          </div>
      </div>
 
