@@ -51,8 +51,32 @@ def profile():
 def requests():
     form = RequestForm()
     form1 = RequestExamForm()
+    post = Student.query.filter(Student.user_id == current_user.id).join(
+        Users, Users.id == Student.user_id
+    ).join(
+        models.machines, models.machines.id == Student.machine_id
+    ).join(
+        majors, majors.id == Student.major_id
+    ).join(
+        Levels, Levels.id == Student.level_id
+    ).with_entities(
+        Student.id.label("id"),
+        models.machines.machine_name.label("machine_name"),
+        Levels.description.label("description"),
+        Users.id.label("User_id")
+    ).first()
+
+    detail = Student.query.filter(Student.user_id == post.User_id).join(
+        models.machines, models.machines.id == Student.machine_id
+    ).join(
+        Levels, Levels.id == Student.level_id
+    ).with_entities(
+        models.machines.machine_name.label("machine_name"),
+        Levels.description.label("description")
+    ).all()
     if (current_user.email_ver < 1):
-        flash(Markup('You Must Verify Email To Access <a href="/resend" class="alert-link">Resend Email Verification?</a>',))
+        flash(Markup(
+            'You Must Verify Email To Access <a href="/resend" class="alert-link">Resend Email Verification?</a>', ))
         return redirect(url_for('Main_View.home'))
     if current_user.passed_exam > 1:
         form.request.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=2)]
@@ -64,7 +88,7 @@ def requests():
             db.session.add(request)
             db.session.commit()
             return redirect(url_for('Main_View.home'))
-        return render_template("StudentPage/request.html", title="Request Form", form=form)
+        return render_template("StudentPage/request.html", title="Request Form", form=form, detail=detail)
     else:
         form1.requests.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=1)]
         if form1.validate_on_submit():
@@ -72,10 +96,20 @@ def requests():
             db.session.add(request)
             db.session.commit()
             return redirect(url_for('Main_View.home'))
-        return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1)
+        return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, detail=detail)
+
 
 @Student_view.route('/announcement')
 @login_required
 def post():
-    posts = Post.query.all()
+    posts = Post.query.filter(Post.author == Users.id).join(
+        Users, Users.id == Post.author
+    ).with_entities(
+        Post.id.label("id"),
+        Users.first_name.label("first_name"),
+        Users.last_name.label("last_name"),
+        Post.content.label("content"),
+        Post.title.label("title"),
+        Post.date_posted.label("date_posted")
+    ).all()
     return render_template("StudentPage/Post.html", title="Announcement", posts=posts)

@@ -31,7 +31,7 @@ WTForms
 
              <h2 >{{ post.title }}</h2>
                 <p>{{ post.content }}</p>
-        <a href="{{ url_for('Staff_View.post', post_id=post.id) }}"> Posted by: {{ post.author }}</a>
+        <a href="{{ url_for('Staff_View.post', post_id=post.id) }}"> Posted by: {{ post.first_name }} {{ post.last_name }}</a>
             <div>
              <small> On: {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
