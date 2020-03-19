@@ -28,38 +28,52 @@ Machine Descriptions
 
 
 </head>
-
-     <div class="dropdown" style="float:left;">
-         <button class="dropbtn">Select Room</button>
-         <div class="dropdown-content" style="left:0;">
-{#             {% for machine in ball%}#}
-                 <tr>
-                     <td>
-                         <input type="radio" id="103" name="103" value="103">
-                         <label for="103">103</label><br>
-                     </td>
-                 </tr>
-
-{#                 <tr>#}
-{#                     <td>#}
-{#                         <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id)}}">{{ machine.machine_name }}</a>#}
-{#                     </td>#}
-{#                 </tr>#}
-{#             {% endfor %}#}
-
-         </div>
-     </div>
-
      <body>
+        <div class="dropdown" style="float:left;">
+            <button class="dropbtn">Select Room</button>
+            <div class="dropdown-content" style="left:0;">
+
+            </div>
+        </div>
+
+        {% for room in Rooms%}
+            <tr>
+                <td>
+                    {{ room.room_num }}
+                </td>
+            </tr>
+        {% endfor %}
 
 
-   <form method=post enctype=multipart/form-data>
-       <input type=file name=file>
-       <input type=submit value=Upload>
-   </form>
 
 
-    </body>
+
+
+
+
+
+
+        <form method=post enctype=multipart/form-data>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+
+
+        </form>
+<div id="help">
+        {% for room in Rooms%}
+                    <tr>
+                        <td>
+                            <a>{{ room.roomNum }}</a>
+                        </td>
+                    </tr>
+
+        {% endfor %}
+
+</div>
+
+
+      <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
+     </body>
 
 
 

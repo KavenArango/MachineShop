@@ -3,9 +3,11 @@ from app import ALLOWED_EXTENSIONS, uploaded_file, app
 from flask import Flask, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from apps.Machine import models
+from apps.Machine.models import building
 from flask import Blueprint
 from flask import render_template, session
 from flask_login import current_user, login_required
+from apps.AdminBookingPage.forms import Roomform
 
 
 admin_booking_View = Blueprint('adminBooking_View', __name__)
@@ -47,6 +49,19 @@ def bookingpage():
 def room():
     template = "adminBookingPage/RoomEdit.html"
     Room = models.room.query.distinct(models.room.room_num).all()
-    return render_template(template)
+    return render_template(template, Rooms=Room)
 
+
+@admin_booking_View.route('/adminbooking/room/creation', methods=['get', 'post'])
+@login_required
+def roomcreation():
+    form = Roomform()
+    template = "adminBookingPage/createRoom.html"
+    form.Building.choices = [(building.id, building.building_name) for building in building.query.all()]
+    Room = models.room.query.distinct(models.room.room_num).all()
+    # Buildings = models.building.building_name
+    if form.validate_on_submit():
+        # Room = models.room.query.distinct(models.room.room_num).all()
+        return redirect(url_for('adminBooking_View.room'))
+    return render_template(template, Rooms=Room, form=form)
 
