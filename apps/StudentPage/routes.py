@@ -9,7 +9,7 @@ from apps.StudentPage.models import Student, majors, Notification
 from flask_login import current_user, login_required
 from app import db
 from apps.StaffPage.models import Post
-from datetime import datetime, time
+from datetime import datetime
 Student_view = Blueprint('Student_view', __name__)
 
 
@@ -101,7 +101,7 @@ def requests():
             db.session.add(request)
             db.session.commit()
             notification = Notification(user_id=current_user.id, description="You have Succefully submmited a request!",
-                                        delete_bool=0, date_receive=time)
+                                        delete_bool=0, date_receive=datetime.now())
             db.session.add(notification)
             db.session.commit()
             return redirect(url_for('Main_View.home'))

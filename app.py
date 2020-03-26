@@ -33,11 +33,10 @@ app.config['SECRET_KEY'] = 'KILLME'
 
 url = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
-params = urllib.parse.quote_plus("Driver={ODBC Driver 17 for SQL Server};"
-                                 "Server=tcp:idea-lab1.database.windows.net,1433;Database=machineshop;Uid=jsnow;"
-                                 "Pwd=Kavensteveshannonalldumb!;Encrypt=yes;TrustServerCertificate=no;"
-                                 "Connection Timeout=30;")
-app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://jsnow:Kavensteveshannonalldumb!@" \
+                                        "idea-lab1.database.windows.net:1433/machineshop1?" \
+                                        "DRIVER={ODBC Driver 17 for SQL Server}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
