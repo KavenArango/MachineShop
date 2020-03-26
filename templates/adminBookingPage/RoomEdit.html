@@ -15,34 +15,37 @@ Machine Descriptions
 {% endblock %}
 
 {% block content %}
- <div class="container">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-        {% endfor %}
-<head>
-    <meta charset="UTF-8">
-    <title>MachineInfo</title>
+    {#    <div class="container">#}
+{#        {% for message in get_flashed_messages() %}#}
+{#            <div class="alert alert-warning">#}
+{#                <button type="button" class="close" data-dismiss="alert">&times;</button>#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
 
+    <head>
+        <meta charset="UTF-8">
+        <title>MachineInfo</title>
+    </head>
 
-</head>
-     <body>
+    <body>
+
         <div class="dropdown" style="float:left;">
-            <button class="dropbtn">Select Room</button>
+            <button class="dropbtn">Rooms</button>
             <div class="dropdown-content" style="left:0;">
-
+                {% for room in Rooms%}
+                    {% if machine.machine_name != "Default" %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('adminBooking_View.building', room_ID=room.id)}}">{{ room.room_num }}</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
 
-        {% for room in Rooms%}
-            <tr>
-                <td>
-                    {{ room.room_num }}
-                </td>
-            </tr>
-        {% endfor %}
 
 
 
@@ -53,23 +56,10 @@ Machine Descriptions
 
 
 
-        <form method=post enctype=multipart/form-data>
-            <input type=file name=file>
-            <input type=submit value=Upload>
-
-
-        </form>
-<div id="help">
-        {% for room in Rooms%}
-                    <tr>
-                        <td>
-                            <a>{{ room.roomNum }}</a>
-                        </td>
-                    </tr>
-
-        {% endfor %}
-
-</div>
+{#        <form method=post enctype=multipart/form-data>#}
+{#            <input type=file name=file>#}
+{#            <input type=submit value=Upload>#}
+{#        </form>#}
 
 
       <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>

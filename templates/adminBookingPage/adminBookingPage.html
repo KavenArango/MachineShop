@@ -11,57 +11,57 @@ Machine Descriptions
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/AdminBooking/AdminBookingPage.css') }}">
-
 {% endblock %}
-
 {% block content %}
- <div class="container">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-        {% endfor %}
-<head>
-    <meta charset="UTF-8">
-    <title>MachineInfo</title>
+{#    <div class="container">#}
+{#        {% for message in get_flashed_messages() %}#}
+{#            <div class="alert alert-warning">#}
+{#                <button type="button" class="close" data-dismiss="alert">&times;</button>#}
+{#                {{ message }}#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#    </div>#}
+
+    <head>
+        <meta charset="UTF-8">
+        <title>AdminBooking</title>
+    </head>
 
 
-</head>
 
- <div class="dropdown" style="float:left;">
-        <button class="dropbtn">upload images</button>
+    <div class="dropdown" style="float:left;">
+        <button class="dropbtn">Machines</button>
         <div class="dropdown-content" style="left:0;">
-
+            	{% for building in Buildings%}
+{#                    {% if machine.machine_name != "Default" %}#}
                         <tr>
                             <td>
-                                <a href="{{ url_for('adminBooking_View.room')}}">Room</a>
+                                <a href="{{ url_for('adminBooking_View.building', building_id=building.id)}}">{{ building.building_name }}</a>
                             </td>
                         </tr>
+{#                    {% endif %}#}
+                {% endfor %}
         </div>
     </div>
 
-    <body id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="31">
-    </div>
-
-
-
-    <div class="bridgeport">
-        <div class="bridgeport_img">
-            <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/Bridgeport.jpg")}}' width="300" height="300"/>
-        </div>
-    </div>
-
-    <form method=post enctype=multipart/form-data>
-        <input type=file name=file>
-        <input type=submit value=Upload>
-   </form>
+{#    <body id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">#}
+{#    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">#}
+{#        <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="31">#}
+{#    </div>#}
+{#    <div class="bridgeport">#}
+{#        <div class="bridgeport_img">#}
+{#            <img style="margin-left:25px;" src='{{  url_for( 'static' , filename= "images/Bridgeport.jpg")}}' width="300" height="300"/>#}
+{#        </div>#}
+{#    </div>#}
 
 
-    </body>
+     <body>
+{#     <form method=post enctype=multipart/form-data>#}
+{#         <input type=file name=file>#}
+{#         <input type=submit value=Upload>#}
+{#     </form>#}
+
+     </body>
 
 
 

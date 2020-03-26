@@ -13,8 +13,6 @@ from apps.AdminBookingPage.forms import Roomform
 admin_booking_View = Blueprint('adminBooking_View', __name__)
 
 
-
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -24,6 +22,8 @@ def allowed_file(filename):
 @login_required
 def bookingpage():
     template = "adminBookingPage/adminBookingPage.html"
+    Buildings = models.building.query.distinct(models.building.building_name).all()
+
     if request.method == 'POST':
         print(request.files)
         # check if the post request has the file part
@@ -41,15 +41,26 @@ def bookingpage():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     #       TELL USER IMAGE HAS BEEN SENT
 
-    return render_template(template)
+    return render_template(template, Buildings=Buildings)
 
 
-@admin_booking_View.route('/adminbooking/room', methods=['get', 'post'])
+# @admin_booking_View.route('/adminbooking/room', methods=['get', 'post'])
+# @login_required
+# def room():
+#     template = "adminBookingPage/RoomEdit.html"
+#     room = models.room.query.distinct(models.room.room_num).all()
+#     return render_template(template, Rooms=room)
+
+
+
+@admin_booking_View.route('/adminbooking/building/<building_id>', methods=['get', 'post'])
 @login_required
-def room():
+def building(building_id):
     template = "adminBookingPage/RoomEdit.html"
-    Room = models.room.query.distinct(models.room.room_num).all()
-    return render_template(template, Rooms=Room)
+    Rooms = models.room.query.distinct(models.room.room_num).all()
+    return render_template(template, Rooms=Rooms)
+
+
 
 
 @admin_booking_View.route('/adminbooking/room/creation', methods=['get', 'post'])
