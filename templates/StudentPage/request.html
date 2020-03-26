@@ -1,17 +1,16 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% include "Home Page/Nav.html" %}
 {% block title %}
 WTForms
 {% endblock %}
 
-{% block navbar %}
-        {{ nav.my_nav.render() }}
-{% endblock %}
+
+
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/testing.css') }}">
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/request.css') }}">
 
 {% endblock %}
 
@@ -31,22 +30,17 @@ WTForms
             {{ message }}
         </div>
         {% endfor %}
-<div class="table table-hover">
 
-		<table class="table" id="data_table">
-			<thead>
+
+		<table class="table table-bordered table-hover" id="data_table">
+			<thead >
 			<tr>
                 <th scope="col">Machine</th>
                 <th scope="col">Level</th>
 			</tr>
 			</thead>
 
-            <tfoot>
-            <tr>
-            <td colspan="2">
-            </td>
-            </tr>
-            </tfoot>
+
 
 			<tbody>
 			   	{% for details in detail%}
@@ -59,7 +53,9 @@ WTForms
 				{% endfor %}
 			</tbody>
 		</table>
-	</div>
+
+     <h1 align="center">Request</h1>
+     <h4 align="center">Below you can request to level up on a Machine that you have completed workshops on</h4>
     <form method="post">
 
         {{ form.csrf_token }}

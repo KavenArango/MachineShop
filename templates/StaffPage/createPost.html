@@ -1,17 +1,15 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% include "Home Page/Nav.html" %}
 {% block title %}
-Staff Page
+Post Announcement
 {% endblock %}
 
-{% block navbar %}
-        {{ nav.my_nav.render() }}
-{% endblock %}
+
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/studentsearch.css') }}">
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/createpost.css') }}">
 
 {% endblock %}
 
@@ -23,11 +21,31 @@ Staff Page
     </div>
         {% endfor %}
 
+    <section class="hero" id="hero">
+      <h2 class="hero_header"><span class="light">Post Announcement&nbsp;</span></h2>
+
+
+  </section>
+
+    <div class="header_announce">
+    <h1 style="color:  #0c3270">Create A Post Below</h1>
+    </div>
+
 <div class="content-section">
     <form method="POST" action="">
         {{ wtf.quick_form(form) }}
     </form>
 </div>
+    </div>
+
+     <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="hero_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
+  </section>
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2019- <strong></strong></div>
+
 
 
 

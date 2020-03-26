@@ -5,11 +5,11 @@ from apps.StudentPage.models import Levels
 from apps.StaffPage.models import Request, Request_Des
 from apps.Machine import models
 from apps.accounts.models import Users
-from apps.StudentPage.models import Student, majors
+from apps.StudentPage.models import Student, majors, Notification
 from flask_login import current_user, login_required
 from app import db
 from apps.StaffPage.models import Post
-
+from datetime import datetime, time
 Student_view = Blueprint('Student_view', __name__)
 
 
@@ -87,6 +87,11 @@ def requests():
                               level_id=form.level.data, requests_id=form.request.data)
             db.session.add(request)
             db.session.commit()
+            notification = Notification(user_id=current_user.id, description="You have Succefully submmited a you lab"
+                                                                             "safety request!",
+                                        delete_bool=0, date_receive=datetime.now())
+            db.session.add(notification)
+            db.session.commit()
             return redirect(url_for('Main_View.home'))
         return render_template("StudentPage/request.html", title="Request Form", form=form, detail=detail)
     else:
@@ -94,6 +99,10 @@ def requests():
         if form1.validate_on_submit():
             request = Request(user_id=current_user.id, machine_id=1, level_id=1, requests_id=form1.requests.data)
             db.session.add(request)
+            db.session.commit()
+            notification = Notification(user_id=current_user.id, description="You have Succefully submmited a request!",
+                                        delete_bool=0, date_receive=time)
+            db.session.add(notification)
             db.session.commit()
             return redirect(url_for('Main_View.home'))
         return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, detail=detail)

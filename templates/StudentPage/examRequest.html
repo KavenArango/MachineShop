@@ -1,18 +1,17 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% include "Home Page/Nav.html" %}
 {% block title %}
 Profile
 {% endblock %}
 
-{% block navbar %}
-        {{ nav.my_nav.render() }}
-{% endblock %}
+
+
 
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/testing.css') }}">
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/request.css') }}">
 
 {% endblock %}
 
@@ -54,8 +53,8 @@ Profile
 		</table>
 
      <div class="request">
-     <h1 align="center">Level Request</h1>
-     <h4 align="center">Below is a drop down menu where you may select to put in a request that you have passed your exam</h4>
+     <h1 align="center">Exam Pass Request</h1>
+     <h4 align="center">After passing the Safety Exam please fill out the request form below for full site access</h4>
         {% for message in get_flashed_messages() %}
         <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times;</button>

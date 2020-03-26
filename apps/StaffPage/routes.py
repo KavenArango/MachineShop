@@ -2,11 +2,12 @@ from flask import Blueprint, redirect, url_for, flash, abort, request
 from flask import render_template, g
 from app import db
 from apps.accounts.models import Users
-from apps.StudentPage.models import Student, majors, Levels
+from apps.StudentPage.models import Student, majors, Levels, Notification
 from apps.StaffPage.forms import Staff_Student, Staff_Request, PostForm
 from apps.Machine import models
 from .models import Request, Request_Des, Post
 from flask_login import current_user, login_required
+from datetime import datetime
 
 Staff_View = Blueprint('Staff_View', __name__)
 
@@ -142,6 +143,10 @@ def request_detail(request_id):
             for levelups in levelUp:
                 levelups.level_id = levelups.level_id + 1
             Request.query.filter_by(id=post.id).delete()
+            db.session.commit()
+            notification = Notification(user_id=user.id, description="You have Succefully passed the Saftey Lab Test",
+                                        delete_bool=1, date_receives=datetime.now())
+            db.session.add(notification)
             db.session.commit()
             flash('test1')
             return redirect(url_for('Staff_View.request_search'))

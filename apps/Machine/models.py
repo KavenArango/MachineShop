@@ -46,6 +46,6 @@ class tool_User(db.Model):
     first_name = db.Column(db.String(20),nullable=False)
     last_name = db.Column(db.String(20),nullable=False)
     tool = db.Column(db.String(100), nullable=False)
-    check_in_date = db.Column(db.DATE, nullable=False)
-    check_out_date = db.Column(db.DATE, nullable=True)
+    check_in_date = db.Column(db.Date)
+    check_out_date = db.Column(db.Date)
     checked = db.Column(db.Integer)
