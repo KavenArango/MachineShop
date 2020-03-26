@@ -11,28 +11,74 @@ WTForms
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/login-signup/login.css') }}">
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/testing.css') }}">
 
 {% endblock %}
 
 {% block content %}
-<h1 align="center">Request Form</h1>
+    <div class="container">
+  <section class="hero" id="hero">
+      <h2 class="hero_header"><span class="light">The IDE&nbsp;</span></h2>
+      <h2 class="hero_header"><span class="light">Innovation Lab&nbsp;</span></h2>
 
-     <div class="container">
+  </section>
+<h1 align="center">{{ current_user.first_name }} {{ current_user.last_name }}</h1>
+
+     <div class="request">
         {% for message in get_flashed_messages() %}
         <div class="alert alert-warning">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             {{ message }}
         </div>
         {% endfor %}
+<div class="table table-hover">
+
+		<table class="table" id="data_table">
+			<thead>
+			<tr>
+                <th scope="col">Machine</th>
+                <th scope="col">Level</th>
+			</tr>
+			</thead>
+
+            <tfoot>
+            <tr>
+            <td colspan="2">
+            </td>
+            </tr>
+            </tfoot>
+
+			<tbody>
+			   	{% for details in detail%}
+                    {% if details.machine_name != "Default" %}
+                    <tr>
+                        <td>{{ details.machine_name }}</td>
+                        <td>{{ details.description }}</td>
+					</tr>
+                    {% endif %}
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
     <form method="post">
 
         {{ form.csrf_token }}
         <h2>{{wtf.quick_form(form)}}</h2>
-
-
     </form>
     </div>
+
+
+
+      <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="hero_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
+  </section>
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2019- <strong></strong></div>
+</div>
+<!-- Main Container Ends -->
+</body>
 {% endblock %}
 
 

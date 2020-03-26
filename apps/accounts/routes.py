@@ -146,7 +146,7 @@ def logout():
 
 @login_view.route('/send', methods=['get', 'post'])
 def send():
-    client.send_message({'from': '15739191005', 'to': '19778473976', 'text': 'WE DID IT DAWG'})
+    client.send_message({'from': '15739191005', 'to': '13055100402', 'text': 'A message has been sent from MachineShop'})
     flash('Sent')
     return redirect(url_for('login.login_form'))
 
