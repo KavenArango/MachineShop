@@ -35,10 +35,11 @@ Machine Descriptions
             <button class="dropbtn">Rooms</button>
             <div class="dropdown-content" style="left:0;">
                 {% for room in Rooms%}
-                    {% if machine.machine_name != "Default" %}
+                    {% if room.building_id == Building.building_name %}
                         <tr>
                             <td>
-                                <a href="{{ url_for('adminBooking_View.building', room_ID=room.id)}}">{{ room.room_num }}</a>
+{#                                {{ url_for('adminBooking_View.building', room_ID=room.id)}}#}
+                                <a href="">{{ room.room_num }}</a>
                             </td>
                         </tr>
                     {% endif %}

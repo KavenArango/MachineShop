@@ -1,5 +1,5 @@
 import os
-from app import ALLOWED_EXTENSIONS, uploaded_file, app
+from app import ALLOWED_EXTENSIONS, uploaded_file, app, db
 from flask import Flask, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from apps.Machine import models
@@ -40,7 +40,6 @@ def bookingpage():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     #       TELL USER IMAGE HAS BEEN SENT
-
     return render_template(template, Buildings=Buildings)
 
 
@@ -58,7 +57,8 @@ def bookingpage():
 def building(building_id):
     template = "adminBookingPage/RoomEdit.html"
     Rooms = models.room.query.distinct(models.room.room_num).all()
-    return render_template(template, Rooms=Rooms)
+    Building = models.building.query.filter_by(id=building_id).first()
+    return render_template(template, Rooms=Rooms, Building=Building)
 
 
 
@@ -68,11 +68,18 @@ def building(building_id):
 def roomcreation():
     form = Roomform()
     template = "adminBookingPage/createRoom.html"
-    form.Building.choices = [(building.id, building.building_name) for building in building.query.all()]
+    form.Building.choices = [(m.id, m.building_name) for m in
+                             models.building.query.distinct(models.building.building_name).all()]
     Room = models.room.query.distinct(models.room.room_num).all()
     # Buildings = models.building.building_name
     if form.validate_on_submit():
-        # Room = models.room.query.distinct(models.room.room_num).all()
-        return redirect(url_for('adminBooking_View.room'))
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            room = Room(room_num=form.RoomNum.data, room_outline=filename, building_id=form.Building.data)
+            db.session.add(room)
+            db.session.commit()
+            return redirect(url_for('adminBooking_View.building', building_id=form.Building.id))
     return render_template(template, Rooms=Room, form=form)
 

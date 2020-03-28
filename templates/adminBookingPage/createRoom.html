@@ -32,18 +32,13 @@ Register
 {#     <img src='{{  url_for( 'static' , filename= "images/pencilicon.png")}}' class = "img-icon" width="300" height="400" />#}
 
 
-     <form method="post">
+     <form method="post" enctype=multipart/form-data>>
          {{ form.csrf_token() }}
  <h1>Room</h1>
          <div class="form-group col-md-6">
              Room number
              {{ wtf.form_field(form.RoomNum, class='form-control', placeholder='000') }}
          </div>
-         <div class="form-group col-md-6">
-             Room Name
-             {{ wtf.form_field(form.RoomName, class='form-control', placeholder='Room Name') }}
-         </div>
-
          <div class="form-group col-md-6">
              {{ wtf.form_field(form.Building, class='form-control') }}
          </div>

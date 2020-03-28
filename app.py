@@ -37,14 +37,16 @@ params = urllib.parse.quote_plus("Driver={ODBC Driver 17 for SQL Server};"
                                  "Server=tcp:idea-lab1.database.windows.net,1433;Database=machineshop;Uid=jsnow;"
                                  "Pwd=Kavensteveshannonalldumb!;Encrypt=yes;TrustServerCertificate=no;"
                                  "Connection Timeout=30;")
-app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://jsnow:Kavensteveshannonalldumb!@" \
+                                        "idea-lab1.database.windows.net:1433/machineshop1?" \
+                                        "DRIVER={ODBC Driver 17 for SQL Server}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-# app.config['MAIL_DEBUG'] =
 app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
 app.config['MAIL_PASSWORD'] = "Clownpictures"
 app.config['MAIL_DEFAULT_SENDER'] = "Idea Lab Snhu"

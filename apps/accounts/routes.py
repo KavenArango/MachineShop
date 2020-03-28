@@ -57,8 +57,8 @@ def signup():
         flash('Your account has been created! You may now log in', 'success')
         return redirect(url_for('login.login_form'))
 
-
     return render_template("accounts/signup.html", title="Signup", form=form)
+
 
 @login_view.route('/confirm_email/<token>')
 def confirm_email(token):
