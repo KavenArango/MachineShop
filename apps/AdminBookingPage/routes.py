@@ -38,7 +38,6 @@ def bookingpage():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     #       TELL USER IMAGE HAS BEEN SENT
-
     return render_template(template)
 
 
@@ -46,7 +45,7 @@ def bookingpage():
 @login_required
 def room():
     template = "adminBookingPage/RoomEdit.html"
-    RoomNumber = machines.query.distinct(machines.machine_name).all()
+    RoomNumber = models.machines.query.distinct(models.machines.machine_name).all()
     return render_template(template)
 
 

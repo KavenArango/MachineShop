@@ -1,83 +1,102 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% include "Home Page/Nav.html" %}
+
+
 {% block title %}
-WTForms
+Profile
 {% endblock %}
 
-
-
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
 
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/request.css') }}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
+    <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
 
 {% endblock %}
+
 
 {% block content %}
-    <div class="container">
-  <section class="hero" id="hero">
-      <h2 class="hero_header"><span class="light">The IDE&nbsp;</span></h2>
-      <h2 class="hero_header"><span class="light">Innovation Lab&nbsp;</span></h2>
-
-  </section>
-<h1 align="center">{{ current_user.first_name }} {{ current_user.last_name }}</h1>
-
-     <div class="request">
-        {% for message in get_flashed_messages() %}
-        <div class="alert alert-warning">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            {{ message }}
-        </div>
-        {% endfor %}
 
 
-		<table class="table table-bordered table-hover" id="data_table">
-			<thead >
-			<tr>
-                <th scope="col">Machine</th>
-                <th scope="col">Level</th>
-			</tr>
-			</thead>
+<div>
+<!-- Header content -->
+<header>
+<div class="container">
+  <div class="profileLogo">
+    <!-- Profile logo. Add a img tag in place of <span>. -->
+    <p class="logoPlaceholder"><!-- <img src="logoImage.png" alt="sample logo"> --><span>Profile</span></p>
+  </div>
 
+  <div class="profilePhoto">
+    <!-- Profile photo -->
+    <img  src="{{ image }}"> </div>
+  <!-- Identity details -->
+  <section class="profileHeader">
+    <h1>{{ current_user.first_name }} {{ current_user.last_name }}</h1>
+    <h3>Student user of the Innovation Idea Lab&nbsp;</h3>
+    <hr>
 
+    <div class="section1Content">
 
-			<tbody>
-			   	{% for details in detail%}
-                    {% if details.machine_name != "Default" %}
-                    <tr>
-                        <td>{{ details.machine_name }}</td>
-                        <td>{{ details.description }}</td>
-					</tr>
-                    {% endif %}
-				{% endfor %}
-			</tbody>
-		</table>
-
-     <h1 align="center">Request</h1>
-     <h4 align="center">Below you can request to level up on a Machine that you have completed workshops on</h4>
-    <form method="post">
-
-        {{ form.csrf_token }}
-        <h2>{{wtf.quick_form(form)}}</h2>
-    </form>
+        <p><span>Username:</span> {{ current_user.username }}</p>
+        <p><span>Email:</span> {{ current_user.email }}</p>
     </div>
-
-
-
-      <section class="footer_banner" id="contact">
-    <h2 class="hidden">Footer Banner Section </h2>
-    <p class="hero_header">FOR THE LATEST NEWS &amp; UPDATES</p>
-      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
   </section>
-  <!-- Copyrights Section -->
-  <div class="copyright">&copy;2019- <strong></strong></div>
+  <!-- Links to Social network accounts -->
+  <aside class="socialNetworkNavBar">
+      <form method=post enctype=multipart/form-data>
+      {{ wtf.quick_form(form2) }}
+</form>
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+
+  </aside>
 </div>
-<!-- Main Container Ends -->
+</header>
+
+<!-- content -->
+<section class="mainContent">
+  <!-- Contact details -->
+  <section class="section1">
+    <h2 class="sectionTitle">Machine Levels&nbsp;</h2>
+    <hr class="sectionTitleRule">
+    <hr class="sectionTitleRule2">
+    <div class="section1Content">
+      {% for details in detail%}
+            {% if details.machine_name != "Default" %}
+                <p><span>{{ details.machine_name }}:</span> {{ details.description }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+  </section>
+  <!-- Previous experience details -->
+  <section class="section2">
+    <h2 class="sectionTitle">Requests&nbsp;</h2>
+    <hr class="sectionTitleRule">
+    <hr class="sectionTitleRule2">
+      <h5>Below you can request to level up on each individual machine after completing a workshop</h5>
+    {{ form.csrf_token }}
+        <h3>{{wtf.quick_form(form)}}</h3>
+  </section>
+  <!-- Links to expore your past projects and download your CV -->
+
+</section>
+</div>
+
+
+  <div class="copyright">&copy;2019- <strong></strong></div>
+
 </body>
 {% endblock %}
-
-
-
-
-
