@@ -35,7 +35,7 @@ Profile
 
   <div class="profilePhoto">
     <!-- Profile photo -->
-    <img  src="{{ image }}"> </div>
+    <img  class="circular--square" src="{{ image }}"> </div>
   <!-- Identity details -->
   <section class="profileHeader">
     <h1>{{ current_user.first_name }} {{ current_user.last_name }}</h1>
@@ -47,12 +47,16 @@ Profile
         <p><span>Username:</span> {{ current_user.username }}</p>
         <p><span>Email:</span> {{ current_user.email }}</p>
     </div>
+      <div class="profile_photo">
+      <form method=post enctype=multipart/form-data>
+      {{ wtf.quick_form(form2) }}
+        </form>
+      </div>
+
   </section>
   <!-- Links to Social network accounts -->
   <aside class="socialNetworkNavBar">
-      <form method=post enctype=multipart/form-data>
-      {{ wtf.quick_form(form2) }}
-</form>
+
     <div class="socialNetworkNav">
       <!-- Add a Anchor tag with nested img tag here -->      </div>
     <div class="socialNetworkNav">

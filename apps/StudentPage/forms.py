@@ -16,5 +16,5 @@ class RequestExamForm(FlaskForm):
     submit = SubmitField('Submit Form')
 
 class Profile(FlaskForm):
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Update profile picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update Photo')
