@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6ab4152bfa45
+Revision ID: f14fb390dfda
 Revises: 
-Create Date: 2020-03-12 18:09:36.871042
+Create Date: 2020-03-26 15:33:38.921051
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6ab4152bfa45'
+revision = 'f14fb390dfda'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,6 +34,12 @@ def upgrade():
     sa.Column('image', sa.String(length=100), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('machine_join',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('x_pos', sa.Integer(), nullable=True),
+    sa.Column('y_pos', sa.Integer(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('machine_type',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('machine_type', sa.String(length=100), nullable=True),
@@ -50,14 +56,19 @@ def upgrade():
     sa.Column('description', sa.String(length=150), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('room_image',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('image', sa.String(length=100), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('tool__user',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=80), nullable=False),
     sa.Column('first_name', sa.String(length=20), nullable=False),
     sa.Column('last_name', sa.String(length=20), nullable=False),
     sa.Column('tool', sa.String(length=100), nullable=False),
-    sa.Column('check_in_date', sa.DATE(), nullable=False),
-    sa.Column('check_out_date', sa.DATE(), nullable=True),
+    sa.Column('check_in_date', sa.Date(), nullable=True),
+    sa.Column('check_out_date', sa.Date(), nullable=True),
     sa.Column('checked', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -77,16 +88,25 @@ def upgrade():
     op.create_table('machines',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('machine_name', sa.String(length=20), nullable=True),
-    sa.Column('description', sa.String(length=180), nullable=True),
+    sa.Column('description', sa.String(length=500), nullable=True),
     sa.Column('machine_type_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['machine_type_id'], ['machine_type.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('notification',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('description', sa.String(length=150), nullable=True),
+    sa.Column('date_receive', sa.Date(), nullable=True),
+    sa.Column('delete_bool', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('post',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=100), nullable=False),
     sa.Column('date_posted', sa.DateTime(), nullable=False),
-    sa.Column('content', sa.Text(), nullable=False),
+    sa.Column('content', sa.String(length=255), nullable=False),
     sa.Column('author', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['author'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -94,9 +114,10 @@ def upgrade():
     op.create_table('room',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('room_num', sa.Integer(), nullable=True),
-    sa.Column('room_outline', sa.String(length=100), nullable=True),
+    sa.Column('room_image', sa.Integer(), nullable=True),
     sa.Column('building_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['building_id'], ['building.id'], ),
+    sa.ForeignKeyConstraint(['room_image'], ['room_image.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('staff',
@@ -117,12 +138,12 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('machine_join',
+    op.create_table('machine_shop_map',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('machine_id', sa.Integer(), nullable=True),
-    sa.Column('x_pos', sa.Integer(), nullable=True),
-    sa.Column('y_pos', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['machine_id'], ['machines.id'], ),
+    sa.Column('room_id', sa.Integer(), nullable=True),
+    sa.Column('machine_join_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['machine_join_id'], ['machine_join.id'], ),
+    sa.ForeignKeyConstraint(['room_id'], ['room.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('request',
@@ -149,14 +170,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('machine_shop_map',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('room_id', sa.Integer(), nullable=True),
-    sa.Column('machine_join_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['machine_join_id'], ['machine_join.id'], ),
-    sa.ForeignKeyConstraint(['room_id'], ['room.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('student_level',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('student_id', sa.Integer(), nullable=True),
@@ -173,20 +186,22 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('student_level')
-    op.drop_table('machine_shop_map')
     op.drop_table('student')
     op.drop_table('request')
-    op.drop_table('machine_join')
+    op.drop_table('machine_shop_map')
     op.drop_table('booking')
     op.drop_table('staff')
     op.drop_table('room')
     op.drop_table('post')
+    op.drop_table('notification')
     op.drop_table('machines')
     op.drop_table('users')
     op.drop_table('tool__user')
+    op.drop_table('room_image')
     op.drop_table('request__des')
     op.drop_table('majors')
     op.drop_table('machine_type')
+    op.drop_table('machine_join')
     op.drop_table('machine_image')
     op.drop_table('levels')
     op.drop_table('building')

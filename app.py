@@ -4,10 +4,8 @@ from flask_bcrypt import Bcrypt
 from flask_uploads import uploaded_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
-from flask_admin import Admin, AdminIndexView
+from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.contrib.sqla import ModelView
-
-
 
 from flask_mail import Mail
 from itsdangerous import URLSafeTimedSerializer
@@ -15,12 +13,6 @@ import nexmo
 from flask_bootstrap import Bootstrap
 from flask_nav import Nav
 from flask_nav.elements import Navbar, Subgroup, View, Link, Text, Separator
-
-
-
-
-
-
 
 
 UPLOAD_FOLDER = "static/media"
@@ -41,11 +33,10 @@ app.config['SECRET_KEY'] = 'KILLME'
 
 url = URLSafeTimedSerializer(app.config['SECRET_KEY'])
 
-params = urllib.parse.quote_plus("Driver={ODBC Driver 17 for SQL Server};"
-                                 "Server=tcp:idea-lab1.database.windows.net,1433;Database=machineshop;Uid=jsnow;"
-                                 "Pwd=Kavensteveshannonalldumb!;Encrypt=yes;TrustServerCertificate=no;"
-                                 "Connection Timeout=30;")
-app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://jsnow:Kavensteveshannonalldumb!@" \
+                                        "idea-lab1.database.windows.net:1433/machineshop1?" \
+                                        "DRIVER={ODBC Driver 17 for SQL Server}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -70,7 +61,8 @@ login_manager = LoginManager(app)
 
 from apps.Machine import models
 from apps.BookingPage.models import Booking
-from apps.StaffPage.models import Request, Post
+from apps.StaffPage.models import Request, Post, Request_Des
+from apps.accounts.models import Users
 from apps.Hompage.routes import Main_View
 from apps.StudentPage.routes import Student_view
 from apps.accounts.routes import login_view
@@ -95,20 +87,16 @@ class MyAdminIndexView(AdminIndexView):
         return current_user.is_authenticated and current_user.user_type == 2
 
     def inaccessible_callback(self, name, **kwargs):
-        if current_user.is_authenticated :
+        if current_user.is_authenticated:
             return redirect(url_for('Main_View.home'))
         else:
             return redirect(url_for('login.login_form'))
 
-admin = Admin(app, index_view=MyAdminIndexView(), template_mode="bootstrap3")
-
-
-
-
-
 
 bootstrap = Bootstrap(app)
+admin = Admin(app, index_view=MyAdminIndexView(), template_mode="bootstrap3")
 nav = Nav(app)
+
 @nav.navigation('my_nav')
 def my_nav():
 
@@ -134,9 +122,8 @@ def my_nav():
         return Navbar( checkIn,CheckInForm,Logout )
     elif current_user.is_authenticated and current_user.user_type == 0:
         MachineShop = View('Machine Shop', 'Main_View.home')
-        Request = View('Level Request', 'Student_view.requests')
+        Request = View('Profile/Request', 'Student_view.requests')
         post = View('Post', 'Student_view.post')
-        Studend = View('Profile', 'Student_view.profile')
         Machine_Des = View('Machine Descriptions', 'Machine_View.Machine')
         Home_view = View('Home', 'Main_View.home')
         admin_view = View("Admin booking", "adminBooking_View.bookingpage")
@@ -146,7 +133,7 @@ def my_nav():
                                 View('Lathe', 'Booking_View.Machine_Details', machine_id='3'),
                                 View('Syil', 'Booking_View.Machine_Details', machine_id='4'))
         Logout = View('Logout', 'login.logout')
-        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,Studend,post,admin_view, Logout)
+        return Navbar(MachineShop, Home_view, Machine_Des, Booking_view, Request,post,admin_view, Logout)
 
     else:
         login = View('Login', 'login.login_form')
@@ -154,12 +141,9 @@ def my_nav():
         return Navbar(login, signup)
 
 
-from apps.accounts.models import Users
 @login_manager.user_loader
 def load_user(id):
     return Users.query.get(id)
-
-
 
 
 if __name__ == '__main__':

@@ -10,11 +10,16 @@ class machine_image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     image = db.Column(db.String(100))
 
+class room_image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    image = db.Column(db.String(100))
+    def __repr__(self):
+        return '<room_image %r>' % (self.image)
 
 class machines(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     machine_name = db.Column(db.String(20))
-    description = db.Column(db.String(180))
+    description = db.Column(db.String(500))
     machine_type_id = db.Column(db.Integer, db.ForeignKey('machine_type.id'))
     machine_type = db.relationship('machine_type', backref=db.backref('machine_type_id', lazy='dynamic'))
     def __repr__(self):
@@ -22,16 +27,20 @@ class machines(db.Model):
 class building(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     building_name = db.Column(db.String(100))
+    def __repr__(self):
+        return '<building %r>' % (self.building_name)
 
 class room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_num = db.Column(db.Integer)
-    room_outline = db.Column(db.String(100))
+    room_image = db.Column(db.Integer, db.ForeignKey('room_image.id'))
     building_id = db.Column(db.Integer, db.ForeignKey('building.id'))
 
+    building = db.relationship('building', backref=db.backref('building_id', lazy='dynamic'))
+    room_images = db.relationship('room_image', backref=db.backref('room_image', lazy='dynamic'))
 class machine_join(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
+    #machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
     x_pos = db.Column(db.Integer)
     y_pos = db.Column(db.Integer)
 
@@ -46,6 +55,6 @@ class tool_User(db.Model):
     first_name = db.Column(db.String(20),nullable=False)
     last_name = db.Column(db.String(20),nullable=False)
     tool = db.Column(db.String(100), nullable=False)
-    check_in_date = db.Column(db.DATE, nullable=False)
-    check_out_date = db.Column(db.DATE, nullable=True)
+    check_in_date = db.Column(db.Date)
+    check_out_date = db.Column(db.Date)
     checked = db.Column(db.Integer)

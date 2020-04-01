@@ -35,3 +35,10 @@ class Student(db.Model):
     major_id = db.Column(db.Integer, db.ForeignKey('majors.id'))
     machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
     level_id = db.Column(db.Integer, db.ForeignKey('levels.id'))
+
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    description = db.Column(db.String(150))
+    date_receive = db.Column(db.Date)
+    delete_bool = db.Column(db.Integer)

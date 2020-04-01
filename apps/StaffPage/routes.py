@@ -2,11 +2,12 @@ from flask import Blueprint, redirect, url_for, flash, abort, request
 from flask import render_template, g
 from app import db
 from apps.accounts.models import Users
-from apps.StudentPage.models import Student, majors, Levels
+from apps.StudentPage.models import Student, majors, Levels, Notification
 from apps.StaffPage.forms import Staff_Student, Staff_Request, PostForm
 from apps.Machine import models
 from .models import Request, Request_Des, Post
 from flask_login import current_user, login_required
+from datetime import datetime
 
 Staff_View = Blueprint('Staff_View', __name__)
 
@@ -143,6 +144,10 @@ def request_detail(request_id):
                 levelups.level_id = levelups.level_id + 1
             Request.query.filter_by(id=post.id).delete()
             db.session.commit()
+            notification = Notification(user_id=user.id, description="You have Succefully passed the Saftey Lab Test",
+                                        delete_bool=1, date_receives=datetime.now())
+            db.session.add(notification)
+            db.session.commit()
             flash('test1')
             return redirect(url_for('Staff_View.request_search'))
         else:
@@ -193,7 +198,7 @@ def newPost():
     template = "StaffPage/createPost.html"
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user.first_name)
+        post = Post(title=form.title.data, content=form.content.data, author=current_user.id)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
@@ -204,7 +209,17 @@ def newPost():
 @Staff_View.route("/post/<int:post_id>")
 @login_required
 def post(post_id):
-    post = Post.query.get(post_id)
+    post = Post.query.filter(Post.id == post_id).join(
+        Users, Users.id == Post.author
+    ).with_entities(
+        Post.id.label("id"),
+        Users.first_name.label("first_name"),
+        Users.last_name.label("last_name"),
+        Post.content.label("content"),
+        Post.title.label("title"),
+        Post.date_posted.label("date_posted")
+    ).first()
+    #post = Post.query.get(post_id)
     return render_template("StaffPage/PostDetail.html", title=post.title, post=post)
 
 
@@ -214,11 +229,15 @@ def update_post(post_id):
     post = Post.query.get(post_id)
     form = PostForm()
     if form.validate_on_submit():
-        post.title = form.title.data
-        post.content = form.content.data
-        db.session.commit()
-        flash('Your post has been updated!', 'success')
-        return redirect(url_for('Staff_View.post', post_id=post.id))
+        if post.author != current_user.id:
+            flash('You can not edit this post')
+            return redirect(url_for('Student_view.post'))
+        else:
+            post.title = form.title.data
+            post.content = form.content.data
+            db.session.commit()
+            flash('Your post has been updated!', 'success')
+            return redirect(url_for('Staff_View.post', post_id=post.id))
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
@@ -229,7 +248,7 @@ def update_post(post_id):
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
-    if post.author != current_user.first_name:
+    if post.author != current_user.id:
         redirect('Student.view.post')
         flash('You can not delete this post')
     else:
