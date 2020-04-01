@@ -32,9 +32,10 @@ Profile
     <!-- Profile logo. Add a img tag in place of <span>. -->
     <p class="logoPlaceholder"><!-- <img src="logoImage.png" alt="sample logo"> --><span>Profile</span></p>
   </div>
+
   <div class="profilePhoto">
     <!-- Profile photo -->
-    <img src="file:///Macintosh HD/Users/shannondonahue/Library/Application Support/Adobe/Dreamweaver 2020/en_US/Configuration/Temp/Assets/eam3f88b585.TMP/AboutPageAssets/images/profilephoto.png" alt="sample"> </div>
+    <img  src="{{ image }}"> </div>
   <!-- Identity details -->
   <section class="profileHeader">
     <h1>{{ current_user.first_name }} {{ current_user.last_name }}</h1>
@@ -42,12 +43,16 @@ Profile
     <hr>
 
     <div class="section1Content">
+
         <p><span>Username:</span> {{ current_user.username }}</p>
         <p><span>Email:</span> {{ current_user.email }}</p>
     </div>
   </section>
   <!-- Links to Social network accounts -->
   <aside class="socialNetworkNavBar">
+      <form method=post enctype=multipart/form-data>
+      {{ wtf.quick_form(form2) }}
+</form>
     <div class="socialNetworkNav">
       <!-- Add a Anchor tag with nested img tag here -->      </div>
     <div class="socialNetworkNav">
@@ -56,6 +61,7 @@ Profile
       <!-- Add a Anchor tag with nested img tag here -->      </div>
     <div class="socialNetworkNav">
       <!-- Add a Anchor tag with nested img tag here -->      </div>
+
   </aside>
 </div>
 </header>
