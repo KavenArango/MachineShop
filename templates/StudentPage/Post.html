@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
-WTForms
+Announcements
 {% endblock %}
 
 {% block navbar %}
@@ -11,35 +11,54 @@ WTForms
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/login-signup/') }}">
-
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/post.css') }}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 {% endblock %}
 
 {% block content %}
-<h1 align="center">Announcments </h1>
  {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
     </div>
         {% endfor %}
-     <div class="container" align="left">
+     <div class="container" align="center">
 
+     <div class="container">
+  <section class="hero" id="hero">
+      <h2 class="hero_header"><span class="light">Announcements&nbsp;</span></h2>
 
+  </section>
+    <div class="announcing">
     {% for post in posts %}
-
-
-             <h2 >{{ post.title }}</h2>
-                <p>{{ post.content }}</p>
-        <a href="{{ url_for('Staff_View.post', post_id=post.id) }}"> Posted by: {{ post.author }}</a>
-            <div>
-             <small> On: {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+        <div class="an_announcement">
+            <div class="announce_title">
+            <h2 id= "posted_title" style = "font-size: 50px;">{{ post.title }}</h2>
             </div>
-
+            <p class="announce_content" style="font-size: 28px;">{{ post.content }}</p>
+            <a href="{{ url_for('Staff_View.post', post_id=post.id) }}" style="font-size: 15px;"> Posted by: {{ post.author }}</a>
+            <div class="announce_footer">
+             <small style="font-size: 18px;"> On: {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+        </div>
 
     {% endfor %}
+    </div>
 
     </div>
+
+    <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="hero_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
+  </section>
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2019- <strong></strong></div>
+</div>
+<!-- Main Container Ends -->
+</body>
 {% endblock %}
 
 

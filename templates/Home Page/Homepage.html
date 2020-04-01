@@ -1,17 +1,15 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% include "Home Page/Nav.html" %}
 {% block title %}
 Homepage
 {% endblock %}
 
-{% block navbar %}
-        {{ nav.my_nav.render() }}
-{% endblock %}
+
 
 {% block styles %}
 {{super()}}
-    <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/Home.css') }}">
+    <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/home.css') }}">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">

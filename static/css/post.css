@@ -216,3 +216,46 @@ footer {
     }
 }
 
+.announcing
+{
+	width: 90%;
+	height: 50%;
+	background-color: #f2f2f2;
+	border: #f2f2f2 ;
+	border-radius: 10px;
+}
+
+.an_announcement
+{
+	position:relative;
+	top: 10px;
+	bottom: -0px;
+	border: #ffffff;
+	border-radius: 10px;
+	background-color: #ffffff;
+	margin-top: 10px;
+	width: 75%;
+}
+
+.announce_title
+{
+	border: #ffffff;
+	border-radius: 10px;
+	margin-top: 30px;
+	width: 100%;
+
+}
+#posted_title
+{
+	color:#bf9c43;
+
+}
+.announce_footer {
+	margin-top: 8px;
+	border-radius: 10px;
+	width: 100%;
+}
+
+
+
+

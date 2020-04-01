@@ -216,3 +216,16 @@ footer {
     }
 }
 
+.header_announce
+{
+	text-align: center;
+}
+
+.content-section
+{
+	color:  #0c3270;
+	margin-left: 50px;
+	font-size: 30px;
+	width: 90%;
+	margin-bottom: 50px;
+}

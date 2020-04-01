@@ -11,5 +11,5 @@ class RequestForm(FlaskForm):
 
 
 class RequestExamForm(FlaskForm):
-    requests = SelectField("Request", coerce=int, validators=[DataRequired()])
+    requests = SelectField("Passed Exam",coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit Form')
