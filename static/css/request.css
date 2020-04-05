@@ -2,17 +2,30 @@
 /* Global Styles */
 .container {
 	width: 100%;
-
 	height: 500px;
 	background-color: #FFFFFF;
 }
 
+.hero {
+    background-image: url("../../static/images/Shop.jpeg");
+    background-repeat: no-repeat;
+    background-size: 1600px 500px;
+	padding-top: 200px;
+	padding-bottom: 75px;
+	height: 20px;
+}
+
 body {
-
+	font-family: source-sans-pro;
 	width: 100%;
-
 	padding-left: 2.275%;
 	padding-right: 2.275%;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	font-style: normal;
+	font-weight: 200;
 }
 /* Header */
 header {
@@ -494,3 +507,17 @@ footer {
 {
 	margin-top: 60px;
 }
+
+.hero_header {
+	text-align: center;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	letter-spacing: 4px;
+
+}
+
+
+
+

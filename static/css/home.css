@@ -2,7 +2,7 @@
 /* Body */
 body {
 	font-family: source-sans-pro;
-	background-color: #f2f2f2;
+
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
@@ -16,36 +16,33 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	height: 1000px;
-	background-color: #FFFFFF;
+
 }
 
 .hero_header {
-
-	font-color: #bf9c43;
-	text-align: center;
+	text-align:right;
 	margin-top: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
-	letter-spacing: 4px;
+
+
 }
 /* Hero Section */
-/*.welcome{*/
-/*    width: 500px;*/
-/*    height: 500px;*/
-/*    background-color: #FFFFFF;*/
-/*}*/
+
 .hero {
     background-image: url("../../static/images/Shop.jpeg");
     background-repeat: no-repeat;
     background-size: 1800px 700px;
-	padding-top: 200px;
-	padding-bottom: 200px;
+	padding-top: 100px;
+	padding-bottom: 300px;
+	height: 200px;
 }
 .light {
-    background-color:#FFFFFF;
+
 	font-weight: bold;
-	color: #717070;
+	color: #000000;
+	font-size: 70px;
 }
 .tagline {
     background-color:#FFFFFF;

@@ -1,18 +1,21 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% include "Home Page/Nav.html" %}
 {% block title %}
 Announcements
 {% endblock %}
 
-
+{% block navbar %}
+        {{ nav.my_nav.render() }}
+{% endblock %}
 
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/post.css') }}">
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
+
 {% endblock %}
 
 {% block content %}
@@ -21,31 +24,32 @@ Announcements
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
     </div>
-        {% endfor %}
+ {% endfor %}
      <div class="container" align="center">
 
-     <div class="container">
-  <section class="hero" id="hero">
-      <h2 class="hero_header"><span class="light">Announcements&nbsp;</span></h2>
+        <section class="hero" id="hero">
+            <h2 class="hero_header"><span class="light">Announcements&nbsp;</span></h2>
+        </section>
 
-  </section>
-    <div class="announcing">
-    {% for post in posts %}
-        <div class="an_announcement">
-            <div class="announce_title">
-            <h2 id= "posted_title" style = "font-size: 50px;">{{ post.title }}</h2>
+        <div class="announcing">
+            {% for post in posts %}
+            <div class="an_announcement">
+
+                <div class="announce_title">
+                    <h2 id= "posted_title" style = "font-size: 50px;">{{ post.title }}</h2>
+                </div>
+
+                <p class="announce_content" style="font-size: 28px;">{{ post.content }}</p>
+                <a href="{{ url_for('Staff_View.post', post_id=post.id) }}" style="font-size: 15px;"> Posted by: {{ post.author }}</a>
+
+                <div class="announce_footer">
+                    <small style="font-size: 18px;"> On: {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+                </div>
             </div>
-            <p class="announce_content" style="font-size: 28px;">{{ post.content }}</p>
-            <a href="{{ url_for('Staff_View.post', post_id=post.id) }}" style="font-size: 15px;"> Posted by: {{ post.author }}</a>
-            <div class="announce_footer">
-             <small style="font-size: 18px;"> On: {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-            </div>
+
+            {% endfor %}
         </div>
-
-    {% endfor %}
-    </div>
-
-    </div>
+     </div>
 
     <section class="footer_banner" id="contact">
     <h2 class="hidden">Footer Banner Section </h2>
@@ -54,7 +58,6 @@ Announcements
   </section>
   <!-- Copyrights Section -->
   <div class="copyright">&copy;2019- <strong></strong></div>
-</div>
 <!-- Main Container Ends -->
 </body>
 {% endblock %}
