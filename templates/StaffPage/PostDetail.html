@@ -1,14 +1,11 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% include "Home Page/Nav.html" %}
 {% block title %}
 WTForms
 {% endblock %}
 
-{% block navbar %}
 
-        {{ nav.my_nav.render() }}
-{% endblock %}
 
 {% block styles %}
 {{super()}}

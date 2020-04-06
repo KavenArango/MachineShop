@@ -17,6 +17,7 @@ class Users(db.Model, UserMixin):
     user_type = db.Column(db.Integer)
     passed_exam = db.Column(db.Integer)
     email_ver = db.Column(db.Integer)
+    profile_pic = db.Column(db.String(255), nullable=True, default='default.png')
 
     def __repr__(self):
         return '<Users %r>' % (self.first_name + " " + self.last_name)
