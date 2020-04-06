@@ -41,9 +41,9 @@
                   <li><a href="{{ url_for('Staff_View.request_search')}}">Student Request</a></li>
                   <li><a href="{{ url_for('Student_view.post')}}">Announcments</a></li>
                   <li><a href="{{ url_for('Staff_View.newPost')}}">Post</a></li>
-                       <li><a href="{{ url_for('adminBooking_View.bookingpage')}}">Admin booking</a></li>
                   <li><a href="{{ url_for('login.logout')}}">Logout</a></li>
-                    </ul>
+                  <li><a href="{{ url_for('adminBooking_View.bookingpage')}}">Admin booking</a></li>
+                  </ul>
                 {% elif current_user.is_authenticated and current_user.user_type == 3 %}
                   <ul class="nav navbar-nav">
                   <li><a href="{{ url_for('Tool_View.CheckIn')}}">Check In Table</a></li>
