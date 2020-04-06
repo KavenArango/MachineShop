@@ -34,8 +34,10 @@ class building(db.Model):
 class room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room_num = db.Column(db.Integer)
-    room_outline = db.Column(db.String(100))
+    room_image = db.Column(db.Integer, db.ForeignKey('room_image.id'))
     building_id = db.Column(db.Integer, db.ForeignKey('building.id'))
+    building = db.relationship('building', backref=db.backref('building_id', lazy='dynamic'))
+    room_images = db.relationship('room_image', backref=db.backref('room_image', lazy='dynamic'))
 
 
 class machine_join(db.Model):
