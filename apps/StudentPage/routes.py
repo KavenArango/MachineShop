@@ -112,6 +112,7 @@ def requests():
         image = url_for('static', filename="media/"+ current_user.profile_pic)
         return render_template("StudentPage/request.html", title="Request Form", form=form, form2=form2, detail=detail, image=image)
     else:
+
         form1.requests.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=1)]
         if form1.validate_on_submit():
             request = Request(user_id=current_user.id, machine_id=1, level_id=1, requests_id=form1.requests.data)
@@ -122,8 +123,8 @@ def requests():
             db.session.add(notification)
             db.session.commit()
             return redirect(url_for('Main_View.home'))
-
-        return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, form2=form2, detail=detail)
+        image = url_for('static', filename="media/" + current_user.profile_pic)
+    return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, form2=form2, detail=detail, image=image)
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)

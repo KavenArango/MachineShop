@@ -10,6 +10,10 @@ Post Announcement
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/createpost.css') }}">
+        <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
 {% endblock %}
 
@@ -22,7 +26,8 @@ Post Announcement
         {% endfor %}
 
     <section class="hero" id="hero">
-      <h2 class="hero_header"><span class="light">Post Announcement&nbsp;</span></h2>
+      <h2 class="hero_header"><span class="light">Post&nbsp;</span></h2>
+    <h2 class="hero_header"><span class="light">Announcement&nbsp;</span></h2>
 
 
   </section>
@@ -40,7 +45,7 @@ Post Announcement
 
      <section class="footer_banner" id="contact">
     <h2 class="hidden">Footer Banner Section </h2>
-    <p class="hero_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+    <p class="footer_header">FOR THE LATEST NEWS &amp; UPDATES</p>
       <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
   </section>
   <!-- Copyrights Section -->

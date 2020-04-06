@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% include "Home Page/Nav.html" %}
 {% block title %}
-Staff Page
+Student Search
 {% endblock %}
 
 
@@ -11,15 +11,24 @@ Staff Page
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/studentsearch.css') }}">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
 
 {% endblock %}
 
 {% block content %}
-<title>Student Search</title>
-    <h1>Machine Shop Student Search</h1>
-    <p> Welcome to the student search table! From here you can either search by a student name or major depending on
-        who you are looking for.</p><p> If you need to see a more detailed view of a student's information you can click on
-        their name.</p>
+
+    <section class="hero" id="hero">
+      <h2 class="hero_header"><span class="light">Student&nbsp;</span></h2>
+      <h2 class="hero_header"><span class="light">Search&nbsp;</span></h2>
+  </section>
+
+
+
+
+<div class="container">
 
     <!-- The divider for the welcome paragraph at the top of the homepage -->
 <div class="table-responsive">
@@ -28,7 +37,7 @@ Staff Page
 
 
 		<table class="table table-hover" id="data_table">
-			<thead>
+			<thead class="thead-dark">
 			<tr>
 
 				<th scope="col">Name</th>
@@ -59,6 +68,15 @@ Staff Page
 			</tbody>
 		</table>
 	</div>
+</div>
+      <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="footer_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
+  </section>
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2019- <strong></strong></div>
+</div>
 
 
 

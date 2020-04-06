@@ -12,9 +12,9 @@ class RequestForm(FlaskForm):
 
 
 class RequestExamForm(FlaskForm):
-    requests = SelectField("Request", coerce=int, validators=[DataRequired()])
+    requests = SelectField("Passed Exam",coerce=int, validators=[DataRequired()])
     submit = SubmitField('Submit Form')
 
 class Profile(FlaskForm):
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Update profile picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update Photo')

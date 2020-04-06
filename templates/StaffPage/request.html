@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% include "Home Page/Nav.html" %}
 {% block title %}
-Staff Page
+Requests
 {% endblock %}
 
 
@@ -11,18 +11,26 @@ Staff Page
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/studentsearch.css') }}">
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
 
 {% endblock %}
 
 {% block content %}
+    <section class="hero" id="hero">
+      <h2 class="hero_header"><span class="light">Student&nbsp;</span></h2>
+      <h2 class="hero_header"><span class="light">Requests&nbsp;</span></h2>
+  </section>
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         {{ message }}
     </div>
         {% endfor %}
-<title>Request</title>
-    <h1>Machine Shop Request Table</h1>
+    <div class="container">
+
     <p> Welcome to the Request table! Here you can accept or deny students request to level up or submited there safty exam.</p>
     <p> If you need to see a more information about a student's request you can click on
         their name.</p>
@@ -58,6 +66,16 @@ Staff Page
 			</tbody>
 		</table>
 	</div>
+    </div>
+
+     <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="hero_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
+  </section>
+
+
+  <div class="copyright">&copy;2019- <strong></strong></div>
 
 
 
