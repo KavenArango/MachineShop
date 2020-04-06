@@ -2,16 +2,14 @@
 /* Global Styles */
 .container {
 	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
+
 	height: 500px;
 	background-color: #FFFFFF;
 }
 
 body {
-	margin-left: auto;
-	margin-right: auto;
-	width: 92%;
+
+	width: 100%;
 
 	padding-left: 2.275%;
 	padding-right: 2.275%;
@@ -482,4 +480,17 @@ footer {
 	display: none;
 }
 
+}
+.circular--square {
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
+	width: 270px;
+	height:270px;
+}
+
+.profile_photo
+{
+	margin-top: 60px;
 }
