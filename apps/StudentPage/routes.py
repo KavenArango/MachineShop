@@ -123,7 +123,7 @@ def requests():
             db.session.commit()
             return redirect(url_for('Main_View.home'))
 
-    return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, form2=form2, detail=detail)
+        return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, form2=form2, detail=detail)
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
