@@ -55,7 +55,8 @@ def student_detail(student_id):
         majors.major_name.label("major_name"),
         models.machines.machine_name.label("machine_name"),
         Levels.description.label("description"),
-        Users.id.label("User_id")
+        Users.id.label("User_id"),
+        Users.profile_pic.label("profile_pic")
     ).first()
     form.first_name.data = post.first_name
     form.last_name.data = post.last_name
@@ -70,9 +71,8 @@ def student_detail(student_id):
         models.machines.machine_name.label("machine_name"),
         Levels.description.label("description")
     ).all()
-
-    return render_template(template, title=title, form=form, detail=detail)
-
+    image = url_for('static', filename="media/" + post.profile_pic)
+    return render_template(template, title=title, form=form, detail=detail, post=post, image=image)
 
 @Staff_View.route('/requestsearch')
 @login_required
