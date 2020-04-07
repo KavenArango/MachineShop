@@ -32,20 +32,21 @@ Machine Descriptions
     <body>
 
 
-        <div class="dropdown" style="float:left;">
-            <button class="dropbtn">Rooms</button>
-            <div class="dropdown-content" style="left:0;">
-                {% for room in Rooms%}
-                    {% if room.building_id == Building.id %}
+    <div class="dropdown" style="float:left;">
+        <button class="dropbtn">Machines</button>
+        <div class="dropdown-content" style="left:0;">
+            	{% for building in Buildings%}
                         <tr>
                             <td>
-                                <a href="{{ url_for('adminBooking_View.room',  building_id=room.building_id , room_id=room.id)}}">{{room.room_num}}</a>
+                                <a href="{{ url_for('adminBooking_View.building', building_id=building.id)}}">{{ building.building_name }}</a>
                             </td>
                         </tr>
-                    {% endif %}
                 {% endfor %}
-            </div>
         </div>
+    </div>
+
+
+
 
 
 

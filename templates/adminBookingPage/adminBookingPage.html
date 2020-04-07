@@ -30,19 +30,39 @@ Machine Descriptions
 
 
     <div class="dropdown" style="float:left;">
-        <button class="dropbtn">Machines</button>
+        <button class="dropbtn">Edits</button>
         <div class="dropdown-content" style="left:0;">
-            	{% for building in Buildings%}
-{#                    {% if machine.machine_name != "Default" %}#}
-                        <tr>
-                            <td>
-                                <a href="{{ url_for('adminBooking_View.building', building_id=building.id)}}">{{ building.building_name }}</a>
-                            </td>
-                        </tr>
-{#                    {% endif %}#}
-                {% endfor %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('adminBooking_View.buildings')}}">Buildings</a>
+                    <a href="{{ url_for('adminBooking_View.buildings')}}">Machines</a>
+                </td>
+            </tr>
         </div>
     </div>
+
+
+
+
+
+{##}
+{#    <div class="dropdown" style="float:left;">#}
+{#        <button class="dropbtn">Machines</button>#}
+{#        <div class="dropdown-content" style="left:0;">#}
+{#            	{% for building in Buildings%}#}
+{#                        <tr>#}
+{#                            <td>#}
+{#                                <a href="{{ url_for('adminBooking_View.building', building_id=building.id)}}">{{ building.building_name }}</a>#}
+{#                            </td>#}
+{#                        </tr>#}
+{#                {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
+
+
+
+
+
 
 {#    <body id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">#}
 {#    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">#}
