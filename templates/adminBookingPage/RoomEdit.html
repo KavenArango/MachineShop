@@ -39,7 +39,7 @@ Machine Descriptions
                     {% if room.building_id == Building.id %}
                         <tr>
                             <td>
-                                <a href="{{ url_for('adminBooking_View.room',  building_id=room.building_id , room_id=room.id)}}">{{room.room_num}}</a>
+                                <a href="{{ url_for('adminBooking_View.room',  building_id=room.building_id , room_id=room.id)}}">{{room.room_num}}  {{room.room_images}}</a>
                             </td>
                         </tr>
                     {% endif %}

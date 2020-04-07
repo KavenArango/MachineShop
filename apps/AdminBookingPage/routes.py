@@ -88,6 +88,7 @@ def roomcreation():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print(filename)
             newroom = room(room_num=form.RoomNum.data, building_id=form.Building.data)
             db.session.add(newroom)
             db.session.commit()
