@@ -88,10 +88,10 @@ def roomcreation():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print(filename)
-            newroom = room(room_num=form.RoomNum.data, building_id=form.Building.data)
+            newroom = models.room(room_num=form.RoomNum.data, room_image=filename, building_id=form.Building.data)
             db.session.add(newroom)
             db.session.commit()
+
             return redirect(url_for('adminBooking_View.building', building_id=form.Building.data))
     return render_template(template, Rooms=Room, form=form)
 
