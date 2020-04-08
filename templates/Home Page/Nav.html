@@ -18,11 +18,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="{{ url_for('Main_View.home')}}">Machine Shop</a>
+
         </div>
         <div id="navbar" class="collapse navbar-collapse">
 
               {% if current_user.is_authenticated and current_user.user_type == 1%}
+                  <a class="navbar-brand" href="{{ url_for('Main_View.home')}}">Machine Shop</a>
                   <ul class="nav navbar-nav">
                   <li><a href="{{ url_for('Main_View.home')}}">Home</a></li>
                   <li><a href="{{ url_for('Machine_View.Machine')}}">Machine Description</a></li>
@@ -44,13 +45,22 @@
                   <li><a href="{{ url_for('login.logout')}}">Logout</a></li>
                   <li><a href="{{ url_for('adminBooking_View.bookingpage')}}">Admin booking</a></li>
                   </ul>
+              {% elif current_user.is_authenticated and current_user.user_type == 2%}
+                  <a class="navbar-brand" href="{{ url_for('admin.index')}}">Admin</a>
+                  <ul class="nav navbar-nav">
+
+                  <li><a href="{{ url_for('admin.index')}}">Home</a></li>
+
+                  </ul>
                 {% elif current_user.is_authenticated and current_user.user_type == 3 %}
+                  <a class="navbar-brand" href="{{ url_for('Main_View.home')}}">Machine Shop</a>
                   <ul class="nav navbar-nav">
                   <li><a href="{{ url_for('Tool_View.CheckIn')}}">Check In Table</a></li>
                   <li><a href="{{ url_for('Tool_View.CheckInSignIn')}}">Check In Form</a></li>
                   <li><a href="{{ url_for('login.logout')}}">Logout</a></li>
                   </ul>
                 {% elif current_user.is_authenticated and current_user.user_type == 0  %}
+                  <a class="navbar-brand" href="{{ url_for('Main_View.home')}}">Machine Shop</a>
                   <ul class="nav navbar-nav">
                   <li><a href="{{ url_for('Main_View.home')}}">Home</a></li>
                   <li><a href="{{ url_for('Machine_View.Machine')}}">Machine Description</a></li>

@@ -113,9 +113,7 @@ class test(BaseView):
 
     @expose('/')
     def index(self):
-        return self.render('AdminViews/Test.html')
-
-
+        return self.render('adminBookingPage/adminBookingPage.html')
 
 
 
@@ -156,7 +154,7 @@ class RequestView(ModelView):
 
 
 admin.add_view(User(Users, db.session))
-admin.add_view(test(name='Test', endpoint='test'))
+admin.add_view(test(name='Maps', endpoint='test'))
 admin.add_view(Machines(models.machines, db.session))
 admin.add_view(ModelView(Booking, db.session))
 admin.add_view(RequestView(Request, db.session))
