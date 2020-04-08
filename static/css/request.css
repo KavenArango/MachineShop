@@ -40,7 +40,7 @@ header {
 	display: block;
 }
 header .profileLogo .logoPlaceholder {
-	background-color: rgba(208,207,207,1.00);
+	background-color: #bf9c43;
 	width: 187px;
 	text-align: center;
 }
@@ -62,14 +62,14 @@ header .profilePhoto {
 }
 header .profileHeader h1 {
 	font-family: 'Montserrat', sans-serif;
-	color: rgba(146,146,146,1.00);
+	color: #072a5f;
 	font-size: 30px;
 	font-weight: 700;
 	line-height: 24px;
 }
 header .profileHeader h3 {
 	font-family: sans-serif;
-	color: rgba(146,146,146,1.00);
+	color: #072a5f;
 	font-size: 16px;
 	font-weight: 700;
 	line-height: 24px;
@@ -80,7 +80,7 @@ hr {
 }
 header .profileHeader p {
 	font-family: sans-serif;
-	color: rgba(146,146,146,1.00);
+	color: #072a5f;
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 1.8;
@@ -105,7 +105,7 @@ header .socialNetworkNavBar .socialNetworkNav img:hover {
 }
 .section1 .sectionTitle, .section2 .sectionTitle {
 	font-family: 'Montserrat', sans-serif;
-	color: rgba(146,146,146,1.00);
+	color: #072a5f;
 	font-size: 18px;
 	font-weight: 700;
 	text-transform: uppercase;
@@ -124,27 +124,27 @@ header .socialNetworkNavBar .socialNetworkNav img:hover {
 	font-family: ProximaNova;
 	font-size: 14px;
 	font-weight: 100;
-	color: rgba(208,207,207,1.00);
+	color: #0b3f8e;
 }
 .mainContent .section1 .section1Content span {
-	color: rgba(146,146,146,1.00);
+	color: #072a5f;
 	font-family: sans-serif;
 }
 .section2 .sectionContentTitle {
 	font-family: sans-serif;
-	color: rgba(146,146,146,1.00);
+	color: #072a5f;
 	font-size: 18px;
 	font-weight: 700;
 }
 .section2 .sectionContentSubTitle {
 	font-family: sans-serif;
-	color: rgba(68,67,67,1.00);
+	color: #072a5f;
 	font-size: 14px;
 	font-weight: 400;
 }
 .section2 .sectionContent {
 	font-family: sans-serif;
-	color: rgba(146,146,146,1.00);
+	color: #072a5f;
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 1.8;
