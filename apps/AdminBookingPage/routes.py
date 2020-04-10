@@ -60,7 +60,7 @@ def building(building_id):
     template = "adminBookingPage/RoomEdit.html"
     Rooms = models.room.query.distinct(models.room.room_num).all()
     Building = models.building.query.filter_by(id=building_id).first()
-    return render_template(template, Rooms=Rooms, Building=Building)
+    return render_template(template, Rooms=Rooms, Building=Building,currentRoom='')
 
 
 
@@ -69,8 +69,9 @@ def building(building_id):
 def room(building_id, room_id):
     template = "adminBookingPage/RoomEdit.html"
     Rooms = models.room.query.distinct(models.room.room_num).all()
+    currentRoom = models.room.query.filter_by(id=room_id).first()
     Building = models.building.query.filter_by(id=building_id).first()
-    return render_template(template, Rooms=Rooms, Building=Building)
+    return render_template(template, Rooms=Rooms, Building=Building, CurrentRoom=room_id)
 
 
 
@@ -91,7 +92,6 @@ def roomcreation():
             newroom = models.room(room_num=form.RoomNum.data, room_image=filename, building_id=form.Building.data)
             db.session.add(newroom)
             db.session.commit()
-
             return redirect(url_for('adminBooking_View.building', building_id=form.Building.data))
     return render_template(template, Rooms=Room, form=form)
 
