@@ -71,7 +71,8 @@ def room(building_id, room_id):
     Rooms = models.room.query.distinct(models.room.room_num).all()
     currentRoom = models.room.query.filter_by(id=room_id).first()
     Building = models.building.query.filter_by(id=building_id).first()
-    return render_template(template, Rooms=Rooms, Building=Building, CurrentRoom=room_id)
+
+    return render_template(template, Rooms=Rooms, Building=Building, currentRoom=currentRoom)
 
 
 
