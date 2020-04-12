@@ -6,10 +6,10 @@ from flask import Flask, flash, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
 from apps.Machine import models
 from apps.Machine.models import building, room
-from flask import Blueprint
+from flask import Blueprint, jsonify
 from flask import render_template, session
 from flask_login import current_user, login_required
-from apps.AdminBookingPage.forms import RoomForm
+from apps.AdminBookingPage.forms import RoomForm, BuildingSelect
 
 
 admin_booking_View = Blueprint('adminBooking_View', __name__)
@@ -49,10 +49,30 @@ def bookingpage():
 @login_required
 def buildings():
     template = "adminBookingPage/Building.html"
+    form = BuildingSelect()
+
+    form.buildings.choices = [(build.id, build.building_name) for build in models.building.query.all()]
+    choices = [("", "---")]
+    form.rooms.choices = [("", "")]
+
+
     # Rooms = models.room.query.distinct(models.room.room_num).all()
     Buildings = models.building.query.distinct(models.building.building_name).all()
-    return render_template(template, Buildings=Buildings)
+    return render_template(template, Buildings=Buildings, form=form)
 
+@admin_booking_View.route('/adminbooking/<building_id>', methods=['get', 'post'])
+def building_state(building_id):
+    template = "adminBookingPage/RoomEdit.html"
+    Rooms = models.room.query.filter_by(building_id= building_id).all()
+    roomArray = []
+
+    for rooms in Rooms:
+        roomObj = {}
+        roomObj['id'] = rooms.id
+        roomObj['Number'] = rooms.room_num
+        roomArray.append(roomObj)
+
+    return jsonify({'Room': roomArray})
 
 @admin_booking_View.route('/adminbooking/building/<building_id>', methods=['get', 'post'])
 @login_required

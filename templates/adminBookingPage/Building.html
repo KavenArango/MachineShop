@@ -30,8 +30,15 @@ Machine Descriptions
     </head>
 
     <body>
+    <form>
 
-
+         <div class="form-group col-md-6">
+             {{ wtf.form_field(form.buildings, class='form-control') }}
+         </div>
+        <div class="form-group col-md-6" >
+             {{ wtf.form_field(form.rooms, class='form-control') }}
+         </div>
+   </form>
     <div class="dropdown" style="float:left;">
         <button class="dropbtn">Machines</button>
         <div class="dropdown-content" style="left:0;">
@@ -55,6 +62,7 @@ Machine Descriptions
 
 
 
+
 {#        <form method=post enctype=multipart/form-data>#}
 {#            <input type=file name=file>#}
 {#            <input type=submit value=Upload>#}
@@ -64,13 +72,32 @@ Machine Descriptions
       <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
      </body>
 
+<script>
+let building_select = document.getElementById('buildings');
+let room_select = document.getElementById('rooms');
 
+    building_select.onchange = function () {
+        building = building_select.value;
+
+        fetch('/adminbooking/' + building).then(function (response) {
+            response.json().then(function (data) {
+                let optionHTML = "";
+                for (let room of data.Room)
+                {
+
+                    optionHTML += '<option value="' +room.id + '">' + room.Number + '</<option>';
+
+                }
+                room_select.innerHTML = optionHTML;
+            })
+        });
+    }
+</script>
 
     <script>
-
-function allowDrop(ev) {
-  ev.preventDefault();
-}
+    function allowDrop(ev) {
+    ev.preventDefault();
+    }
 
 function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
