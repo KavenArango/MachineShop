@@ -16,3 +16,7 @@ class RoomForm(FlaskForm):
         if room_num:
             raise ValidationError('That Room number is taken.')
 
+class BuildingSelect(FlaskForm):
+    buildings = SelectField("Building", coerce=int, validators=[DataRequired()])
+    rooms = SelectField("Room" )
+    submit = SubmitField('Submit Form')
