@@ -1,14 +1,13 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-
+{% include "Home Page/Nav.html" %}
 {% block title %}
 Profile
 {% endblock %}
 
-{% block navbar %}
-        {{ nav.my_nav.render() }}
-{% endblock %}
+
+
 
 {% block styles %}
 {{super()}}
@@ -24,7 +23,12 @@ Profile
 
 {% block content %}
 
-
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+        {% endfor %}
 <div>
 <!-- Header content -->
 <header>
