@@ -3,7 +3,7 @@ p{
     text-align: center;
     color: #0C3270;
     padding-top: 30px;
-    font-size: 15px;
+    font-size: 20px;
     font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
 }
 
@@ -55,7 +55,7 @@ p{
   padding: 3px 2px;
 }
 #data_table tbody td {
-  font-size: 17px;
+  font-size: 25px;
 }
 #data_table tr:nth-child(even) {
  /* background: #fee9b3;*/
@@ -66,9 +66,10 @@ p{
 }
 
 #data_table thead th {
-  font-size: 19px;
+  font-size: 35px;
   font-weight: bold;
-  color: #000000;
+	background: #0c3270;
+  color: #ffffff;
   text-align: center;
   /*border-left: 2px solid #0c3270;*/
 }
