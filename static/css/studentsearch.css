@@ -35,8 +35,8 @@ p{
 #data_table {
     position: absolute;
     top:61%;
-    border: 2px solid #0c3270;
-    background-color: #f2f2f2;
+/*    border: 2px solid #0c3270;
+    background-color: #f2f2f2;*/
     width: 90%;
     margin-right: 60px;
     margin-left: 80px;
@@ -51,26 +51,26 @@ p{
       page-break-after:auto;
   }
 #data_table td, #data_table th {
-  border: 1px solid #AAAAAA;
+  /*border: 1px solid #AAAAAA;*/
   padding: 3px 2px;
 }
 #data_table tbody td {
   font-size: 17px;
 }
 #data_table tr:nth-child(even) {
-  background: #fee9b3;
+ /* background: #fee9b3;*/
 }
 #data_table thead {
-  background: #0c3270;
+  /*background: #0c3270;*/
     display:table-header-group;
 }
 
 #data_table thead th {
   font-size: 19px;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #000000;
   text-align: center;
-  border-left: 2px solid #0c3270;
+  /*border-left: 2px solid #0c3270;*/
 }
 
 #data_table thead th:first-child {

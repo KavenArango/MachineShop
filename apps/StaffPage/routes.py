@@ -112,6 +112,8 @@ def request_detail(request_id):
     template = "StaffPage/requestdetails.html"
     title = "Request Detail"
     form = Staff_Request()
+    form2 = Staff_Student()
+
     post = Request.query.filter(Request.id == request_id).join(
         Users, Users.id == Request.user_id
     ).join(

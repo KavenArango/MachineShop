@@ -6,7 +6,18 @@
 	background-color: #FFFFFF;
 }
 
+.Request_detailing
+{
+    padding-top: 160px ;
+    font-size: 25px;
+    text-align: left;
+    color: #093370;
 
+}
+.footer_containing
+{
+    padding-top: 200px;
+}
 .hero {
 
 	background-image: url("../../static/images/Shop.jpeg");
@@ -526,7 +537,3 @@ footer {
 	letter-spacing: 4px;
 
 }
-
-
-
-
