@@ -30,17 +30,16 @@ Machine Descriptions
         </div>
 
 
-
-    <div id="mydiv">
-        <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-
-        <div id="mydivheader">
-            <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/Syil.jpg")}}' width = "100" height="100">
+        <div id="mydiv">
+            <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+            <div id="mydivheader">
+                <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/Syil.jpg")}}' width = "100" height="100">
+            </div>
         </div>
 
-    </div>
 
 
+{#        <img class="img-fluid" src='{{  url_for( 'static' , filename= "images/Syil.jpg")}}' onclick="myFunction()" width = "100" height="100">#}
 
 
 
@@ -58,9 +57,26 @@ Machine Descriptions
 
 
     <script>
+        {#function myFunction()#}
+        {#{#}
+        {#    document.getElementById("surprise").innerHTML=images/aftersurprise.png;#}
 
-        dragElement(document.getElementById("mydiv"));
 
+        function move() {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+             e = e || window.event;
+             e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+        }
+
+
+        {#dragElement(document.getElementById("mydiv"));#} // make on drag that the element where the div will give itself
         function dragElement(elmnt) {
             var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
             if (document.getElementById(elmnt.id + "header")) {
@@ -70,7 +86,6 @@ Machine Descriptions
                 // otherwise, move the DIV from anywhere inside the DIV:
                 elmnt.onmousedown = dragMouseDown;
             }
-
             function dragMouseDown(e) {
                 e = e || window.event;
                 e.preventDefault();
@@ -81,7 +96,6 @@ Machine Descriptions
                 // call a function whenever the cursor moves:
                 document.onmousemove = elementDrag;
             }
-
             function elementDrag(e) {
                 e = e || window.event;
                 e.preventDefault();
@@ -94,17 +108,11 @@ Machine Descriptions
                 elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
                 elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
             }
-
             function closeDragElement() {
                 // stop moving when mouse button is released:
                 document.onmouseup = null;
                 document.onmousemove = null;
             }
-
-
-
-
-
         }
 
     </script>
