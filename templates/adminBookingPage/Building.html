@@ -30,19 +30,28 @@ Machine Descriptions
     </head>
 
     <body>
-    <form>
+    <form method="post" enctype=multipart/form-data>
 
+
+
+        {{ form.csrf_token() }}
          <div class="form-group col-md-6">
              {{ wtf.form_field(form.buildings, class='form-control') }}
          </div>
+
         <div class="form-group col-md-6" >
-             {{ wtf.form_field(form.rooms, class='form-control') }}
+             {{ wtf.form_field(form.rooms) }}
+        </div>
+
+         <div class="form-group col-md-6" id="log-btndiv">
+             {{ form.submit(class_="btn btn-outline-dark btn-lg ") }}
          </div>
+
+
+
    </form>
 
     <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
-    <p><a href="{{ url_for('adminBooking_View.room', building_id=room.building_id , room_id=room.id)}}"><br>Make a Room</a></p>
-
 
 
 

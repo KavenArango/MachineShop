@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, IntegerField
-from wtforms.validators import InputRequired, length, Email, DataRequired, EqualTo, ValidationError, NumberRange
+from wtforms import StringField, SubmitField, SelectField, IntegerField
+from wtforms.validators import InputRequired, length,  DataRequired,  ValidationError, NumberRange
 from flask_wtf.file import FileAllowed, FileField
 from apps.Machine.models import room
 
@@ -16,7 +16,8 @@ class RoomForm(FlaskForm):
         if room_num:
             raise ValidationError('That Room number is taken.')
 
+
 class BuildingSelect(FlaskForm):
     buildings = SelectField("Building", coerce=int, validators=[DataRequired()])
-    rooms = SelectField("Room" )
-    submit = SubmitField('Submit Form')
+    rooms = SelectField("Room")
+    submit = SubmitField('Edit Map')

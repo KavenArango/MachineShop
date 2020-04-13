@@ -34,24 +34,29 @@ Register
          {{ form.csrf_token() }}
          <h1>Room</h1>
 
+
+
          <div class="form-group col-md-6">
              Room number
              {{ wtf.form_field(form.RoomNum, class='form-control', placeholder='000') }}
          </div>
-         <div class="form-group col-md-6">
-             {{ wtf.form_field(form.Building, class='form-control') }}
-         </div>
-{#         #}
-{#         <div class="form-group col-md-6">#}
-{#             {{ wtf.form_field(form.email, class='form-control', placeholder='Email') }}#}
-{#         </div>#}
-{#         #}
-{#         <div class="form-group col-md-6">#}
-{#             {{ wtf.form_field(form.password, class='form-control', placeholder='Password') }}#}
-{#         </div>#}
 
-         <p>Upload Map Image</p>
-         <input type=file name=file>
+
+
+         <div class="form-group col-md-6">
+             Building
+             {{ wtf.form_field(form.Building, class='form-control', placeholder='000') }}
+         </div>
+
+
+
+         <div class="form-group col-md-6">
+             <p>Upload Map Image</p>
+             <input type=file name=file>
+         </div>
+
+
+
          <div class="form-group col-md-6" id="log-btndiv">
              {{ form.submit(class_="btn btn-outline-dark btn-lg ") }}
          </div>

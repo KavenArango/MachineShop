@@ -45,23 +45,13 @@ def bookingpage():
     return render_template(template, Buildings=Buildings)
 
 
-@admin_booking_View.route('/adminbooking/building', methods=['get', 'post'])
-@login_required
-def buildings():
-    template = "adminBookingPage/Building.html"
-    form = BuildingSelect()
-    form.buildings.choices = [(build.id, build.building_name) for build in models.building.query.all()]
-    choices = [("", "---")]
-    form.rooms.choices = [("", "")]
 
-    Buildings = models.building.query.distinct(models.building.building_name).all()
 
-    return render_template(template, Buildings=Buildings, form=form)
 
 @admin_booking_View.route('/adminbooking/<building_id>', methods=['get', 'post'])
 def building_state(building_id):
     template = "adminBookingPage/RoomEdit.html"
-    Rooms = models.room.query.filter_by(building_id= building_id).all()
+    Rooms = models.room.query.filter_by(building_id=building_id).all()
     roomArray = []
 
     for rooms in Rooms:
@@ -71,15 +61,6 @@ def building_state(building_id):
         roomArray.append(roomObj)
 
     return jsonify({'Room': roomArray})
-#
-# @admin_booking_View.route('/adminbooking/building/<building_id>', methods=['get', 'post'])
-# @login_required
-# def building(building_id):
-#     template = "adminBookingPage/RoomEdit.html"
-#     Rooms = models.room.query.distinct(models.room.room_num).all()
-#     Building = models.building.query.filter_by(id=building_id).first()
-#     return render_template(template, Rooms=Rooms, Building=Building, currentRoom='')
-
 
 
 @admin_booking_View.route('/adminbooking/building/<building_id>/<room_id>', methods=['get', 'post'])
@@ -110,6 +91,24 @@ def roomcreation():
             newroom = models.room(room_num=form.RoomNum.data, room_image=filename, building_id=form.Building.data)
             db.session.add(newroom)
             db.session.commit()
-            return redirect(url_for('adminBooking_View.building', building_id=form.Building.data))
-    return render_template(template, Rooms=Room, form=form)
+            return redirect(url_for('adminBooking_View.buildings'))
+    return render_template(template, form=form)
+
+
+@admin_booking_View.route('/adminbooking/building', methods=['get', 'post'])
+@login_required
+def buildings():
+    template = "adminBookingPage/Building.html"
+    form = BuildingSelect()
+    form.buildings.choices = [("-1", "")]
+    form.buildings.choices += [(build.id, build.building_name) for build in
+                              models.building.query.distinct(models.building.building_name).all()]
+    form.rooms.choices = [("-1", "")]
+
+    print(form.buildings.data)
+    print(form.rooms.data)
+
+    if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
+        return redirect(url_for('adminBooking_View.room', building_id=form.buildings.data, room_id=form.rooms.data))
+    return render_template(template, form=form)
 
