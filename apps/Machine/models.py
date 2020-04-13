@@ -26,6 +26,8 @@ class machines(db.Model):
     description = db.Column(db.String(500))
     machine_type_id = db.Column(db.Integer, db.ForeignKey('machine_type.id'))
     machine_type = db.relationship('machine_type', backref=db.backref('machine_type_id', lazy='dynamic'))
+    machine_image_id = db.Column(db.Integer, db.ForeignKey('machine_image.id'))
+    machine_image = db.relationship('machine_image', backref=db.backref('machine_image_id', lazy='dynamic'))
 
     def __repr__(self):
         return '<machines %r>' % (self.machine_name)
