@@ -50,14 +50,12 @@ def bookingpage():
 def buildings():
     template = "adminBookingPage/Building.html"
     form = BuildingSelect()
-
     form.buildings.choices = [(build.id, build.building_name) for build in models.building.query.all()]
     choices = [("", "---")]
     form.rooms.choices = [("", "")]
 
-
-    # Rooms = models.room.query.distinct(models.room.room_num).all()
     Buildings = models.building.query.distinct(models.building.building_name).all()
+
     return render_template(template, Buildings=Buildings, form=form)
 
 @admin_booking_View.route('/adminbooking/<building_id>', methods=['get', 'post'])
@@ -73,14 +71,14 @@ def building_state(building_id):
         roomArray.append(roomObj)
 
     return jsonify({'Room': roomArray})
-
-@admin_booking_View.route('/adminbooking/building/<building_id>', methods=['get', 'post'])
-@login_required
-def building(building_id):
-    template = "adminBookingPage/RoomEdit.html"
-    Rooms = models.room.query.distinct(models.room.room_num).all()
-    Building = models.building.query.filter_by(id=building_id).first()
-    return render_template(template, Rooms=Rooms, Building=Building, currentRoom='')
+#
+# @admin_booking_View.route('/adminbooking/building/<building_id>', methods=['get', 'post'])
+# @login_required
+# def building(building_id):
+#     template = "adminBookingPage/RoomEdit.html"
+#     Rooms = models.room.query.distinct(models.room.room_num).all()
+#     Building = models.building.query.filter_by(id=building_id).first()
+#     return render_template(template, Rooms=Rooms, Building=Building, currentRoom='')
 
 
 

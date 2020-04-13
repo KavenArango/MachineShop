@@ -39,20 +39,9 @@ Machine Descriptions
              {{ wtf.form_field(form.rooms, class='form-control') }}
          </div>
    </form>
-    <div class="dropdown" style="float:left;">
-        <button class="dropbtn">Machines</button>
-        <div class="dropdown-content" style="left:0;">
-            	{% for building in Buildings%}
-                        <tr>
-                            <td>
-                                <a href="{{ url_for('adminBooking_View.building', building_id=building.id)}}">{{ building.building_name }}</a>
-                            </td>
-                        </tr>
-                {% endfor %}
-        </div>
-    </div>
 
-
+    <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
+    <p><a href="{{ url_for('adminBooking_View.room', building_id=room.building_id , room_id=room.id)}}"><br>Make a Room</a></p>
 
 
 
@@ -67,9 +56,6 @@ Machine Descriptions
 {#            <input type=file name=file>#}
 {#            <input type=submit value=Upload>#}
 {#        </form>#}
-
-
-      <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
      </body>
 
 <script>
