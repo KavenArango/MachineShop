@@ -1,18 +1,17 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% include "Home Page/Nav.html" %}
 
 {% block title %}
-Request Detail
+Profile
 {% endblock %}
 
-{% block navbar %}
-        {{ nav.my_nav.render() }}
-{% endblock %}
+
+
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/teacher_request.css') }}">
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/request.css') }}">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,11 +23,16 @@ Request Detail
 
 {% block content %}
 
-
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+        {% endfor %}
 <div>
 <!-- Header content -->
 <header>
-     <section class="hero" id="hero">
+    <section class="hero" id="hero">
 
 
   </section>
@@ -38,6 +42,58 @@ Request Detail
     <!-- Profile logo. Add a img tag in place of <span>. -->
     <p class="logoPlaceholder"><!-- <img src="logoImage.png" alt="sample logo"> --><span>Student Request</span></p>
   </div>
+  <div class="profilePhoto">
+    <!-- Profile photo -->
+      <img  class="circular--square" src="{{ image }}"> </div>
+  <!-- Identity details -->
+  <section class="profileHeader">
+    <h1>{{ post.first_name }} {{ post.last_name }}</h1>
+    <h3>Student user of the Innovation Idea Lab&nbsp;</h3>
+    <hr>
+
+    <div class="section1Content">
+        <p><span>Username:</span> {{ post.username }}</p>
+        <p><span>Email:</span> {{ post.email }}</p>
+    </div>
+
+
+  </section>
+
+
+
+  <!-- Links to Social network accounts -->
+    <aside class="socialNetworkNavBar">
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+    <div class="socialNetworkNav">
+      <!-- Add a Anchor tag with nested img tag here -->      </div>
+
+  </aside>
+</div>
+</header>
+
+<!-- content -->
+<section class="mainContent">
+  <!-- Contact details -->
+  <section class="section1">
+    <h2 class="sectionTitle">Machine Levels&nbsp;</h2>
+    <hr class="sectionTitleRule">
+    <hr class="sectionTitleRule2">
+    <div class="section1Content">
+      {% for details in detail%}
+            {% if details.machine_name != "Default" %}
+                <p><span>{{ details.machine_name }}:</span> {{ details.description }}</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+  </section>
+<div>
+
+
 <div class = "Request_detailing">
     <!-- content -->
 
