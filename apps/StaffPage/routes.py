@@ -134,8 +134,6 @@ def request_detail(request_id):
         Levels.description.label("description"),
         Request_Des.description.label('Request')
     ).first()
-    form.first_name.data = post.first_name
-    form.last_name.data = post.last_name
     form.machine.data = post.machine_name
     form.level.data = post.description
     form.des.data = post.Request

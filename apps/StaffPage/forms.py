@@ -18,8 +18,7 @@ class Staff_Student(Form):
         read_only(self.major)
 
 class Staff_Request(Form):
-    first_name = StringField('first name')
-    last_name = StringField('last name')
+
     machine = StringField('Machine')
     level = StringField('Level')
     des = StringField('Request')
@@ -28,8 +27,6 @@ class Staff_Request(Form):
 
     def __init__(self, *args, **kwargs):
         super(Staff_Request, self).__init__(*args, **kwargs)
-        read_only(self.first_name)
-        read_only(self.last_name)
         read_only(self.machine)
         read_only(self.level)
         read_only(self.des)
