@@ -50,7 +50,8 @@ class room(db.Model):
 
 class machine_join(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    #machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
+    room = db.Column(db.Integer)
+    machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
     x_pos = db.Column(db.Integer)
     y_pos = db.Column(db.Integer)
 
