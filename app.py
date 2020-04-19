@@ -113,7 +113,8 @@ class test(BaseView):
 
     @expose('/')
     def index(self):
-        return self.render('adminBookingPage/adminBookingPage.html')
+       return redirect(url_for('adminBooking_View.buildings'))
+    #return self.render('adminBookingPage/adminBookingPage.html')
 
 
 
