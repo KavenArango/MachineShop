@@ -45,9 +45,6 @@ def bookingpage():
     return render_template(template, Buildings=Buildings)
 
 
-
-
-
 @admin_booking_View.route('/adminbooking/<building_id>', methods=['get', 'post'])
 def building_state(building_id):
     template = "adminBookingPage/RoomEdit.html"
@@ -70,7 +67,10 @@ def room(building_id, room_id):
     Rooms = models.room.query.distinct(models.room.room_num).all()
     currentRoom = models.room.query.filter_by(id=room_id).first()
     Building = models.building.query.filter_by(id=building_id).first()
-    return render_template(template, Rooms=Rooms, Building=Building, currentRoom=currentRoom)
+    Machine =  models.machines.query.all()
+    Machine_Images = models.machine_image.query.all()
+    return render_template(template, Rooms=Rooms, Building=Building, currentRoom=currentRoom, machines=Machine,
+                           machineImages=Machine_Images)
 
 
 
@@ -93,6 +93,8 @@ def roomcreation():
             db.session.commit()
             return redirect(url_for('adminBooking_View.buildings'))
     return render_template(template, form=form)
+
+
 
 
 @admin_booking_View.route('/adminbooking/building', methods=['get', 'post'])
