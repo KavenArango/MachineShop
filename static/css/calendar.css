@@ -7,15 +7,8 @@ machine_menu{
 
 }
 
-h1{
-    text-align:center;
-    color: #0C3270;
-    font-family: "Roboto", "Lucida Grande", Verdana, Arial, sans-serif;
-}
-
-
-
 button{
+
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -28,9 +21,7 @@ button{
 }
 
 table.calendar {
-    margin-bottom: 0;
-    position: absolute;
-
+    margin-bottom: 30px;
     width:80%;
     height:80%;
     top:15%;
