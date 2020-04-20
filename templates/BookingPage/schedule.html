@@ -3,7 +3,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% include "Home Page/Nav.html" %}
 {% block title %}
-Homepage
+Booking
 {% endblock %}
 
 
@@ -30,12 +30,12 @@ Homepage
 <body>
 <div class="container">
   <section class="hero" id="hero">
-      <h2 class="hero_header"><span class="light">The IDE&nbsp;</span></h2>
-      <h2 class="hero_header"><span class="light">Innovation Lab&nbsp;</span></h2>
+      <h2 class="hero_header"><span class="light">{{MachineID.machine_name}}&nbsp;</span></h2>
+      <h2 class="hero_header"><span class="light">Schedule&nbsp;</span></h2>
   </section>
 <!-- Main Container -->
 <div class="container">
-   <h1>{{MachineID.machine_name}} Schedule</h1>
+
 
 
 <tr>
