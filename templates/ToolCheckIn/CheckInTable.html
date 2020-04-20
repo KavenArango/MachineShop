@@ -11,6 +11,11 @@ Check In Table
 {% block styles %}
 {{super()}}
         <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/studentsearch.css') }}">
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
+
 
 {% endblock %}
 
@@ -22,11 +27,15 @@ Check In Table
             {{ message }}
         </div>
         {% endfor %}
+     <section class="hero" id="hero">
+      <h2 class="hero_header"><span class="light">Students&nbsp;</span></h2>
+         <h2 class="hero_header"><span class="light">Checked In&nbsp;</span></h2>
+  </section>
 
-<title>Check In Table</title>
-    <h1>Machine Shop Tool Check In</h1>
+
+
     <p> Welcome to the Tool Check In! From here you can Check in to use small tools</p>
-    <p><a href="{{ url_for('Tool_View.CheckInSignIn' ) }}"> Check In</a></p>
+    <p class="checking_in"><a href="{{ url_for('Tool_View.CheckInSignIn' ) }}"> Check In</a></p>
     <!-- The divider for the welcome paragraph at the top of the homepage -->
 <div class="table-responsive">
 
@@ -45,13 +54,7 @@ Check In Table
 			</tr>
 			</thead>
 
-                <tfoot>
-            <tr>
-            <td colspan="4">
-                <div class="links"><a href="#">&laquo;</a> <a class="active" href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">&raquo;</a></div>
-            </td>
-            </tr>
-            </tfoot>
+
 
 			<tbody>
 			   	{% for CheckIn in CheckInUser%}
@@ -70,4 +73,8 @@ Check In Table
 		</table>
 	</div>
     </div>
+
+
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2019- <strong></strong></div>
 {% endblock %}

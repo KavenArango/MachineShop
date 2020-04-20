@@ -2,19 +2,23 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% include "Home Page/Nav.html" %}
 {% block title %}
-WTForms
+Announcement Detail
 {% endblock %}
 
 
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/login-signup/') }}">
+        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/postdetail.css') }}">
+     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
 
 {% endblock %}
 
 {% block content %}
-<div class="container">
+
     {% for message in get_flashed_messages() %}
     <div class="alert alert-warning">
         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -22,17 +26,25 @@ WTForms
     </div>
         {% endfor %}
 
-    <div class="container">
-            <h2 >{{ post.title }}</h2>
-                <p>{{ post.content }}</p>
-        <a> Posted by: {{ post.first_name }} {{ post.last_name }}</a>
+
+    <div class="container" align="center">
+        <section class="hero" id="hero">
+            <h2 class="hero_header"><span class="light">Announcement&nbsp;</span></h2>
+            <h2 class="hero_header"><span class="light">Detail&nbsp;</span></h2>
+        </section>
+
+         <div class="announcing">
+            <div class="an_announcement">
+            <h2 id= "posted_title" style = "font-size: 50px;" >{{ post.title }}</h2>
+                <p class="announce_content" style="font-size: 28px;">{{ post.content }}</p>
+        <a style="font-size: 15px;"> Posted by: {{ post.first_name }} {{ post.last_name }}</a>
             <div>
              <small> On: {{ post.date_posted.strftime('%Y-%m-%d') }}</small>
             </div>
 
-        <div class="button">
+
         {% if post.author == current_user.id%}
-             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('Staff_View.update_post', post_id=post.id) }}">Update</a>
+             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('Staff_View.update_post', post_id=post.id) }}" >Update</a>
 
             <form action="{{ url_for('Staff_View.delete_post', post_id=post.id) }}" method="post">
                 <input class="btn btn-danger" type="submit" value="Delete">
@@ -46,8 +58,18 @@ WTForms
             </form>
 
         {% endif %}
+
         </div>
+         </div>
     </div>
 
-</div>
+     <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="footer_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
+  </section>
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2019- <strong></strong></div>
+
+
 {% endblock%}
