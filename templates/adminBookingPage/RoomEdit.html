@@ -17,20 +17,15 @@ Machine Descriptions
 
 {% block content %}
     <head>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+
         <meta charset="UTF-8">
         <title>MachineInfo</title>
     </head>
 
     <body>
-        <p><a href="{{ url_for('adminBooking_View.buildings')}}"><br>BACK</a></p>
-        <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
-        <p><a href="{{ url_for('adminBooking_View.bookingpage')}}"><br>Save</a></p>
-        <div>
-            <img src="{{  url_for( 'static' , filename="media/"+currentRoom.room_image )}}" width = "1000" height="500">
-        </div>
-
-
-
         <div id="MACHINEMAPIMAGES">
 
             <div class="dropdown">
@@ -43,7 +38,9 @@ Machine Descriptions
                                 <td>
                                     {% for machineImage in machineImages %}
                                         {% if machine.machine_image_id == machineImage.id %}
-                                            <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "150" height="100" onclick="">
+                                            <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" machine_id="{{ machine.id }}"
+                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "150" height="100" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
+                                                 style="cursor: pointer;">
                                         {% endif %}
                                     {% endfor %}
                                 </td>
@@ -55,39 +52,21 @@ Machine Descriptions
         </div>
 
 
-
-        <div id="DRAGGABLEMACHINEIMAGES">
-
+        <p><a href="{{ url_for('adminBooking_View.buildings')}}"><br>BACK</a></p>
+        <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
+{#        <p><a href="{{ url_for('adminBooking_View.bookingpage')}}" onclick="SaveMap()"><br>Save</a></p>#}
+        <p><a style="cursor: pointer;" onclick="SaveMap()" ><br>Save</a></p>
+        <div>
+            <img src="{{  url_for( 'static' , filename="media/"+currentRoom.room_image )}}" width = "1000" height="500">
         </div>
 
 
 
 
-        <!-- Draggable DIV -->
-        <div id="mydiv" class="draggable" onclick="dragElement(this)">
-            <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-            <div id="mydivheader" >
-                <img src='{{  url_for( 'static' , filename= "images/Syil.jpg")}}' width = "150" height="100">
-            </div>
+        <div id="DRAGGABLEMACHINEIMAGES"  class="DRAGGABLEMACHINEIMAGES">
+
         </div>
 
-
-        <div id="mydiv" class="draggable" onclick="dragElement(this)" style="top: 500px; left: 500px;">
-
-            <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-            <div id="mydivheader" >
-                <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' width = "150" height="100">
-            </div>
-        </div>
-
-
-        <div id="mydiv" class="draggable" onclick="dragElement(this)" style="top: 500px; left: 500px;">
-
-            <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
-            <div id="mydivheader" >
-                <img src='{{  url_for( 'static' , filename= "images/Saftey.jpg")}}' width = "150" height="100">
-            </div>
-        </div>
 
 
     </body>
@@ -97,23 +76,61 @@ Machine Descriptions
 
     <script>
 
-
-    function SpawnImage(image)
+    function SaveMap()
     {
 
+
+
+
+        var draggableElements = document.getElementById("DRAGGABLEMACHINEIMAGES").getElementsByTagName("img");
+
+        for(let i = 0; i < draggableElements.length; i++)
+        {
+            var machineID = draggableElements[i].getAttributeNode("machine_id").value;
+            var cords = draggableElements[i].getBoundingClientRect();
+
+
+            var text = '{"employees":[' +
+                       '{"firstName":"John","lastName":"Doe" },' +
+                       '{"firstName":"Anna","lastName":"Smith" },' +
+                       '{"firstName":"Peter","lastName":"Jones" }]}';
+
+            
+
+
+            {#var obj1 = JSON.parse(text);#}
+            {#var obj = JSON.stringify(text);#}
+            {#console.log(obj);#}
+            {#console.log(obj1);#}
+            {#console.log(JSON.stringify(obj1));#}
+            {#console.log(JSON.stringify(obj));#}
+
+
+
+            console.log(cords.x)
+
+
+        }
     }
 
 
 
 
 
+    function SpawnImage(machineID, machineImage)
+    {
+        var text = "<div id=\"mydiv\" onclick=\"dragElement(this)\" style=\"top: 500px; left: 500px;\">";
+        text += "<img src=\' "+ machineImage + " \' machine_id=\""+ machineID +"\" width = \"150\" height=\"100\">";
+        text +="</div>";
+        document.getElementById("DRAGGABLEMACHINEIMAGES").innerHTML += text;
+        text = "";
+    }
+
+
     function dragElement(elmnt)
     {
-        console.log(elmnt);
         var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-            // otherwise, move the DIV from anywhere inside the DIV:
-            elmnt.onmousedown = dragMouseDown;
-
+        elmnt.onmousedown = dragMouseDown;
 
         function dragMouseDown(e)
         {
@@ -129,15 +146,12 @@ Machine Descriptions
 
         function elementDrag(e)
         {
-           console.log(pos1, ",  ",pos2, ",  " ,pos3, ",  ",pos4, elmnt);
-
             e = e || window.event;
             pos1 = pos3 - parseInt(e.clientX);
             pos2 = pos4 - parseInt(e.clientY);
             pos3 = parseInt(e.clientX);
             pos4 = parseInt(e.clientY);
             elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            //console.log(elmnt.offsetTop)
             elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
         }
 
@@ -146,7 +160,6 @@ Machine Descriptions
             document.onmouseup = null;
             document.onmousemove = null;
         }
-
     }
 
     </script>
