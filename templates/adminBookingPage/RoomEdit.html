@@ -86,6 +86,7 @@ Machine Descriptions
 
         for(let i = 0; i < draggableElements.length; i++)
         {
+
             var machineID = draggableElements[i].getAttributeNode("machine_id").value;
             var cords = draggableElements[i].getBoundingClientRect();
 
@@ -95,7 +96,21 @@ Machine Descriptions
                        '{"firstName":"Anna","lastName":"Smith" },' +
                        '{"firstName":"Peter","lastName":"Jones" }]}';
 
-            
+            fetch("http://127.0.0.1:5000/add", {
+                body: JSON.stringify({
+                    "xpose": cords.x,
+                    "ypose": cords.y
+                }),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+
+                })
 
 
             {#var obj1 = JSON.parse(text);#}
