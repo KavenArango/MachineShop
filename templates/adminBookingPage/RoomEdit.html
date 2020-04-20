@@ -99,7 +99,9 @@ Machine Descriptions
             fetch("http://127.0.0.1:5000/add", {
                 body: JSON.stringify({
                     "xpose": cords.x,
-                    "ypose": cords.y
+                    "ypose": cords.y,
+                    "machine_id" : machineID,
+                    "current_room": {{ currentRoom.id }}
                 }),
                 method: "POST",
                 headers: {

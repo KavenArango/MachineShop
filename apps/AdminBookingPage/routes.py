@@ -119,6 +119,11 @@ def add():
     data = request.get_json()
     xpose = data['xpose']
     ypose = data['ypose']
+    machine_id = data['machine_id']
+    room = data['current_room']
 
+    machine_map = models.machine_join(x_pose=xpose,y_pose=ypose,machine_id=machine_id,room=room)
+    db.session.add(machine_map)
+    db.session.commit()
 
-    return jsonify({'result': 'Saved', 'xpose':xpose, 'ypose': ypose})
+    return jsonify({'result': 'Saved', 'xpose':xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
