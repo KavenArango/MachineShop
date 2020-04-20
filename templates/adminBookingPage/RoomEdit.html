@@ -39,7 +39,7 @@ Machine Descriptions
                                     {% for machineImage in machineImages %}
                                         {% if machine.machine_image_id == machineImage.id %}
                                             <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" machine_id="{{ machine.id }}"
-                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "150" height="100" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
+                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "75" height="50" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
                                                  style="cursor: pointer;">
                                         {% endif %}
                                     {% endfor %}
@@ -78,10 +78,6 @@ Machine Descriptions
 
     function SaveMap()
     {
-
-
-
-
         var draggableElements = document.getElementById("DRAGGABLEMACHINEIMAGES").getElementsByTagName("img");
 
         for(let i = 0; i < draggableElements.length; i++)
