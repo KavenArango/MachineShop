@@ -125,6 +125,7 @@ def requests():
             return redirect(url_for('Main_View.home'))
         image = url_for('static', filename="media/" + current_user.profile_pic)
     return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, form2=form2, detail=detail, image=image)
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)

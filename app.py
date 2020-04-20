@@ -43,17 +43,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://jsnow:Kavensteveshannona
                                         "DRIVER={ODBC Driver 17 for SQL Server}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-# app.config['MAIL_DEBUG'] =
-app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
-app.config['MAIL_PASSWORD'] = "Clownpictures"
-app.config['MAIL_DEFAULT_SENDER'] = "Idea Lab Snhu"
-app.config['MAIL_MAX_EMAILS'] = None
-app.config['MAIL_SUPRESS_SEND'] = False
-app.config['MAIL_ASCII_ATTACHMENTS'] = False
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+# app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
+# app.config['MAIL_PASSWORD'] = "Clownpictures"
+# app.config['MAIL_DEFAULT_SENDER'] = "Idea Lab Snhu"
+# app.config['MAIL_MAX_EMAILS'] = None
+# app.config['MAIL_SUPRESS_SEND'] = False
+# app.config['MAIL_ASCII_ATTACHMENTS'] = False
 
 
 mail = Mail(app)
@@ -114,9 +113,8 @@ class test(BaseView):
 
     @expose('/')
     def index(self):
-        return self.render('AdminViews/Test.html')
-
-
+       return redirect(url_for('adminBooking_View.buildings'))
+    #return self.render('adminBookingPage/adminBookingPage.html')
 
 
 
@@ -157,7 +155,7 @@ class RequestView(ModelView):
 
 
 admin.add_view(User(Users, db.session))
-admin.add_view(test(name='Test', endpoint='test'))
+admin.add_view(test(name='Maps', endpoint='test'))
 admin.add_view(Machines(models.machines, db.session))
 admin.add_view(ModelView(Booking, db.session))
 admin.add_view(RequestView(Request, db.session))
@@ -219,4 +217,4 @@ def load_user(id):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0", port=80, debug=True)
