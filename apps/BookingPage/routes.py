@@ -61,7 +61,12 @@ def process():
 
 
 
-
+@Booking_View.route('/bookingmap', methods=['get', 'post'])
+@login_required
+def bookingMap():
+    template = "BookingPage/BookingMap.html"
+    notifications = Notification.query.filter(Notification.user_id == current_user.id).all()
+    return render_template(template, notifications=notifications)
 
 
 
