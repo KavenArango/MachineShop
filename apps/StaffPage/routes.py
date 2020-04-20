@@ -112,6 +112,8 @@ def request_detail(request_id):
     template = "StaffPage/requestdetails.html"
     title = "Request Detail"
     form = Staff_Request()
+    form2 = Staff_Student()
+
     post = Request.query.filter(Request.id == request_id).join(
         Users, Users.id == Request.user_id
     ).join(
@@ -122,17 +124,28 @@ def request_detail(request_id):
         Request_Des, Request_Des.id == Request.requests_id
     ).with_entities(
         Request.id.label("id"),
+        Users.id.label("User_id"),
         Users.first_name.label("first_name"),
         Users.last_name.label("last_name"),
+        Users.username.label("username"),
+        Users.email.label("email"),
+        Users.profile_pic.label("profile_pic"),
         models.machines.machine_name.label("machine_name"),
         Levels.description.label("description"),
         Request_Des.description.label('Request')
     ).first()
-    form.first_name.data = post.first_name
-    form.last_name.data = post.last_name
     form.machine.data = post.machine_name
     form.level.data = post.description
     form.des.data = post.Request
+
+    detail = Student.query.filter(Student.user_id == post.User_id).join(
+        models.machines, models.machines.id == Student.machine_id
+    ).join(
+        Levels, Levels.id == Student.level_id
+    ).with_entities(
+        models.machines.machine_name.label("machine_name"),
+        Levels.description.label("description")
+    ).all()
 
     user = Users.query.filter_by(id=Request.user_id).first()
     levelUp = Student.query.filter_by(user_id=user.id).all()
@@ -187,8 +200,8 @@ def request_detail(request_id):
                 db.session.commit()
                 flash('test7')
                 return redirect(url_for('Staff_View.request_search'))
-
-    return render_template(template, title=title, form=form)
+    image = url_for('static', filename="media/" + post.profile_pic)
+    return render_template(template, title=title, form=form, post=post, detail=detail, image=image)
 
 
 

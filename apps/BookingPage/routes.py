@@ -10,6 +10,8 @@ from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
 from apps.Machine import models
 from apps.BookingPage.models import Booking
+from flask_login import login_required, current_user
+from apps.StudentPage.models import Notification
 from apps.BookingPage.forms import BookingForm
 from datetime import datetime
 
@@ -26,6 +28,7 @@ def Machine_Details(machine_id):
         flash('You Must Pass Safety Exam To Access Booking', 'success')
         return redirect(url_for('Main_View.home'))
 
+    notifications = Notification.query.filter(Notification.user_id == current_user.id).all()
     MachineName = models.machines.query.filter_by(id=machine_id).first()
     ball = models.machines.query.distinct(models.machines.machine_name).all()
     stick = Booking.query.filter(Booking.machine_id == machine_id).with_entities(
@@ -36,7 +39,8 @@ def Machine_Details(machine_id):
     # print(jsonStick)
 
     # print.pprint(jsonStick)
-    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick)
+    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick,
+                          notifications=notifications)
 
 
 @Booking_View.route('/process', methods=['POST'])
