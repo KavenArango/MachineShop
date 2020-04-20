@@ -114,3 +114,11 @@ def buildings():
         return redirect(url_for('adminBooking_View.room', building_id=form.buildings.data, room_id=form.rooms.data))
     return render_template(template, form=form)
 
+@admin_booking_View.route('/add', methods=['post'])
+def add():
+    data = request.get_json()
+    xpose = data['xpose']
+    ypose = data['ypose']
+
+
+    return jsonify({'result': 'Saved', 'xpose':xpose, 'ypose': ypose})
