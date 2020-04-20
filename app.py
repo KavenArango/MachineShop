@@ -1,9 +1,9 @@
 import urllib.parse
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request,flash
 from flask_bcrypt import Bcrypt
 from flask_uploads import uploaded_file
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager, current_user,logout_user
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.contrib.sqla import ModelView
 
@@ -116,7 +116,16 @@ class test(BaseView):
        return redirect(url_for('adminBooking_View.buildings'))
     #return self.render('adminBookingPage/adminBookingPage.html')
 
+class logout(BaseView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.user_type == 2
 
+    @expose('/')
+    def index(self):
+        logout_user()
+        flash('You have Logged Out')
+        return redirect(url_for('login.login_form'))
+    #return self.render('adminBookingPage/adminBookingPage.html')
 
 class User(ModelView):
     def is_accessible(self):
@@ -167,6 +176,7 @@ admin.add_view(ModelView(models.machine_shop_map,db.session))
 admin.add_view(ModelView(models.room,db.session))
 admin.add_view(ModelView(models.tool_User, db.session))
 admin.add_view(ModelView(models.building, db.session))
+admin.add_view(logout(name='Logout', endpoint='logout'))
 @nav.navigation('my_nav')
 def my_nav():
 
