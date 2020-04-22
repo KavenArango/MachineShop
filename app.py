@@ -97,7 +97,7 @@ class MyAdminIndexView(AdminIndexView):
 
 
 bootstrap = Bootstrap(app)
-admin = Admin(app, index_view=MyAdminIndexView(), template_mode="bootstrap3")
+admin = Admin(app, template_mode="bootstrap3")
 nav = Nav(app)
 class MyAdminView(AdminIndexView):
     def is_accessible(self):
