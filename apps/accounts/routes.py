@@ -9,10 +9,7 @@ from flask_mail import Message
 from itsdangerous import SignatureExpired
 
 
-
-
 login_view = Blueprint('login', __name__)
-
 
 
 @login_view.route('/', methods=['get', 'post'])
@@ -35,6 +32,7 @@ def login_form():
             flash('Username or Password Incorrect')
     return render_template(template, title=title, form=form)
 
+
 @login_view.route('/signup', methods=['get', 'post'])
 def signup():
     form = SignupForm()
@@ -42,7 +40,7 @@ def signup():
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = Users(first_name=form.first_name.data, last_name=form.last_name.data, username=form.username.data,
-                     email=form.email.data, password=hashed_password,user_type=0 , passed_exam=1, email_ver=0)
+                     email=form.email.data, password=hashed_password, user_type=0, passed_exam=1, email_ver=0)
         db.session.add(user)
         ID = Users.query.filter_by(username=form.username.data).first()
         for i in range(1, 6):
@@ -53,15 +51,14 @@ def signup():
         token = url.dumps(form.email.data, salt='email-confirm')
 
         msg = Message(subject='Welcome to the Machine Shop', recipients=[form.email.data])
-        link = url_for('login.confirm_email',token=token, _external=True)
+        link = url_for('login.confirm_email', token=token, _external=True)
         msg.html = 'Please verify your email <a href="{}">Click Me </a>'.format(link)
         mail.send(msg)
         flash('Your account has been created! You may now log in', 'success')
         return redirect(url_for('login.login_form'))
 
-
-
     return render_template("accounts/signup.html", title="Signup", form=form)
+
 
 @login_view.route('/confirm_email/<token>')
 def confirm_email(token):

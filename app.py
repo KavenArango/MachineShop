@@ -1,9 +1,9 @@
 import urllib.parse
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request,flash
 from flask_bcrypt import Bcrypt
 from flask_uploads import uploaded_file
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager, current_user,logout_user
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from flask_admin.contrib.sqla import ModelView
 
@@ -43,17 +43,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://jsnow:Kavensteveshannona
                                         "DRIVER={ODBC Driver 17 for SQL Server}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
-# app.config['MAIL_DEBUG'] =
-app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
-app.config['MAIL_PASSWORD'] = "Clownpictures"
-app.config['MAIL_DEFAULT_SENDER'] = "Idea Lab Snhu"
-app.config['MAIL_MAX_EMAILS'] = None
-app.config['MAIL_SUPRESS_SEND'] = False
-app.config['MAIL_ASCII_ATTACHMENTS'] = False
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 465
+# app.config['MAIL_USE_TLS'] = False
+# app.config['MAIL_USE_SSL'] = True
+# app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
+# app.config['MAIL_PASSWORD'] = "Clownpictures"
+# app.config['MAIL_DEFAULT_SENDER'] = "Idea Lab Snhu"
+# app.config['MAIL_MAX_EMAILS'] = None
+# app.config['MAIL_SUPRESS_SEND'] = False
+# app.config['MAIL_ASCII_ATTACHMENTS'] = False
 
 
 mail = Mail(app)
@@ -114,11 +113,19 @@ class test(BaseView):
 
     @expose('/')
     def index(self):
-        return self.render('AdminViews/Test.html')
+       return redirect(url_for('adminBooking_View.buildings'))
+    #return self.render('adminBookingPage/adminBookingPage.html')
 
+class logout(BaseView):
+    def is_accessible(self):
+        return current_user.is_authenticated and current_user.user_type == 2
 
-
-
+    @expose('/')
+    def index(self):
+        logout_user()
+        flash('You have Logged Out')
+        return redirect(url_for('login.login_form'))
+    #return self.render('adminBookingPage/adminBookingPage.html')
 
 class User(ModelView):
     def is_accessible(self):
@@ -157,7 +164,7 @@ class RequestView(ModelView):
 
 
 admin.add_view(User(Users, db.session))
-admin.add_view(test(name='Test', endpoint='test'))
+admin.add_view(test(name='Maps', endpoint='test'))
 admin.add_view(Machines(models.machines, db.session))
 admin.add_view(ModelView(Booking, db.session))
 admin.add_view(RequestView(Request, db.session))
@@ -169,6 +176,7 @@ admin.add_view(ModelView(models.machine_shop_map,db.session))
 admin.add_view(ModelView(models.room,db.session))
 admin.add_view(ModelView(models.tool_User, db.session))
 admin.add_view(ModelView(models.building, db.session))
+admin.add_view(logout(name='Logout', endpoint='logout'))
 @nav.navigation('my_nav')
 def my_nav():
 
@@ -219,4 +227,4 @@ def load_user(id):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0", port=80, debug=True)

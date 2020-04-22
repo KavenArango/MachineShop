@@ -2,6 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% include "Home Page/Nav.html" %}
 
+
 {% block title %}
 Machine Descriptions
 {% endblock %}
@@ -15,60 +16,165 @@ Machine Descriptions
 {% endblock %}
 
 {% block content %}
- <div class="container">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-        {% endfor %}
-<head>
-    <meta charset="UTF-8">
-    <title>MachineInfo</title>
+    <head>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+
+        <meta charset="UTF-8">
+        <title>MachineInfo</title>
+    </head>
+
+    <body>
+        <div id="MACHINEMAPIMAGES">
+
+            <div class="dropdown">
+                <button class="dropbtn">Machines</button>
+
+                <div class="dropdown-content" style="left:0;">
+                    {% for machine in machines %}
+                        {% if machine.machine_name != "Default" %}
+                            <tr>
+                                <td>
+                                    {% for machineImage in machineImages %}
+                                        {% if machine.machine_image_id == machineImage.id %}
+                                            <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" machine_id="{{ machine.id }}"
+                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "75" height="50" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
+                                                 style="cursor: pointer;">
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
 
 
-</head>
-
-     <div class="dropdown" style="float:left;">
-         <button class="dropbtn">upload images</button>
-         <div class="dropdown-content" style="left:0;">
-             <tr>
-                 <td>
-                     <input type="radio" id="male" name="gender" value="male">
-                     <label for="male">Male</label><br>
-                 </td>
-             </tr>
-         </div>
-     </div>
-
-     <body>
+        <p><a href="{{ url_for('adminBooking_View.buildings')}}"><br>BACK</a></p>
+        <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
+{#        <p><a href="{{ url_for('adminBooking_View.bookingpage')}}" onclick="SaveMap()"><br>Save</a></p>#}
+        <p><a style="cursor: pointer;" onclick="SaveMap()" ><br>Save</a></p>
+        <div>
+            <img src="{{  url_for( 'static' , filename="media/"+currentRoom.room_image )}}" width = "1000" height="500">
+        </div>
 
 
-   <form method=post enctype=multipart/form-data>
-       <input type=file name=file>
-       <input type=submit value=Upload>
-   </form>
+
+
+        <div id="DRAGGABLEMACHINEIMAGES"  class="DRAGGABLEMACHINEIMAGES">
+
+        </div>
+
 
 
     </body>
 
 
 
+
     <script>
 
-function allowDrop(ev) {
-  ev.preventDefault();
-}
+    function SaveMap()
+    {
+        var draggableElements = document.getElementById("DRAGGABLEMACHINEIMAGES").getElementsByTagName("img");
 
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
+        for(let i = 0; i < draggableElements.length; i++)
+        {
 
-function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
-}
+            var machineID = draggableElements[i].getAttributeNode("machine_id").value;
+            var cords = draggableElements[i].getBoundingClientRect();
+
+
+            var text = '{"employees":[' +
+                       '{"firstName":"John","lastName":"Doe" },' +
+                       '{"firstName":"Anna","lastName":"Smith" },' +
+                       '{"firstName":"Peter","lastName":"Jones" }]}';
+
+            fetch("http://127.0.0.1:5000/add", {
+                body: JSON.stringify({
+                    "xpose": cords.x,
+                    "ypose": cords.y,
+                    "machine_id" : machineID,
+                    "current_room": {{ currentRoom.id }}
+                }),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data);
+
+                })
+
+
+            {#var obj1 = JSON.parse(text);#}
+            {#var obj = JSON.stringify(text);#}
+            {#console.log(obj);#}
+            {#console.log(obj1);#}
+            {#console.log(JSON.stringify(obj1));#}
+            {#console.log(JSON.stringify(obj));#}
+
+
+
+            console.log(cords.x)
+
+
+        }
+    }
+
+
+
+
+
+    function SpawnImage(machineID, machineImage)
+    {
+        var text = "<div id=\"mydiv\" onclick=\"dragElement(this)\" style=\"top: 500px; left: 500px;\">";
+        text += "<img src=\' "+ machineImage + " \' machine_id=\""+ machineID +"\" width = \"150\" height=\"100\">";
+        text +="</div>";
+        document.getElementById("DRAGGABLEMACHINEIMAGES").innerHTML += text;
+        text = "";
+    }
+
+
+    function dragElement(elmnt)
+    {
+        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        elmnt.onmousedown = dragMouseDown;
+
+        function dragMouseDown(e)
+        {
+            e = e || window.event;
+            pos3 = parseInt(e.clientX);
+            pos4 = parseInt(e.clientY);
+
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+            return false;
+        }
+
+
+        function elementDrag(e)
+        {
+            e = e || window.event;
+            pos1 = pos3 - parseInt(e.clientX);
+            pos2 = pos4 - parseInt(e.clientY);
+            pos3 = parseInt(e.clientX);
+            pos4 = parseInt(e.clientY);
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement()
+        {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+    }
+
     </script>
 
 

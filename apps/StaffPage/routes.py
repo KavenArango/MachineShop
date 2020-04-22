@@ -77,7 +77,7 @@ def student_detail(student_id):
 @Staff_View.route('/requestsearch')
 @login_required
 def request_search():
-    template = "StaffPage/Request.html"
+    template = "StaffPage/request.html"
     title = "Request Search"
     form = Staff_Request()
     requests = Request.query.filter(Request.user_id == Users.id).join(

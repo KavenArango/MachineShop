@@ -12,6 +12,7 @@ from apps.StudentPage.models import Student, majors, Notification
 from flask_login import current_user, login_required
 from app import db, app
 from apps.StaffPage.models import Post
+from apps.StudentPage.models import Notification
 from datetime import datetime
 
 Student_view = Blueprint('Student_view', __name__)
@@ -46,7 +47,6 @@ def profile():
         models.machines.machine_name.label("machine_name"),
         Levels.description.label("description")
     ).all()
-
     return render_template(template, title=title, detail=detail)
 
 
@@ -82,7 +82,7 @@ def requests():
         models.machines.machine_name.label("machine_name"),
         Levels.description.label("description")
     ).all()
-
+    notifications = Notification.query.filter(Notification.user_id == current_user.id).all()
     if form2.validate_on_submit():
         if form2.picture.data:
             picture_file = save_picture(form2.picture.data)
@@ -110,7 +110,8 @@ def requests():
             db.session.commit()
             return redirect(url_for('Main_View.home'))
         image = url_for('static', filename="media/"+ current_user.profile_pic)
-        return render_template("StudentPage/request.html", title="Request Form", form=form, form2=form2, detail=detail, image=image)
+        return render_template("StudentPage/request.html", title="Request Form", form=form, form2=form2, detail=detail,
+                               image=image, notifications=notifications)
     else:
 
         form1.requests.choices = [(Requests.id, Requests.description) for Requests in Request_Des.query.filter_by(id=1)]
@@ -125,6 +126,7 @@ def requests():
             return redirect(url_for('Main_View.home'))
         image = url_for('static', filename="media/" + current_user.profile_pic)
     return render_template("StudentPage/examRequest.html", title="Request Form", form1=form1, form2=form2, detail=detail, image=image)
+
 def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
@@ -151,4 +153,5 @@ def post():
         Post.title.label("title"),
         Post.date_posted.label("date_posted")
     ).all()
-    return render_template("StudentPage/Post.html", title="Announcement", posts=posts)
+    notifications = Notification.query.filter(Notification.user_id == current_user.id).all()
+    return render_template("StudentPage/Post.html", title="Announcement", posts=posts, notifications=notifications)
