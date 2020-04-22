@@ -27,6 +27,7 @@
                   <ul class="nav navbar-nav">
                   <li><a href="{{ url_for('Main_View.home')}}">Home</a></li>
                   <li><a href="{{ url_for('Machine_View.Machine')}}">Machine Description</a></li>
+                      <li><a href="{{ url_for('Booking_View.bookingMap')}}">Booking Map</a></li>
                   <li><div class="dropdown">
                     <a class="dropbtn center-block">Booking</a>
                     <div class="dropdown-content">
@@ -43,7 +44,6 @@
                   <li><a href="{{ url_for('Student_view.post')}}">Announcments</a></li>
                   <li><a href="{{ url_for('Staff_View.newPost')}}">Post</a></li>
                   <li><a href="{{ url_for('login.logout')}}">Logout</a></li>
-                  <li><a href="{{ url_for('adminBooking_View.bookingpage')}}">Admin booking</a></li>
                   </ul>
               {% elif current_user.is_authenticated and current_user.user_type == 2%}
                   <a class="navbar-brand" href="{{ url_for('admin.index')}}">Admin</a>

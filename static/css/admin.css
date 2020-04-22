@@ -1,0 +1,24 @@
+
+
+
+.hero_header {
+	text-align:right;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+
+
+}
+/* Hero Section */
+
+.hero {
+
+	background-image: linear-gradient(to right, rgba(255,255,255,0) 10%,
+              rgba(255,255,255,1)), url("../../static/images/Shop.jpeg");
+    background-repeat: no-repeat;
+    background-size: 1800px 700px;
+	padding-top: 100px;
+	padding-bottom: 300px;
+	height: 200px;
+}

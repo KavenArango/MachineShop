@@ -4,7 +4,7 @@
 
 
 {% block title %}
-Machine Descriptions
+Machine Map Edit
 {% endblock %}
 
 
@@ -24,9 +24,23 @@ Machine Descriptions
         <meta charset="UTF-8">
         <title>MachineInfo</title>
     </head>
-
     <body>
-        <div id="MACHINEMAPIMAGES">
+<nav class="navbar navbar-default">
+         <div id="navbar" class="collapse navbar-collapse">
+
+
+                  <ul class="nav navbar-nav">
+
+                  <li><a href="{{ url_for('adminBooking_View.buildings')}}"><br>BACK</a></li>
+                  <li><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></li>
+                  <li><a style="cursor: pointer;" onclick="SaveMap()" ><br>Save</a></li>
+                  </ul>
+
+
+
+        </div><!--/.nav-collapse -->
+    </nav>
+<div id="MACHINEMAPIMAGES">
 
             <div class="dropdown">
                 <button class="dropbtn">Machines</button>
@@ -50,12 +64,6 @@ Machine Descriptions
                 </div>
             </div>
         </div>
-
-
-        <p><a href="{{ url_for('adminBooking_View.buildings')}}"><br>BACK</a></p>
-        <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
-{#        <p><a href="{{ url_for('adminBooking_View.bookingpage')}}" onclick="SaveMap()"><br>Save</a></p>#}
-        <p><a style="cursor: pointer;" onclick="SaveMap()" ><br>Save</a></p>
         <div>
             <img src="{{  url_for( 'static' , filename="media/"+currentRoom.room_image )}}" width = "1000" height="500">
         </div>
