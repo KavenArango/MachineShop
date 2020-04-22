@@ -107,12 +107,10 @@ def buildings():
                               models.building.query.distinct(models.building.building_name).all()]
     form.rooms.choices = [("-1", "")]
 
-    print(form.buildings.data)
-    print(form.rooms.data)
-
     if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
         return redirect(url_for('adminBooking_View.room', building_id=form.buildings.data, room_id=form.rooms.data))
     return render_template(template, form=form)
+
 
 @admin_booking_View.route('/add', methods=['post'])
 def add():

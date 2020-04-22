@@ -10,7 +10,7 @@ from apps.accounts.models import Users
 from apps.StudentPage.models import Student, majors, Levels
 from apps.Machine import models
 from apps.BookingPage.models import Booking
-from apps.BookingPage.forms import BookingForm
+from apps.BookingPage.forms import BookingForm, BuildingSelect
 from datetime import datetime
 
 
@@ -39,6 +39,7 @@ def Machine_Details(machine_id):
     return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick)
 
 
+
 @Booking_View.route('/process', methods=['POST'])
 @login_required
 def process():
@@ -58,7 +59,22 @@ def process():
 
 
 
+@Booking_View.route('/booking/RoomSelection', methods=['get', 'post'])
+@login_required
+def buildings():
+    template = "BookingPage/BuildingSelect.html"
+    form = BuildingSelect()
+    form.buildings.choices = [("-1", "")]
+    form.buildings.choices += [(build.id, build.building_name) for build in
+                              models.building.query.distinct(models.building.building_name).all()]
+    form.rooms.choices = [("-1", "")]
 
+    print(form.buildings.data)
+    print(form.rooms.data)
+
+    if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
+        return redirect(url_for('adminBooking_View.room', building_id=form.buildings.data, room_id=form.rooms.data))
+    return render_template(template, form=form)
 
 
 

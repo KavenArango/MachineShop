@@ -39,7 +39,7 @@ Machine Descriptions
                                     {% for machineImage in machineImages %}
                                         {% if machine.machine_image_id == machineImage.id %}
                                             <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" machine_id="{{ machine.id }}"
-                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "75" height="50" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
+                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "150" height="125" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
                                                  style="cursor: pointer;">
                                         {% endif %}
                                     {% endfor %}
@@ -55,7 +55,8 @@ Machine Descriptions
         <p><a href="{{ url_for('adminBooking_View.buildings')}}"><br>BACK</a></p>
         <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
 {#        <p><a href="{{ url_for('adminBooking_View.bookingpage')}}" onclick="SaveMap()"><br>Save</a></p>#}
-        <p><a style="cursor: pointer;" onclick="SaveMap()" ><br>Save</a></p>
+        <p><a href="{{ url_for('adminBooking_View.bookingpage')}}" style="cursor: pointer;" onclick="SaveMap()" ><br>Save</a></p>
+
         <div>
             <img src="{{  url_for( 'static' , filename="media/"+currentRoom.room_image )}}" width = "1000" height="500">
         </div>
