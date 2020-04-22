@@ -197,6 +197,37 @@ footer {
 	letter-spacing: 4px;
 	}
 
+
+.Map_Image
+{
+	border: 10px solid #093370;
+	border-radius: 4px;
+	margin-top: 40px;
+	margin-bottom: 50px;
+
+}
+
+.map_paragraph
+{
+	text-align: right;
+	position: absolute;
+	left: 1350px;
+  	top: 700px;
+	width: 200px;
+
+}
+
+.map_para
+{
+	font-size: 20px;
+
+}
+
+.map_header
+{
+	font-size: 50px;
+	color:#093370;
+}
 /* Small Desktops */
 @media (min-width: 768px) and (max-width: 1096px) {
     .text_column {
@@ -223,6 +254,7 @@ footer {
         margin-top: 0px;
         padding-top: 0px;
     }
+
 
 
 }
