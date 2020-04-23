@@ -51,6 +51,7 @@ def student_detail(student_id):
         Student.id.label("id"),
         Users.first_name.label("first_name"),
         Users.last_name.label("last_name"),
+        Users.username.label("username"),
         Users.email.label("email"),
         majors.major_name.label("major_name"),
         models.machines.machine_name.label("machine_name"),
@@ -158,10 +159,10 @@ def request_detail(request_id):
             Request.query.filter_by(id=post.id).delete()
             db.session.commit()
             notification = Notification(user_id=user.id, description="You have Succefully passed the Saftey Lab Test",
-                                        delete_bool=1, date_receives=datetime.now())
+                                        delete_bool=1, date_receive=datetime.now())
             db.session.add(notification)
             db.session.commit()
-            flash('test1')
+            flash('Approved')
             return redirect(url_for('Staff_View.request_search'))
         else:
             machine = models.machines.query.filter_by(machine_name=post.machine_name).first()
@@ -170,35 +171,50 @@ def request_detail(request_id):
             if student.level_id > level.id:
                 Request.query.filter_by(id=post.id).delete()
                 db.session.commit()
-                flash('test2')
+                flash('Student already a higher level')
                 return redirect(url_for('Staff_View.request_search'))
             elif student.level_id != level.id:
                 if student.level_id + 2 == level.id:
                     Request.query.filter_by(id=post.id).delete()
                     db.session.commit()
-                    flash('test3')
+                    notification = Notification(user_id=user.id,
+                                                description="You have Succefully Leveled up",
+                                                delete_bool=1, date_receive=datetime.now())
+                    db.session.add(notification)
+                    db.session.commit()
+                    flash('Student leveled up')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 3 == level.id:
                     Request.query.filter_by(id=post.id).delete()
                     db.session.commit()
-                    flash('test4')
+                    notification = Notification(user_id=user.id,
+                                                description="You have Succefully Leveled up",
+                                                delete_bool=1, date_receive=datetime.now())
+                    db.session.add(notification)
+                    db.session.commit()
+                    flash('Student Leveled up')
                     return redirect(url_for('Staff_View.request_search'))
                 elif student.level_id + 4 == level.id:
                     Request.query.filter_by(id=post.id).delete()
                     db.session.commit()
-                    flash('test5')
+                    notification = Notification(user_id=user.id,
+                                                description="You have Succefully Leveled up",
+                                                delete_bool=1, date_receive=datetime.now())
+                    db.session.add(notification)
+                    db.session.commit()
+                    flash('Student Leveled Up')
                     return redirect(url_for('Staff_View.request_search'))
                 else:
                     student.level_id = level.id
 
                     Request.query.filter_by(id=post.id).delete()
                     db.session.commit()
-                    flash('test6')
+                    flash('Student already that level')
                     return redirect(url_for('Staff_View.request_search'))
             else:
                 Request.query.filter_by(id=post.id).delete()
                 db.session.commit()
-                flash('test7')
+                flash('Student already that level')
                 return redirect(url_for('Staff_View.request_search'))
     image = url_for('static', filename="media/" + post.profile_pic)
     return render_template(template, title=title, form=form, post=post, detail=detail, image=image)

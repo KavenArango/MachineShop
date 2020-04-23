@@ -43,16 +43,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc://jsnow:Kavensteveshannona
                                         "DRIVER={ODBC Driver 17 for SQL Server}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-# app.config['MAIL_PORT'] = 465
-# app.config['MAIL_USE_TLS'] = False
-# app.config['MAIL_USE_SSL'] = True
-# app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
-# app.config['MAIL_PASSWORD'] = "Clownpictures"
-# app.config['MAIL_DEFAULT_SENDER'] = "Idea Lab Snhu"
-# app.config['MAIL_MAX_EMAILS'] = None
-# app.config['MAIL_SUPRESS_SEND'] = False
-# app.config['MAIL_ASCII_ATTACHMENTS'] = False
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = "idea.lab.snhu@gmail.com"
+app.config['MAIL_PASSWORD'] = "Clownpictures"
+app.config['MAIL_DEFAULT_SENDER'] = "Idea Lab Snhu"
+app.config['MAIL_MAX_EMAILS'] = None
+app.config['MAIL_SUPRESS_SEND'] = False
+app.config['MAIL_ASCII_ATTACHMENTS'] = False
 
 
 mail = Mail(app)

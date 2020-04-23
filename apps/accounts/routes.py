@@ -7,6 +7,8 @@ from apps.StudentPage.models import majors, Student
 from app import mail
 from flask_mail import Message
 from itsdangerous import SignatureExpired
+from apps.StudentPage.models import Student, majors, Levels, Notification
+from datetime import datetime
 
 
 login_view = Blueprint('login', __name__)
@@ -47,7 +49,10 @@ def signup():
             student = Student(user_id=ID.id, major_id=form.major.data, machine_id=i, level_id=1)
             db.session.add(student)
         db.session.commit()
-
+        notification = Notification(user_id=user.id, description="Welcome to the Machine Shop", delete_bool=1,
+                                    date_receive=datetime.now())
+        db.session.add(notification)
+        db.session.commit()
         token = url.dumps(form.email.data, salt='email-confirm')
 
         msg = Message(subject='Welcome to the Machine Shop', recipients=[form.email.data])
