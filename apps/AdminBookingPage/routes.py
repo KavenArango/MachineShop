@@ -50,7 +50,6 @@ def building_state(building_id):
     template = "adminBookingPage/RoomEdit.html"
     Rooms = models.room.query.filter_by(building_id=building_id).all()
     roomArray = []
-
     for rooms in Rooms:
         roomObj = {}
         roomObj['id'] = rooms.id
@@ -120,8 +119,9 @@ def add():
     machine_id = data['machine_id']
     room = data['current_room']
 
-    machine_map = models.machine_join(x_pos=xpose,y_pos=ypose,machine_id=machine_id,room=room)
+    machine_map = models.machine_join(x_pos=xpose, y_pos=ypose, machine_id=machine_id, room=room)
     db.session.add(machine_map)
     db.session.commit()
 
-    return jsonify({'result': 'Saved', 'xpose':xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
+    return jsonify({'result': 'Saved', 'xpose': xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
+

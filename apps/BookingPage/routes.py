@@ -57,8 +57,6 @@ def process():
     return 'Block ID:'
 
 
-
-
 @Booking_View.route('/booking/RoomSelection', methods=['get', 'post'])
 @login_required
 def buildings():
@@ -69,13 +67,32 @@ def buildings():
                               models.building.query.distinct(models.building.building_name).all()]
     form.rooms.choices = [("-1", "")]
 
-    print(form.buildings.data)
-    print(form.rooms.data)
-
     if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
-        return redirect(url_for('adminBooking_View.room', building_id=form.buildings.data, room_id=form.rooms.data))
+        return redirect(url_for('Booking_View.Maps', building_id=form.buildings.data, room_id=form.rooms.data))
     return render_template(template, form=form)
 
 
+# @Booking_View.route('/booking/RoomSelection', methods=['get', 'post'])
+# @login_required
+# def buildings():
+#     template = "BookingPage/BuildingSelect.html"
+#     form = BuildingSelect()
+#     form.buildings.choices = [("-1", "")]
+#     form.buildings.choices += [(build.id, build.building_name) for build in
+#                               models.building.query.distinct(models.building.building_name).all()]
+#     form.rooms.choices = [("-1", "")]
+#
+#     if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
+#         return redirect(url_for('adminBooking_View.Maps', room_id=form.rooms.data))
+#     return render_template(template, form=form)
 
+
+@Booking_View.route('/booking/RoomSelection/MachineSelection/<room_id>', methods=['get', 'post'])
+@login_required
+def Maps(room_id):
+    template = "BookingPage/Map.html"
+    MachineMap = models.machine_join.query.all()
+    currentRoom = models.room.query.filter_by(id=room_id).first()
+    Machine_Images = models.machine_image.query.all()
+    return render_template(template, MachineMaps=MachineMap, Room=currentRoom, Machine_Images=Machine_Images)
 
