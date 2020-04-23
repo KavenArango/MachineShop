@@ -11,17 +11,30 @@ Machine Descriptions
 {% block styles %}
 {{super()}}
 {#        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/AdminBooking/RoomEdit.css') }}">#}
+      <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>var __adobewebfontsappname__="dreamweaver"</script><script src="http://use.edgefonts.net/montserrat:n4:default;source-sans-pro:n2:default.js" type="text/javascript"></script>
 
 {% endblock %}
 
 {% block content %}
-    <head>
-        <meta charset="UTF-8">
-        <title>MachineInfo</title>
-    </head>
+
     <body>
 
-    <div id="MAP">
+     <section class="hero" id="hero">
+      <h2 class="hero_header"><span class="light">Interactive&nbsp;</span></h2>
+      <h2 class="hero_header"><span class="light">Booking&nbsp;</span></h2>
+  </section>
+
+ <div class= "map_paragraph" width = "500" height="700" >
+      <h1 class = "map_header">Interactive Map</h1>
+      <P class="map_para">Welcome to the Innovation IDE interactive map. From here you can access any machines booking page
+      easily by clicking on the image of the wanted machine.</P>
+  </div>
+
+    <div class= id="MAP">
         <div>
             {% for machineMap in MachineMaps %}
                 {% if machineMap.room == Room.id %}
@@ -31,10 +44,10 @@ Machine Descriptions
                                 {% if machineMap.machine_id == machineImage.id %}
                                     <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}"
                                          href="{{ url_for('Booking_View.Machine_Details', machine_id=machineMap.machine_id.id, room_id=Room.id)}}"
-                                         width = "150" height="125"
+                                         width = "150px" height="125px"
                                          style="cursor: pointer; left: {{ machineMap.x_pos }}px;top: {{ machineMap.y_pos }}px;
                                                  position: absolute;z-index: 9;">
-                                {% endif %}
+                                 {% endif %}
                             {% endfor %}
                         </td>
                     </tr>
@@ -45,10 +58,17 @@ Machine Descriptions
 
 
     <div>
-            <img src="{{  url_for( 'static' , filename="media/"+Room.room_image )}}" width = "1200" height="700">
+            <img class="Map_Image" src="{{  url_for( 'static' , filename="media/"+Room.room_image )}}" width = "1200" height="700">
     </div>
 
-
+ <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="footer_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+      <div class="button"><a  href="{{ url_for('Student_view.post') }}">Announcements</a>&nbsp;</div>
+  </section>
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2019- <strong></strong></div>
+</div>
 
 
     </body>

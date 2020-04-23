@@ -13,6 +13,6 @@ class BookingForm(FlaskForm):
 
 
 class BuildingSelect(FlaskForm):
-    buildings = SelectField("Building", coerce=int, validators=[DataRequired()])
-    rooms = SelectField("Room")
+    buildings = SelectField("", coerce=int, validators=[DataRequired()])
+    rooms = SelectField("")
     submit = SubmitField('Select Room')

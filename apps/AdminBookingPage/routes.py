@@ -119,7 +119,7 @@ def add():
     machine_id = data['machine_id']
     room = data['current_room']
 
-    machine_map = models.machine_join(x_pos=xpose, y_pos=ypose, machine_id=machine_id, room=room)
+    machine_map = models.machine_join(x_pos=xpose, y_pos=ypose + 350, machine_id=machine_id, room=room)
     db.session.add(machine_map)
     db.session.commit()
 
