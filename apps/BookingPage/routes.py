@@ -17,14 +17,16 @@ from datetime import datetime
 Booking_View = Blueprint('Booking_View', __name__)
 
 
-@Booking_View.route('/booking/<machine_id>')
+@Booking_View.route('/booking/<room_id>/<machine_id>')
 @login_required
-def Machine_Details(machine_id):
+def Machine_Details(room_id, machine_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
     if current_user.passed_exam < 0:
         flash('You Must Pass Safety Exam To Access Booking', 'success')
         return redirect(url_for('Main_View.home'))
+
+    Room = models.room.query.filter_by(id=room_id).first()
 
     MachineName = models.machines.query.filter_by(id=machine_id).first()
     ball = models.machines.query.distinct(models.machines.machine_name).all()
@@ -36,7 +38,7 @@ def Machine_Details(machine_id):
     # print(jsonStick)
 
     # print.pprint(jsonStick)
-    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick)
+    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, Room=Room ,jsonStick=jsonStick)
 
 
 
@@ -49,9 +51,12 @@ def process():
     MachineBookingDate = request.form['MachineBookingTime']
     MachineBookingTime = request.form['MachineBookingDate']
     DateMachineBooked = request.form['DateMachineBooked']
+    RoomID = request.form['Room_ID']
+
     if request.method == "POST":
-        book = Booking(Key=Block_ID, user_id=User_ID, machine_id=Machine_ID, booking_For_Date=MachineBookingTime,
-                       Start_Time=MachineBookingDate, Booked_date=DateMachineBooked)
+        book = Booking(Key=Block_ID, user_id=User_ID, room_id=RoomID, machine_id=Machine_ID,
+                       booking_For_Date=MachineBookingTime, Start_Time=MachineBookingDate,
+                       Booked_date=DateMachineBooked)
         db.session.add(book)
         db.session.commit()
     return 'Block ID:'
@@ -70,21 +75,6 @@ def buildings():
     if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
         return redirect(url_for('Booking_View.Maps', building_id=form.buildings.data, room_id=form.rooms.data))
     return render_template(template, form=form)
-
-
-# @Booking_View.route('/booking/RoomSelection', methods=['get', 'post'])
-# @login_required
-# def buildings():
-#     template = "BookingPage/BuildingSelect.html"
-#     form = BuildingSelect()
-#     form.buildings.choices = [("-1", "")]
-#     form.buildings.choices += [(build.id, build.building_name) for build in
-#                               models.building.query.distinct(models.building.building_name).all()]
-#     form.rooms.choices = [("-1", "")]
-#
-#     if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
-#         return redirect(url_for('adminBooking_View.Maps', room_id=form.rooms.data))
-#     return render_template(template, form=form)
 
 
 @Booking_View.route('/booking/RoomSelection/MachineSelection/<room_id>', methods=['get', 'post'])

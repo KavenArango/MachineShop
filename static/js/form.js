@@ -10,6 +10,7 @@ $(document).ready(function(){
                 MachineBookingTime: $('#MachineBookingTime').val(),
                 MachineBookingDate: $('#MachineBookingDate').val(),
                 DateMachineBooked:  $('#DateMachineBooked').val(),
+                Room_ID:            $('#Room_ID').val(),
             },
 			type : 'POST',
 			url : '/process',

@@ -123,5 +123,5 @@ def add():
     db.session.add(machine_map)
     db.session.commit()
 
-    return jsonify({'result': 'Saved', 'xpose': xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
+    return jsonify({'result': 'Saved', 'xpose':xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
 
