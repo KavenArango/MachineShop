@@ -148,11 +148,11 @@ def request_detail(request_id):
         Levels.description.label("description")
     ).all()
 
-    user = Users.query.filter_by(id=Request.user_id).first()
+    user = Users.query.filter_by(id=post.User_id).first()
     levelUp = Student.query.filter_by(user_id=user.id).all()
     if form.validate_on_submit():
 
-        if user.passed_exam < 2:
+        if user.passed_exam == 1:
             user.passed_exam = 2
             for levelups in levelUp:
                 levelups.level_id = levelups.level_id + 1
