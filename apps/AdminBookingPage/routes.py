@@ -50,7 +50,6 @@ def building_state(building_id):
     template = "adminBookingPage/RoomEdit.html"
     Rooms = models.room.query.filter_by(building_id=building_id).all()
     roomArray = []
-
     for rooms in Rooms:
         roomObj = {}
         roomObj['id'] = rooms.id
@@ -107,12 +106,10 @@ def buildings():
                               models.building.query.distinct(models.building.building_name).all()]
     form.rooms.choices = [("-1", "")]
 
-    print(form.buildings.data)
-    print(form.rooms.data)
-
     if (form.rooms.data != "None" and form.buildings.data != "None") and (form.rooms.data != -1 and form.buildings.data != -1):
         return redirect(url_for('adminBooking_View.room', building_id=form.buildings.data, room_id=form.rooms.data))
     return render_template(template, form=form)
+
 
 @admin_booking_View.route('/add', methods=['post'])
 def add():
@@ -122,8 +119,9 @@ def add():
     machine_id = data['machine_id']
     room = data['current_room']
 
-    machine_map = models.machine_join(x_pos=xpose,y_pos=ypose,machine_id=machine_id,room=room)
+    machine_map = models.machine_join(x_pos=xpose, y_pos=ypose, machine_id=machine_id, room=room)
     db.session.add(machine_map)
     db.session.commit()
 
-    return jsonify({'result': 'Saved', 'xpose':xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
+    return jsonify({'result': 'Saved', 'xpose': xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
+

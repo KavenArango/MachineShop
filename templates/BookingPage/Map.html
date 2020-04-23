@@ -1,0 +1,55 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "Home Page/Nav.html" %}
+
+{% block title %}
+Machine Descriptions
+{% endblock %}
+
+
+
+{% block styles %}
+{{super()}}
+{#        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/AdminBooking/RoomEdit.css') }}">#}
+
+{% endblock %}
+
+{% block content %}
+    <head>
+        <meta charset="UTF-8">
+        <title>MachineInfo</title>
+    </head>
+    <body>
+
+    <div id="MAP">
+        <div>
+            {% for machineMap in MachineMaps %}
+                {% if machineMap.room == Room.id %}
+                    <tr>
+                        <td>
+                            {% for machineImage in Machine_Images %}
+                                {% if machineMap.machine_id == machineImage.id %}
+                                    <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}"
+                                         href="{{ url_for('Booking_View.Machine_Details', machine_id=machineMap.machine_id.id, room_id=Room.id)}}"
+                                         width = "150" height="125"
+                                         style="cursor: pointer; left: {{ machineMap.x_pos }}px;top: {{ machineMap.y_pos }}px;
+                                                 position: absolute;z-index: 9;">
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div>
+            <img src="{{  url_for( 'static' , filename="media/"+Room.room_image )}}" width = "1200" height="700">
+    </div>
+
+
+
+
+    </body>
+{% endblock %}

@@ -3,37 +3,26 @@
 {% include "Home Page/Nav.html" %}
 
 {% block title %}
-Building
+Machine Descriptions
 {% endblock %}
 
 
 
 {% block styles %}
 {{super()}}
-        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/AdminBooking/RoomEdit.css') }}">
+{#        <link rel="stylesheet" type ="text/css" href="{{ url_for('static', filename='css/AdminBooking/RoomEdit.css') }}">#}
 
 {% endblock %}
 
 {% block content %}
-    {#    <div class="container">#}
-{#        {% for message in get_flashed_messages() %}#}
-{#            <div class="alert alert-warning">#}
-{#                <button type="button" class="close" data-dismiss="alert">&times;</button>#}
-{#                {{ message }}#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </div>#}
-
     <head>
         <meta charset="UTF-8">
         <title>MachineInfo</title>
     </head>
 
     <body>
+
     <form method="post" enctype=multipart/form-data>
-
-
-
         {{ form.csrf_token() }}
          <div class="form-group col-md-6">
              {{ wtf.form_field(form.buildings, class='form-control') }}
@@ -46,17 +35,12 @@ Building
          <div class="form-group col-md-6" id="log-btndiv">
              {{ form.submit(class_="btn btn-outline-dark btn-lg ") }}
          </div>
-
-
-
    </form>
 
-    <p><a href="{{ url_for('adminBooking_View.roomcreation')}}"><br>Make a Room</a></p>
 
-
-     </body>
-
+    </body>
 <script>
+
 let building_select = document.getElementById('buildings');
 let room_select = document.getElementById('rooms');
 

@@ -6,7 +6,7 @@ from apps.Machine.models import room
 
 
 class RoomForm(FlaskForm):
-    RoomNum = IntegerField("", validators=[DataRequired("Input a number"),NumberRange(min=100, max=999, message="Input a number from 100 - 999")])
+    RoomNum = IntegerField("", validators=[DataRequired("Input a number"), NumberRange(min=100, max=999, message="Input a number from 100 - 999")])
     Building = SelectField("", coerce=int, validators=[DataRequired()])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField("Create Room")

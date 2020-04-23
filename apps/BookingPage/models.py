@@ -10,6 +10,7 @@ class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #group_id = db.Column(db.Integer, db.ForeignKey('group_join.id'))
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     machine_id = db.Column(db.Integer, db.ForeignKey('machines.id'))
     booking_For_Date = db.Column(db.DATE)
     Booked_date = db.Column(db.DATE)
