@@ -28,23 +28,6 @@
 
 
 
-    <div class="dropdown" style="float:left;">
-        <button class="dropbtn">Machines</button>
-        <div class="dropdown-content" style="left:0;">
-
-            	{% for machine in ball%}
-                    {% if machine.machine_name != "Default" %}
-                        <tr>
-                            <td>
-                                <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id)}}"></a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-        </div>
-    </div>
-
-
     <table class="calendar table table-bordered">
         <thead id="days">
 

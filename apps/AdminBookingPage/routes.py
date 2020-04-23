@@ -81,7 +81,6 @@ def roomcreation():
     form.Building.choices = [(m.id, m.building_name) for m in
                              models.building.query.distinct(models.building.building_name).all()]
     Room = models.room.query.distinct(models.room.room_num).all()
-    # Buildings = models.building.building_name
     if form.validate_on_submit():
         file = request.files['file']
         if file and allowed_file(file.filename):
@@ -123,5 +122,5 @@ def add():
     db.session.add(machine_map)
     db.session.commit()
 
-    return jsonify({'result': 'Saved', 'xpose':xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
+    return jsonify({'result': 'Saved', 'xpose': xpose, 'ypose': ypose, 'machine_id': machine_id, 'room_id': room})
 

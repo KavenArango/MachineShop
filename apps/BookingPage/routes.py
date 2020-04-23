@@ -17,9 +17,9 @@ from datetime import datetime
 Booking_View = Blueprint('Booking_View', __name__)
 
 
-@Booking_View.route('/booking/<room_id>/<machine_id>')
+@Booking_View.route('/booking/<machine_id>/<room_id>')
 @login_required
-def Machine_Details(room_id, machine_id):
+def Machine_Details(machine_id, room_id):
     template = "BookingPage/schedule.html"
     title = "Reserve"
     if current_user.passed_exam < 0:
@@ -30,15 +30,16 @@ def Machine_Details(room_id, machine_id):
 
     MachineName = models.machines.query.filter_by(id=machine_id).first()
     ball = models.machines.query.distinct(models.machines.machine_name).all()
-    stick = Booking.query.filter(Booking.machine_id == machine_id).with_entities(
-        Booking.Key.label("key")
+    stick = Booking.query.filter(Booking.machine_id == machine_id).with_entities(Booking.Key.label("key")
     ).all()
+
     jsonStick = json.dumps(stick)
     # print(stick)
     # print(jsonStick)
 
     # print.pprint(jsonStick)
-    return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, Room=Room ,jsonStick=jsonStick)
+    return render_template(template, title=title, ball=ball, stick=stick,
+                           MachineID=MachineName, Room=Room, jsonStick=jsonStick)
 
 
 
