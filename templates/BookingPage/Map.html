@@ -29,11 +29,12 @@ Machine Descriptions
                         <td>
                             {% for machineImage in Machine_Images %}
                                 {% if machineMap.machine_id == machineImage.id %}
-                                    <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}"
-                                         href="{{ url_for('Booking_View.Machine_Details', machine_id=machineMap.machine_id.id, room_id=Room.id)}}"
-                                         width = "150" height="125"
-                                         style="cursor: pointer; left: {{ machineMap.x_pos }}px;top: {{ machineMap.y_pos }}px;
-                                                 position: absolute;z-index: 9;">
+                                    <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machineMap.machine_id, room_id=Room.id)}}">
+                                        <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}"
+                                             width = "150" height="125"
+                                             style="cursor: pointer; left: {{ machineMap.x_pos }}px;top: {{ machineMap.y_pos }}px;
+                                                     position: absolute;z-index: 9;">
+                                    </a>
                                 {% endif %}
                             {% endfor %}
                         </td>

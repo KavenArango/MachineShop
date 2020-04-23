@@ -41,23 +41,23 @@ Booking
 <tr>
         <form id="confirmationTable">
 
-        </form>
-    </tr>
-    <div class="dropdown" style="float:left;">
-        <button class="dropbtn">Machines</button>
-        <div class="dropdown-content" style="left:0;">
 
-            	{% for machine in ball%}
-                    {% if machine.machine_name != "Default" %}
-                        <tr>
-                            <td>
-                                <a href="{{ url_for('Booking_View.Machine_Details', machine_id=machine.id)}}"></a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                {% endfor %}
-        </div>
-    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     <table class="calendar table table-bordered">
@@ -239,6 +239,7 @@ Booking
             text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingTime\" value=\"" + time + "\" readonly>";
             text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"MachineBookingDate\" value=\"" + date + "\" readonly>";
             text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"DateMachineBooked\" value=\"" + newdate + "\" readonly>";
+            text += "<input style=\"outline-width: 0; display:none;\"\" type=\"text\" id=\"Room_ID\" value=\"" + {{ Room.id }} + "\" readonly>";
             text += "<button type=\"submit\">Confirm</button>";
             text += "</tr>";
 
