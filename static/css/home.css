@@ -228,6 +228,18 @@ footer {
 	font-size: 50px;
 	color:#093370;
 }
+.room_selector
+{
+	height: 300px;
+	padding-top: 50px;
+
+}
+.selecting_room
+{
+	border: 2px solid #093370;
+	border-radius: 4px;
+	width:129px;
+}
 /* Small Desktops */
 @media (min-width: 768px) and (max-width: 1096px) {
     .text_column {

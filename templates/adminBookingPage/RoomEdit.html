@@ -53,7 +53,7 @@ Machine Map Edit
                                     {% for machineImage in machineImages %}
                                         {% if machine.machine_image_id == machineImage.id %}
                                             <img src="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" machine_id="{{ machine.id }}"
-                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "150" height="125" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
+                                                 machineimage="{{  url_for( 'static' , filename="media/"+ machineImage.image )}}" width = "150px" height="125px" onclick="SpawnImage(this.getAttribute('machine_id'), this.getAttribute('machineimage') )"
                                                  style="cursor: pointer;">
                                         {% endif %}
                                     {% endfor %}
@@ -72,7 +72,7 @@ Machine Map Edit
 
 
         <div>
-            <img src="{{  url_for( 'static' , filename="media/"+currentRoom.room_image )}}" width = "1000" height="500">
+            <img src="{{  url_for( 'static' , filename="media/"+currentRoom.room_image )}}" width = "1200" height="700">
         </div>
 
 
