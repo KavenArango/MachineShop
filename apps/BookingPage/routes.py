@@ -11,7 +11,7 @@ from apps.StudentPage.models import Student, majors, Levels
 from apps.Machine import models
 from apps.BookingPage.models import Booking
 from apps.BookingPage.forms import BookingForm, BuildingSelect
-
+from apps.StudentPage.models import Notification
 
 from datetime import datetime
 
@@ -28,11 +28,16 @@ def Machine_Details(machine_id, room_id):
         flash('You Must Pass Safety Exam To Access Booking', 'success')
         return redirect(url_for('Main_View.home'))
 
-    notifications = Notification.query.filter(Notification.user_id == current_user.id).all()
+    notifications = Notification.query.filter_by(user_id = current_user.id).all()
+    notification = Notification(user_id=current_user.id, description="You have Succefully Booked",
+                                delete_bool=1, date_receive=datetime.now())
+    db.session.add(notification)
+    db.session.commit()
     Room = models.room.query.filter_by(id=room_id).first()
     MachineName = models.machines.query.filter_by(id=machine_id).first()
     ball = models.machines.query.distinct(models.machines.machine_name).all()
-    stick = Booking.query.filter_by(machine_id= machine_id ,room_id= room_id).with_entities(Booking.Key.label("key")).all()
+    stick = Booking.query.filter_by(machine_id= machine_id,room_id= room_id).with_entities(Booking.Key.label("key")
+                                                                                            ).all()
 
     jsonStick = json.dumps(stick)
     # print(stick.room_id)
@@ -40,9 +45,7 @@ def Machine_Details(machine_id, room_id):
 
     # print.pprint(jsonStick)
     return render_template(template, title=title, ball=ball, stick=stick, MachineID=MachineName, jsonStick=jsonStick,
-    return render_template(template, title=title, ball=ball, stick=stick,
-                          notifications=notifications)
-                           MachineID=MachineName, Room=Room, jsonStick=jsonStick)
+                           notifications=notifications, Room=Room)
 
 
 
