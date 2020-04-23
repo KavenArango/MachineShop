@@ -30,11 +30,10 @@ def Machine_Details(machine_id, room_id):
 
     MachineName = models.machines.query.filter_by(id=machine_id).first()
     ball = models.machines.query.distinct(models.machines.machine_name).all()
-    stick = Booking.query.filter(Booking.machine_id == machine_id).with_entities(Booking.Key.label("key")
-    ).all()
+    stick = Booking.query.filter_by(machine_id= machine_id ,room_id= room_id).with_entities(Booking.Key.label("key")).all()
 
     jsonStick = json.dumps(stick)
-    # print(stick)
+    # print(stick.room_id)
     # print(jsonStick)
 
     # print.pprint(jsonStick)
